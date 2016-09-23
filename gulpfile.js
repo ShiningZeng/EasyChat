@@ -1,45 +1,18 @@
-// 引入 gulp
-var gulp = require('gulp'); 
-
-// 引入组件
-var jshint = require('gulp-jshint');
-var sass = require('gulp-sass');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-
-// 检查脚本
-gulp.task('jshint', function() {
-    gulp.src('./js/*.js')
-        .pipe(jshint())
-       // .pipe(jshint.reporter('default')); //默认在命令行里输出结果
-        .pipe(jshint.reporter('gulp-jshint-html-reporter', {filename:'jshint-report.html'}));    //输出结果到 自定义的html文件
-
-});
-
-// 编译Sass
-gulp.task('sass', function() {
-    gulp.src('./scss/*.scss')
-        .pipe(sass())
-        .pipe(gulp.dest('./css'));
-});
-
-// 合并，压缩文件
-gulp.task('scripts', function() {
-    gulp.src('./js/*.js')
-        .pipe(concat('all.js'))
-        .pipe(gulp.dest('./dist'))
-        .pipe(rename('all.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./dist'));
-});
-
-// 默认任务
-gulp.task('default', function(){
-    gulp.run('lint', 'sass', 'scripts');
-
-    // 监听文件变化
-    gulp.watch('./js/*.js', function(){
-        gulp.run('lint', 'sass', 'scripts');
-    });
+// gulp只负责文件执行功能
+var gulp = require('gulp');
+//browserify负责各个模块的依赖关系
+var browserify = require('browserify');
+//reactify 责把JSX内容转换成浏览器可以识别的JS内容
+var reactify = require('reactify');
+//vinyl-source-stream是一个文件流的处理插件
+var source = require('vinyl-source-stream');
+//执行gulp命令
+gulp.task('default',function(){
+    return browserify('app/layout.js')
+    //这里是browserify需要管理的文件，因为layout.js依赖list.js
+    //所以browserify会自动引入list.js
+    .transform(reactify)//browserify下的转换功能，我们把reactify传入，表示把JSX转换成JS
+    .bundle()//把所有JS代码合并成一个文件，包括react等依赖的文件，这里返回的是一个字符串
+    .pipe(source('bundle.js'))//转换成文件流
+    .pipe(gulp.dest('build'))//插入到这个目录下
 });
