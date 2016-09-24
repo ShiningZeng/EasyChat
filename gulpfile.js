@@ -40,18 +40,15 @@ gulp.task('sass', function() {
 //执行gulp命令
 gulp.task('scripts',function(){
     return browserify('./public/js/main.js')
-    //这里是browserify需要管理的文件，因为layout.js依赖list.js
-    //所以browserify会自动引入list.js
     .transform(reactify)//browserify下的转换功能，我们把reactify传入，表示把JSX转换成JS
     .bundle()//把所有JS代码合并成一个文件，包括react等依赖的文件，这里返回的是一个字符串
     .pipe(source('bundle.js'))//转换成文件流
     .pipe(gulp.dest('build'))//插入到这个目录下
-
 });
 
 gulp.task('default', function(){
     gulp.run('sass', 'scripts');
-    gulp.watch('./public/js', function(){
+    gulp.watch('./public/js/*.js', function(){
         gulp.run('scripts');
     });
     gulp.watch('./public/scss/*.scss', function(){
