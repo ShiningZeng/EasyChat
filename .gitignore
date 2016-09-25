@@ -1,4 +1,4 @@
 node_modules/
 sessions/
 data/
-bower_components/
+public/bower_components/
