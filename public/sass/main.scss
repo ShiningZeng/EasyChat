@@ -1,23 +1,73 @@
-@import "menu-nav.scss";
+@import "../bower_components/normalize-css/normalize.css";
 
-body{
-	height: 100%;
-	width: 100%;
-}
-#container {
-	position: relative;
-	top: 60px;
-	left: 0;
-	right: 0;
-	margin: auto;
-	width: 850px;
-	height: 590px;
-	border:1px solid black;
-}
+// set the boundary of PC and phone
+$mobile-width: 767px;
 
-@media screen and (max-width: 767px) {
-	#container{
-		top: 0;
-		width: 100%;
+
+// setting of container div
+$container-width: 850px;
+$container-height: 600px;
+
+
+// setting of menu-nav div
+$menu-nav-width: 50px;
+
+
+// setting of chatting-list div
+$chatting-list-width: 250px;
+
+// setting of chat-interface div
+$chat-interface-width: 550px;
+
+
+@mixin setPos($position:static, $p1:0, $p2:0, $p3:0, $p4:0){
+	@if ($position == 'absolute') or ($position == 'relative') {
+		@if $position == 'absolute' {
+			position: absolute;
+		}
+		@else {
+			position: relative;
+		}
+	    @each $p in $p1, $p2, $p3, $p4 {
+	    	@each $i in top, right, bottom, left {
+	    		@if $p == $i {
+	    			#{$i}: 0;
+	    		}
+	    	}
+	    }
 	}
 }
+
+
+
+
+// @each $position in absolute, relative{
+// 	@each $top in -t, ''{
+// 		@each $right in -r, ''{
+// 			@each $bottom in -b, ''{
+// 				@each $left in -l, ''{
+// 					.#{$position}#{$top}#{$right}#{$bottom}#{$left} {
+// 						@if $position == 'absolute' {
+// 							position: absolute;
+// 						}
+// 						@else {
+// 							position: relative;
+// 						}
+// 						@if $top != '' {
+// 							top: 0;
+// 						}
+// 						@if $right != '' {
+// 							right: 0;
+// 						}
+// 						@if $bottom != '' {
+// 							bottom: 0;
+// 						}
+// 						@if $left != '' {
+// 							left: 0;
+// 						}
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// }

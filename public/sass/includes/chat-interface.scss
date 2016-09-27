@@ -1,0 +1,40 @@
+ #chat-interface {
+	float: left;
+	height: 100%;
+	width: $chat-interface-width;
+	background-color: blue;
+	&:after {
+		content: "";
+		clear: both;
+	}
+	&>div {
+		float: left;
+		width: 100%;
+	}
+	.interface-header {
+		height: 10%;
+		background-color: red;
+	}
+	.interface-body {
+		height: 65%;
+		background-color: green;
+	}
+	.interface-footer {
+		position: relative;
+		height: 25%;
+		background-color: red;
+		&>textarea {
+			@include setPos(absolute, top, left);
+			padding: 0;
+			border: 1px solid #aaa;
+			width: 70%;
+			height: calc(100% - 2 * 1px);
+		}
+		&>button {
+			@include setPos(absolute, top, right);
+			font-size: 30pt;
+			width: calc(30% - 2 * 1px);
+			height: 100%;
+		}
+	}
+}
