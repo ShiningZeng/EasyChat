@@ -24,14 +24,14 @@
 		height: 25%;
 		background-color: red;
 		&>textarea {
-			@include setPos(absolute, top, left);
+			@include absolute(top, left);
 			padding: 0;
 			border: 1px solid #aaa;
 			width: 70%;
 			height: calc(100% - 2 * 1px);
 		}
 		&>button {
-			@include setPos(absolute, top, right);
+			@include absolute(top, right);
 			font-size: 30pt;
 			width: calc(30% - 2 * 1px);
 			height: 100%;

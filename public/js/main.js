@@ -1,9 +1,8 @@
-var React = require('../bower_components/react/react');
-var ReactDOM = require("../bower_components/react/react-dom");
+var React = require('react');
+var ReactDOM = require("react-dom");
 var io = require("socket.io-client");
 var socket = io.connect();
  
-
 function IsPC() {  
 	var userAgentInfo = navigator.userAgent;  
 	var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");  

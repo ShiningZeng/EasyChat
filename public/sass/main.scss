@@ -20,22 +20,22 @@ $chatting-list-width: 250px;
 $chat-interface-width: 550px;
 
 
-@mixin setPos($position:static, $p1:0, $p2:0, $p3:0, $p4:0){
-	@if ($position == 'absolute') or ($position == 'relative') {
-		@if $position == 'absolute' {
-			position: absolute;
-		}
-		@else {
-			position: relative;
-		}
-	    @each $p in $p1, $p2, $p3, $p4 {
-	    	@each $i in top, right, bottom, left {
-	    		@if $p == $i {
-	    			#{$i}: 0;
-	    		}
-	    	}
-	    }
-	}
+@mixin absolute($p1:0, $p2:0, $p3:0, $p4:0) {
+	position: absolute;
+	@include setPos($p1, $p2, $p3, $p4);
+}
+@mixin relative($p1:0, $p2:0, $p3:0, $p4:0) {
+	position: relative;
+	@include setPos($p1, $p2, $p3, $p4);
+}
+@mixin setPos($p1:0, $p2:0, $p3:0, $p4:0) {
+	@each $p in $p1, $p2, $p3, $p4 {
+    	@each $i in top, right, bottom, left {
+    		@if $p == $i {
+    			#{$i}: 0;
+    		}
+    	}
+    }
 }
 
 
