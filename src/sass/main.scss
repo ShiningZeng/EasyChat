@@ -1,9 +1,8 @@
-@import "../bower_components/normalize-css/normalize.css";
-
+@import "../../node_modules/normalize.css/normalize.css";
 // set the boundary of PC and phone
 $mobile-width: 767px;
 
-
+ 
 // setting of container div
 $container-width: 850px;
 $container-height: 600px;
