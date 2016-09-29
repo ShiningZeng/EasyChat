@@ -14,15 +14,7 @@ var babelify = require('babelify');//babelify 责把babel/内容转换成浏览�
 var plugins = require('gulp-load-plugins')();
 var source = require('vinyl-source-stream');//vinyl-source-stream是一个文件流的处理插件
 var path = require('path');
-var assign = require('lodash.assign');
 var gutil = require('gulp-util');
-//检查js脚本的任务
-// gulp.task('lint', function() {
-//     gulp.src('./app/list.js') //可配置你需要检查脚本的具体名字。
-//         .pipe(jshint())
-//         .pipe(jshint.reporter('default'));
-// });
-
 
 // 编译Sass
 gulp.task('sass', function() {
@@ -38,36 +30,27 @@ gulp.task('sass', function() {
         .pipe(gulp.dest('./dist/css'));//dest()写入文件
 });
 
-//执行gulp命令
-// gulp.task('scripts',function(){
-//     gulp.src('./src/js/mainES6.js', { read: false })
-//     .pipe(browserify({
-//       transform: ['babelify']
-//     }))
-//     .on('error', function(err){console.log(err.message)})
-//     .pipe(rename('bundle.js'))
-//     .pipe(gulp.dest('dist/js'))
 
-// });
 // 在这里添加自定义 browserify 选项
-var customOpts = {
-  entries: ['./src/js/mainES6.js'],
-  debug: true
-};
-var opts = assign({}, watchify.args, customOpts);
-var b = watchify(browserify(opts));
-b.transform(babelify);
 
-gulp.task('scripts', bundle); // 这样你就可以运行 `gulp js` 来编译文件了
-b.on('update', bundle); // 当任何依赖发生改变的时候，运行打包工具
-b.on('log', gutil.log); // 输出编译日志到终端
+
+//browserify打包处理js文件，watchify改进browserify后续打包工作
+gulp.task('scripts', bundle);
 
 function bundle() {
-  return b.bundle()
-    // 如果有错误发生，记录这些错误
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./dist/js'));
+    var customOpts = {
+      entries: ['./src/js/main.js'],
+      debug: true
+    };
+    var opts = Object.assign({}, watchify.args, customOpts);
+    var b = watchify(browserify(opts))
+        .transform(babelify)
+        .on('update', bundle)// 当任何依赖发生改变的时候，运行打包工具
+        .on('log', gutil.log)// 输出编译日志到终端
+    return b.bundle()
+        .on('error', gutil.log.bind(gutil, 'Browserify Error'))// 如果有错误发生，记录这些错误
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest('./dist/js'));
 }
 
 
@@ -84,3 +67,24 @@ gulp.task('default', function(){
         gulp.run('sass');
     })
 });
+
+
+
+
+//检查js脚本的任务
+// gulp.task('lint', function() {
+//     gulp.src('./app/list.js') //可配置你需要检查脚本的具体名字。
+//         .pipe(jshint())
+//         .pipe(jshint.reporter('default'));
+// });
+
+// gulp.task('scripts',function(){
+//     gulp.src('./src/js/mainES6.js', { read: false })
+//     .pipe(browserify({
+//       transform: ['babelify']
+//     }))
+//     .on('error', function(err){console.log(err.message)})
+//     .pipe(rename('bundle.js'))
+//     .pipe(gulp.dest('dist/js'))
+
+// });
