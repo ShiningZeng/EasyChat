@@ -7,7 +7,7 @@ function counter(state=0,action){
 		default:return state;
 	}
 }
-const rootReducer=combineReducers({
+const rootReducer=combineReducers({ 
 	counter
 })
 export default rootReducer;

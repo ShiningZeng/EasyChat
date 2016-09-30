@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 import {ChatInterface} from './chatInterface';
 import {store, socket} from '../main';
 
+
+// class Test extends Component {
+// 	constructor(props) {
+// 		 super(props);
+// 		 console.log(this)
+// 	}
+// 	render() {
+// 		return (<span>sdsd</span>)
+// 	}
+// }
+
+
+
+
+
+
 export class App extends Component {
 	constructor(props) {
 	    super(props);
@@ -25,7 +41,7 @@ export class App extends Component {
 					<div id='chatting-list'>
 					</div>
 					<div id='chat-interface'>
-						<ChatInterface />
+						<ChatInterface {...this.props}/>
 					</div>
 				</div>)
 	}

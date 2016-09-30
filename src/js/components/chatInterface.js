@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {store, socket} from '../main';
 
 export class ChatInterface extends Component {
-	constructor() {
-	    super();
-	    console.log(store)
+	constructor(props) {
+	    super(props);
+	    console.log(props)
 	    this.state = {
 			record: [],
 			//appState: store.getState()
