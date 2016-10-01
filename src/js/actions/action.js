@@ -1,25 +1,16 @@
-export const ADD="ADD"
+export const ADD_RECORD="ADD_RECORD"
 export const RED="RED"
 
-export function increment(){
+export function add_record(text){
   return {
-    type:ADD
+    type:ADD_RECORD,
+    text
   }
 }
-export function decrement(){
-  return {
-    type:RED
-  }
-}
-export function ince(){
+
+export function addRecord(text){
   return (dispatch,getState) =>{
     //const {counter}=getState()
-    dispatch(increment());
-  }
-}
-export function dece(){
-  return (dispatch,getState)=>{
-    //const {counter}=getState()
-    dispatch(decrement())
+    dispatch(add_record(text));
   }
 }

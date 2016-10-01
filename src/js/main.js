@@ -7,8 +7,10 @@ import {App} from './components/App';
 import configureStore from "./store";
 import *as Actions from './actions/action'
 
-export const store =configureStore();
+
+const store =configureStore();
 export const socket = io.connect();
+export const NAME = username;
 
 function IsPC() {  
 	const userAgentInfo = navigator.userAgent;  
@@ -27,7 +29,7 @@ if(IsPC()) {
 //将state.counter绑定到props的counter
 function mapStateToprops(state){
 	return {
-		counter:state.counter
+		record:state.record
 	}
 }
 

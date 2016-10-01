@@ -17,6 +17,12 @@ $chatting-list-width: 250px;
 
 // setting of chat-interface div
 $chat-interface-width: 550px;
+$chat-interface-background: rgb(245,245,245);
+
+
+$chat-content-color-left: #fff;
+$chat-content-color-right: #28cb40;
+$chat-content-color-shadow: #aaa;
 
 
 @mixin absolute($p1:0, $p2:0, $p3:0, $p4:0) {

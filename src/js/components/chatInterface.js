@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
-import {store, socket} from '../main';
+import {socket, NAME} from '../main';
 
 export class ChatInterface extends Component {
 	constructor(props) {
 	    super(props);
-	    console.log(props)
-	    this.state = {
-			record: [],
-			//appState: store.getState()
-		}
+	    this._record = [];
 	}
 	componentDidMount() {
-		console.log(this)
-		socket.on('newMsg', msg => {
-		    console.log(msg);
-		    var record = this.state.record;
-		    record.push(<li key={record.length}>{msg}</li>);
-		    that.setState({record:record});
+		const that = this;
+		const {addRecord, record} = this.props;
+		socket.on('newMsg', (name, msg) => {
+		    console.log(name, msg);
+		    this._record.push(<li key={this._record.length}>{msg}</li>)
+		    addRecord();
 		});
 	}
 	sendMessage() {
-		var textDom = document.getElementsByTagName('textarea')[0];
-		var msg = textDom.value;
+		let textDom = document.getElementsByTagName('textarea')[0];
+		const msg = textDom.value;
 		if(msg) {
-			socket.emit('postMsg', msg);
+			socket.emit('postMsg', NAME, msg);
 		}
 		textDom.value = '';
 	}
@@ -33,7 +29,40 @@ export class ChatInterface extends Component {
 					</div>
 					<div className='interface-body'>
 						<ul ref="ul">
-							{this.state.record}
+							<li className='chat-record-list-left'>
+								<img src="" />
+								<div>
+									<span>username</span>
+									<p>
+										<span className="triangle-in"></span>
+										<span className="triangle-out"></span>
+										English is a West Germanic language that was first spoken in early medieval England and is now a global lingua fran...
+									</p>
+								</div>
+							</li>
+							<li className='chat-record-list-left'>
+								<img src="" />
+								<div>
+									<span>username</span>
+									<p>
+										<span className="triangle-in"></span>
+										<span className="triangle-out"></span>
+										English is guag
+									</p>
+								</div>
+							</li>
+							<li className='chat-record-list-right'>
+								<img src="" />
+								<div>
+									<span>username</span>
+									<p>
+										<span className="triangle-in"></span>
+										<span className="triangle-out"></span>
+										English is guag
+									</p>
+								</div>
+							</li>
+							{this._record}
 						</ul>
 					</div>
 					<div className='interface-footer'>

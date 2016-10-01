@@ -1,13 +1,18 @@
 import {combineReducers} from "Redux"
-import { ADD,RED } from '../actions/action'
-function counter(state=0,action){
+import { ADD_RECORD, RED } from '../actions/action'
+
+
+function record(state= [],action){
 	switch(action.type){
-		case ADD: return state+1;
-		case RED:return state-1;
+		case ADD_RECORD:
+			return [...state,
+					{
+			        	text: action.text,
+			        }];
 		default:return state;
 	}
 }
 const rootReducer=combineReducers({ 
-	counter
+	record
 })
 export default rootReducer;
