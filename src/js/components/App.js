@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {ChatInterface} from './chatInterface';
+import {ChatList} from './chatList';
 import {socket, NAME} from '../main';
 
 
@@ -16,7 +17,8 @@ export class App extends Component {
 						<div>
 						</div>
 					</div>
-					<div id='chatting-list'>
+					<div id='chat-list'>
+						<ChatList {...this.props}/>
 					</div>
 					<div id='chat-interface'>
 						<ChatInterface {...this.props}/>

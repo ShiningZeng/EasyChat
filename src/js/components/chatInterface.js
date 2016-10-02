@@ -11,9 +11,25 @@ export class ChatInterface extends Component {
 		const {addRecord, record} = this.props;
 		socket.on('newMsg', (name, msg) => {
 		    console.log(name, msg);
-		    this._record.push(<li key={this._record.length}>{msg}</li>)
+		    this._record.push(this.recordToDom(name, msg, '', this._record.length))
 		    addRecord();
 		});
+	}
+	recordToDom(username, msg, imgsrc, key) {
+		let classname = 'chat-record-list-left';
+		if (username == NAME)
+			classname = 'chat-record-list-right'
+		return (<li className = {classname} key = {key}>
+					<img src={imgsrc} />
+					<div>
+						<span>{username}</span>
+						<p>
+							<span className="triangle-in"></span>
+							<span className="triangle-out"></span>
+							{msg}
+						</p>
+					</div>
+				</li>)
 	}
 	sendMessage() {
 		let textDom = document.getElementsByTagName('textarea')[0];
@@ -29,39 +45,6 @@ export class ChatInterface extends Component {
 					</div>
 					<div className='interface-body'>
 						<ul ref="ul">
-							<li className='chat-record-list-left'>
-								<img src="" />
-								<div>
-									<span>username</span>
-									<p>
-										<span className="triangle-in"></span>
-										<span className="triangle-out"></span>
-										English is a West Germanic language that was first spoken in early medieval England and is now a global lingua fran...
-									</p>
-								</div>
-							</li>
-							<li className='chat-record-list-left'>
-								<img src="" />
-								<div>
-									<span>username</span>
-									<p>
-										<span className="triangle-in"></span>
-										<span className="triangle-out"></span>
-										English is guag
-									</p>
-								</div>
-							</li>
-							<li className='chat-record-list-right'>
-								<img src="" />
-								<div>
-									<span>username</span>
-									<p>
-										<span className="triangle-in"></span>
-										<span className="triangle-out"></span>
-										English is guag
-									</p>
-								</div>
-							</li>
 							{this._record}
 						</ul>
 					</div>

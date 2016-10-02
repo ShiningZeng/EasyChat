@@ -96,10 +96,17 @@
 	}
 	.interface-body {
 		height: 65%;
-		ul li.chat-record-list-left {
+		overflow: scroll;
+		>ul {
+			margin-left: auto;
+			margin-right: auto;
+			padding: 0;
+			width: 90%;	
+		}
+		>ul li.chat-record-list-left {
 			@include chat-record-list(left);
 		}
-		ul li.chat-record-list-right {
+		>ul li.chat-record-list-right {
 			@include chat-record-list(right);
 		}
 	}
