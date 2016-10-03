@@ -2,7 +2,7 @@
 	float: left;
 	height: 100%;
 	width: $chat-list-width;
-	background-color: orange;
+	
 }
 #chat-list .react-wrap {
 	>div.user-search{ 
@@ -10,31 +10,35 @@
 		margin-right: auto;
 		padding: 0;
 		width: 100%;
-		height: 40px;
+		height: 50px;
 		background-color: blue;
 	}
 	>ul.user-list {
 		margin: 0;
 		padding: 0;
 		width: 100%;
-		height: calc(100% - 40px);
-		overflow: scroll;
+		height: calc(100% - 50px);
+		overflow: auto;
 		li {
 			position: relative;
 			width: 100%;
-			height: 50px;
+			height: 60px;
+			background-color: $chat-list-background;
 			img {
 				float: left;
-				margin-top: 5px;
+				margin-top: 8px;
 				margin-left: 5px;
-				width: 40px;
-				height: 40px;
+				width: 44px;
+				height: 44px;
 			}
 			span {
 				float: left;
-				margin-top: 5px;
+				margin-top: 8px;
 				margin-left: 5px;
-				
+				text-overflow: ellipsis;
+				overflow:hidden;
+				white-space:nowrap;
+				line-height: 24px;
 			}
 			p {
 				float: left;
@@ -42,7 +46,17 @@
 				margin-left: 5px;
 				display: inline-block;
 				width: 150px;
+				text-overflow: ellipsis;
+				line-height: 20px;
+				overflow:hidden;
+				white-space:nowrap;
 			}
+		}
+		li.active {
+			background-color: $chat-list-active;
+		}
+		li:hover {
+			background-color: $chat-list-hover;
 		}
 		li.public-room {
 			
