@@ -1,5 +1,7 @@
+
+
+//record
 export const ADD_RECORD="ADD_RECORD"
-export const RED="RED"
 
 export function add_record(text){
   return {
@@ -13,4 +15,20 @@ export function addRecord(text){
     //const {counter}=getState()
     dispatch(add_record(text));
   }
+}
+
+//userlist
+export const ADD_USER="ADD_USER"
+
+export function add_user(username) {
+	return {
+		type:ADD_USER,
+		username
+	}
+}
+
+export function addUser(username) {
+	return (dispatch, getState) =>{
+		dispatch(add_user(username));
+	}
 }

@@ -13,6 +13,7 @@
     "express": "~4.13.1",
     "express-session": "^1.14.1",
     "jade": "~1.11.0",
+    "lodash": "^4.16.2",
     "morgan": "~1.6.1",
     "normalize.css": "^4.2.0",
     "react": "^15.3.2",
@@ -41,7 +42,6 @@
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.3",
-    "lodash": "^4.16.2",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   }

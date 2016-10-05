@@ -26,10 +26,11 @@ if(IsPC()) {
 	document.getElementById("container").style.height = window.innerWidth;
 }
 
-//将state.counter绑定到props的counter
+//将state相关属性绑定到props的中
 function mapStateToprops(state){
 	return {
-		record:state.record
+		record:state.record,
+		users:state.users
 	}
 }
 

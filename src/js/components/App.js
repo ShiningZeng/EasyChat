@@ -9,9 +9,14 @@ export class App extends Component {
 	    super(props);
 	}
 	componentDidMount() {
+		const {users, addUser} = this.props;
 		
+		addUser("zengxl");
+		addUser("zengxls");
 	}
 	render() {
+		const {users, addUser} = this.props;
+		console.log(users);
 		return (<div className='react-wrap'>
 					<div id='menu-nav'>
 						<div>
