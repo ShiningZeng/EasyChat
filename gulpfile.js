@@ -48,6 +48,7 @@ function bundle() {
         .on('update', bundle)// 当任何依赖发生改变的时候，运行打包工具
         .on('log', gutil.log)// 输出编译日志到终端
     return b.bundle()
+        //.on('error', function(error){console.log(Object.assign({},error,{codeFrame:'...',stream:'...'}))})
         .on('error', gutil.log.bind(gutil, 'Browserify Error'))// 如果有错误发生，记录这些错误
         .pipe(source('bundle.js'))
         .pipe(gulp.dest('./dist/js'));
