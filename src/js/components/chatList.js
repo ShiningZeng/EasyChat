@@ -17,19 +17,19 @@ export class ChatList extends Component {
 	    	
 	    }
 	}
-	reactToDom() {
-		const {users} = this.props;
-		const usersDom = [];
-		const userlist = users._userlist || [];
-		userlist.forEach(function(username) {
-			usersDom.push((<li className='private-room' key={usersDom.length}>
-												<img src="" />
-												<span>{username}</span>
-												<p>msg</p>
-											</li>));
-		})
-		return usersDom;
-	}  
+	// reactToDom() {
+	// 	const {users} = this.props;
+	// 	const usersDom = [];
+	// 	const userlist = users._userlist || [];
+	// 	userlist.forEach(function(username) {
+	// 		usersDom.push((<li className='private-room' key={usersDom.length}>
+	// 											<img src="" />
+	// 											<span>{username}</span>
+	// 											<p>msg</p>
+	// 										</li>));
+	// 	})
+	// 	return usersDom;
+	// }  
 	render() {
 
 		return (<div className='react-wrap'>
@@ -41,7 +41,7 @@ export class ChatList extends Component {
 							<span>username</span>
 							<p>msgmsgmsgmsgmsgmsgmsgmsgmsg</p>
 						</li>
-						{this.reactToDom()}
+						
 					</ul>
 				</div>)
 	}

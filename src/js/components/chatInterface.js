@@ -7,20 +7,21 @@ export class ChatInterface extends Component {
 	}
 	componentDidMount() {
 		const that = this;
-		
-		
 	}
 	sendMessage() {
 		let textDom = document.getElementsByTagName('textarea')[0];
 		const msg = textDom.value;
 		if(msg) {
 			socket.emit('postMsg', NAME, msg);
+			const {addRecord} = this.props;
+			addRecord("zxl","zxl","hh","2016");
 		}
 		textDom.value = '';
 	}
 	render() {
 		const {users} = this.props;
 		let t = users["zxl"];
+		// console.log(t);
 		return (<div className='react-wrap'>
 					<div className='interface-header'>
 						<h1>test</h1>

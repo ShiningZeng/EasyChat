@@ -9,13 +9,12 @@ export class App extends Component {
 	    super(props);
 	}
 	componentDidMount() {
+		const {users, addUser,addRecord} = this.props;
 		socket.on('newMsg', (name, msg) => {
 			const {addRecord} = this.props;
 		    addRecord("zxl",name,msg,new Date())
 		});
-
-
-		const {users, addUser, addRecord} = this.props;
+		
 		
 		addUser("zxl","boy");
 		addUser("cmm","girl");
@@ -24,8 +23,8 @@ export class App extends Component {
 		addRecord("zxl","zxl","hh","2016");
 	}
 	render() {
-		const {users, addUser, addRecord} = this.props;
-		console.log(users)
+		// const {users, addUser} = this.props;
+		// console.log(users);
 		return (<div className='react-wrap'>
 					<div id='menu-nav'>
 						<div>

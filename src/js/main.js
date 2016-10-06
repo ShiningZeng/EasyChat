@@ -7,10 +7,10 @@ import {App} from './components/App';
 import configureStore from "./store";
 import *as Actions from './actions/action'
 
-export const NAME = username;
-export const store =configureStore();
-export const socket = io.connect();
 
+const store =configureStore();
+export const socket = io.connect();
+export const NAME = username;
 
 function IsPC() {  
 	const userAgentInfo = navigator.userAgent;  
@@ -29,6 +29,7 @@ if(IsPC()) {
 //将state相关属性绑定到props的中
 function mapStateToprops(state){
 	return {
+		record:state.record,
 		users:state.users
 	}
 }
