@@ -22,11 +22,13 @@ module.exports = function(server) {
 	    })
 	    socket.on('postMsg', function(data) {
 	        log('postMsg');
-	        if(data.target == 'publicRoom') {
+	        if(data.room == 'publicRoom') {
 	        	io.sockets.emit('resMsg', data);
 	        } else {
-				usockets[data.target].emit('resMsg', data);
-	        	usockets[data.source].emit('resMsg', data);
+				usockets[data.source].emit('resMsg', data);
+				var room = data.room;
+				data.room = data.source;
+	        	usockets[room].emit('resMsg', data);
 	        }
 	    });
 	    

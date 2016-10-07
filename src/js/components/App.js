@@ -12,10 +12,10 @@ export class App extends Component {
 		
 		socket.on('resMsg', (data) => {
 			const {users, addUser, addRecord, changeUnread} = this.props;
-			if(!users[data.target])
-				addUser(data.target, "boy");
-		    addRecord(data.target, data.source, data.message, new Date());
-		    //changeUnread(data.target);
+			if(!users[data.room])
+				addUser(data.room, "boy");
+		    addRecord(data.room, data.source, data.message, new Date());
+		    changeUnread(data.room);
 		});
 		
 		// const {users, addUser,addRecord} = this.props;

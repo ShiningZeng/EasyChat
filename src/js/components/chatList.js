@@ -17,7 +17,7 @@ export class ChatList extends Component {
 			const username = e.target.getAttribute('data-username');
 			const {changeRoom, changeUnread} = this.props;
 			changeRoom(username);
-			// changeUnread(username);
+			changeUnread(username);
 	    }
 	}
 	reactToDom() {
@@ -29,7 +29,9 @@ export class ChatList extends Component {
 			let lastmsg = "";
 			if(record.length)
 				lastmsg = record[record.length-1].text;
-			const unread = users[username].unread;
+			let unread = users[username].unread;
+			if(unread >= 99)
+				unread = "...";
 			usersDom.push((<li className='private-room' key={usersDom.length}>
 								<img src="" className="chat-list-photo"/>
 								{unread ? <div className="chat-list-unread">{unread}</div> : null}

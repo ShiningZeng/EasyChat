@@ -18,7 +18,7 @@ export class ChatInterface extends Component {
 			socket.emit('postMsg', {
 				source:NAME,
 				message: msg,
-				target: current
+				room: current
 			});
 		}
 		textDom.value = '';
