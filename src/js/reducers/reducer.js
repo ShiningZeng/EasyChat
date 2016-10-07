@@ -1,10 +1,16 @@
 import {combineReducers} from "Redux";
-import { ADD_RECORD, ADD_USER} from '../actions/action';
+import { ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD} from '../actions/action';
 import React from 'react';
 import {NAME} from '../main';
 
 const initState = {
-	_userlist:[]
+	publicRoom: {
+		username: "publicRoom",
+		record: [],
+		DOM: []
+	},
+	userlist:["publicRoom"],
+	current:'publicRoom'
 }
 
 function recordToDom(record, key) {
@@ -12,11 +18,12 @@ function recordToDom(record, key) {
  	const time = record.time;
  	const text = record.text;
  	const imgsrc = '';
+ 	// onDoubleclick={this.handleDoubleClick}
 	let classname = 'chat-record-list-left';
 	if (username == NAME)
 	    classname = 'chat-record-list-right'
 	return (<li className = {classname} key = {key}>
-				<img src={imgsrc} />
+				<img src={imgsrc} data-username = {username}/>
 				<div>
 					<span>{username}</span>
 					<p>
@@ -36,18 +43,29 @@ function users(state=initState, action) {
 			const temp = {};
 			temp[action.user.username] = action.user;
 			return Object.assign({}, state, temp, {
-				_userlist: [...state._userlist,action.user.username]
+				userlist: [...state.userlist,action.user.username]
 			});
 		case ADD_RECORD:
-			console.log("b");
 			const temp1 = {};
 			const room = action.record.room;
 			const utemp = Object.assign({}, state[room]);
+			console.log(utemp.DOM);
 			utemp.record = [...(utemp.record), action.record];
-			console.log(utemp.DOM,action.record,utemp.record.length);
 			utemp.DOM = [...(utemp.DOM),recordToDom(action.record, utemp.record.length)];
 			temp1[room] = utemp;
 			return Object.assign({}, state, temp1);
+
+		case CHANGE_ROOM:
+			return Object.assign({}, state, {current:action.username});
+		case CHANGE_UNREAD:
+			const temp2 = Object.assign({}, state[action.username]);
+			if(state.current != action.username)
+				temp2.unread++;
+			else
+				temp2.unread = 0;
+			const temp3 = {};
+			temp3[action.username] = temp2;
+			return Object.assign({}, state, temp3);
 		default:return state;
 	}
 }

@@ -1,23 +1,38 @@
 module.exports = function(server) {
+	function log(msg) {
+		var d = new Date();
+		var h = d.getHours();
+		var m = d.getMinutes();
+		var s = d.getSeconds();
+		console.log('['+h+':'+m+':'+s+'] '+msg);
+	}
+
 
 	var users = {};
-	var usersockets = {};
+	var usockets = {};
 
 	var io = require('socket.io').listen(server);
+
 	io.sockets.on('connection', function(socket){
-	    console.log('connect success.');
 	    socket.on('user join', function(data) {
+	    	log('user '+data.username+' joins.');
+	    	var username = data.username;
 		    users[username] = username;
-		    usocket[username] = socket;
+		    usockets[username] = socket;
 	    })
-	    socket.on('postMsg', function(name, msg) {
-	        console.log('postMsg');
-	        io.sockets.emit('newMsg', name, msg);
+	    socket.on('postMsg', function(data) {
+	        log('postMsg');
+	        if(data.target == 'publicRoom') {
+	        	io.sockets.emit('resMsg', data);
+	        } else {
+				usockets[data.target].emit('resMsg', data);
+	        	usockets[data.source].emit('resMsg', data);
+	        }
 	    });
 	    
 	})
 	io.sockets.on('disconnect', function() {
-		console.log('disconnect')
+		log('disconnect')
 	    // if (username) {
 	    //     counter--;
 	    //     delete users[username];

@@ -9,23 +9,27 @@ export class App extends Component {
 	    super(props);
 	}
 	componentDidMount() {
-		const {users, addUser,addRecord} = this.props;
-		socket.on('newMsg', (name, msg) => {
-			const {addRecord} = this.props;
-		    addRecord("zxl",name,msg,new Date())
+		
+		socket.on('resMsg', (data) => {
+			const {users, addUser, addRecord, changeUnread} = this.props;
+			if(!users[data.target])
+				addUser(data.target, "boy");
+		    addRecord(data.target, data.source, data.message, new Date());
+		    //changeUnread(data.target);
 		});
 		
-		
-		addUser("zxl","boy");
-		addUser("cmm","girl");
-		addRecord("zxl","zxl","hh","2016");
-		addRecord("zxl","zxl","hh","2016");
-		addRecord("zxl","zxl","hh","2016");
+		// const {users, addUser,addRecord} = this.props;
+		// addUser("zxl","boy");
+		// addUser("cmm","girl");
+		// addRecord("zxl","zxl","hh","2016");
+		// addRecord("zxl","zxl","hh","2016");
+		// addRecord("zxl","zxl","hh","2016");
+	}
+	handlekeypress() {
+		console.log("hhh")
 	}
 	render() {
-		// const {users, addUser} = this.props;
-		// console.log(users);
-		return (<div className='react-wrap'>
+		return (<div className='react-wrap' onKeyPress={this.handlekeypress}>
 					<div id='menu-nav'>
 						<div>
 						</div>

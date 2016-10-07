@@ -6,29 +6,46 @@ export class ChatInterface extends Component {
 	    super(props);
 	}
 	componentDidMount() {
-		const that = this;
+		this.handleDoubleClick = this.handleDoubleClick.bind(this);
+		const ul =  this.refs.ul;
+		ul.addEventListener('dblclick',this.handleDoubleClick,false);
 	}
 	sendMessage() {
 		let textDom = document.getElementsByTagName('textarea')[0];
 		const msg = textDom.value;
 		if(msg) {
-			socket.emit('postMsg', NAME, msg);
-			const {addRecord} = this.props;
-			addRecord("zxl","zxl","hh","2016");
+			const {users:{current}} = this.props;
+			socket.emit('postMsg', {
+				source:NAME,
+				message: msg,
+				target: current
+			});
 		}
 		textDom.value = '';
 	}
+	handleDoubleClick(e) {
+		console.log(this);
+		e = e || window.event;//这一行及下一行是为兼容IE8及以下版本
+		var target = e.target || e.srcElement;
+		if(e.target && e.target.nodeName == 'IMG') {
+			const username = e.target.getAttribute('data-username');
+			if(username != NAME) {
+				const {changeRoom, addUser} = this.props;
+				addUser(username,"boy");
+				changeRoom(username);
+			}
+	    }
+	}
 	render() {
 		const {users} = this.props;
-		let t = users["zxl"];
-		// console.log(t);
+		const current = users.current;
 		return (<div className='react-wrap'>
 					<div className='interface-header'>
-						<h1>test</h1>
+						<h1>{current}</h1>
 					</div>
 					<div className='interface-body'>
 						<ul ref="ul">
-							{t?t.DOM:[]}
+							{users[current]?users[current].DOM:[]}
 						</ul>
 					</div>
 					<div className='interface-footer'>
