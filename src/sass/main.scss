@@ -1,4 +1,6 @@
-@import "../../node_modules/normalize.css/normalize.css";
+//@import "../../node_modules/normalize.css/normalize.css";
+@import "font-awesome/css/font-awesome.css";
+
 // set the boundary of PC and phone
 $mobile-width: 767px;
 
@@ -10,7 +12,7 @@ $container-height: 600px;
 
 // setting of menu-nav div
 $menu-nav-width: 50px;
-
+$menu-nav-background: rgb(62,62,64);
 
 // setting of chatting-list div
 $chat-list-width: 250px;

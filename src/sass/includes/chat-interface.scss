@@ -92,7 +92,12 @@
 	}
 	.interface-header {
 		height: 10%;
-		background-color: red;
+		>p {
+			text-align: center;
+			>span{
+				cursor: pointer;
+			}
+		}
 	}
 	.interface-body {
 		height: 65%;

@@ -25,21 +25,24 @@ export class ChatList extends Component {
 		const usersDom = [];
 		const _userlist = users.userlist || [];
 		_userlist.forEach(function(username) {
-			const record = users[username].record;
-			let lastmsg = "";
-			if(record.length)
-				lastmsg = record[record.length-1].text;
-			let unread = users[username].unread;
-			if(unread >= 99)
-				unread = "...";
-			usersDom.push((<li className='private-room' key={usersDom.length}>
-								<img src="" className="chat-list-photo"/>
-								{unread ? <div className="chat-list-unread">{unread}</div> : null}
-								
-								<span className="chat-list-username">{username}</span>
-								<p className="chat-list-brief">{lastmsg}</p>
-								<div className='chat-list-mask' data-username = {username}></div>
-							</li>));
+			if(username != NAME) {
+				const record = users[username].record;
+				let lastmsg = "";
+				if(record.length)
+					lastmsg = record[record.length-1].text;
+				let unread = users[username].unread;
+				if(unread >= 99)
+					unread = "...";
+				let imgsrc = users[username].photo;
+				usersDom.push((<li className={users.current == username ? "active" : ''} key={usersDom.length}>
+									<img src={imgsrc} className="chat-list-photo"/>
+									{unread ? <div className="chat-list-unread">{unread}</div> : null}
+									
+									<span className="chat-list-username">{username}</span>
+									<p className="chat-list-brief">{lastmsg}</p>
+									<div className='chat-list-mask' data-username = {username}></div>
+								</li>));
+			}
 		})
 		return usersDom;
 	}  
@@ -47,6 +50,10 @@ export class ChatList extends Component {
 
 		return (<div className='react-wrap'>
 					<div className='user-search'>
+						
+						<input />
+						<i className="fa fa-search"></i>
+						<div>+</div>
 					</div>
 					<ul className='user-list' ref='userList'>
 						{this.reactToDom()}

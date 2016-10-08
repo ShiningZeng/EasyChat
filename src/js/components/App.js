@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {ChatInterface} from './chatInterface';
 import {ChatList} from './chatList';
-import {socket, NAME} from '../main';
+import {socket, NAME, PHOTO} from '../main';
 
 
 export class App extends Component {
@@ -9,29 +9,45 @@ export class App extends Component {
 	    super(props);
 	}
 	componentDidMount() {
-		
+		const {addUser} = this.props;
+		addUser({
+			username:NAME,
+			photo:PHOTO
+		})
 		socket.on('resMsg', (data) => {
 			const {users, addUser, addRecord, changeUnread} = this.props;
 			if(!users[data.room])
-				addUser(data.room, "boy");
-		    addRecord(data.room, data.source, data.message, new Date());
+				addUser({
+					username: data.room,
+					photo: data.imgsrc
+				});
+		    addRecord({
+		    	room: data.room,
+		        username: data.source,
+		        text: data.message,
+		        time: new Date(),
+		        photo: data.imgsrc
+		    });
 		    changeUnread(data.room);
 		});
-		
-		// const {users, addUser,addRecord} = this.props;
-		// addUser("zxl","boy");
-		// addUser("cmm","girl");
-		// addRecord("zxl","zxl","hh","2016");
-		// addRecord("zxl","zxl","hh","2016");
-		// addRecord("zxl","zxl","hh","2016");
 	}
 	handlekeypress() {
-		console.log("hhh")
 	}
 	render() {
 		return (<div className='react-wrap' onKeyPress={this.handlekeypress}>
 					<div id='menu-nav'>
-						<div>
+						<div className="react-wrap">
+							<ul>
+								<li>
+									<img src={PHOTO} />
+								</li>
+								<li>
+									<i className="fa fa-comment"></i>
+								</li>
+								<li>
+									<i className="fa fa-user"></i>
+								</li>
+							</ul>
 						</div>
 					</div>
 					<div id='chat-list'>

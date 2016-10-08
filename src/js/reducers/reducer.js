@@ -1,11 +1,12 @@
 import {combineReducers} from "Redux";
-import { ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD} from '../actions/action';
+import {ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD} from '../actions/action';
 import React from 'react';
 import {NAME} from '../main';
 
 const initState = {
 	publicRoom: {
 		username: "publicRoom",
+		photo: "",
 		record: [],
 		DOM: []
 	},
@@ -17,8 +18,7 @@ function recordToDom(record, key) {
  	const username = record.username;
  	const time = record.time;
  	const text = record.text;
- 	const imgsrc = '';
- 	// onDoubleclick={this.handleDoubleClick}
+ 	const imgsrc = record.photo;
 	let classname = 'chat-record-list-left';
 	if (username == NAME)
 	    classname = 'chat-record-list-right'
@@ -35,8 +35,6 @@ function recordToDom(record, key) {
 			</li>)
 }
 
-
-
 function users(state=initState, action) {
 	switch(action.type) {
 		case ADD_USER:
@@ -49,7 +47,6 @@ function users(state=initState, action) {
 			const temp1 = {};
 			const room = action.record.room;
 			const utemp = Object.assign({}, state[room]);
-			console.log(utemp.DOM);
 			utemp.record = [...(utemp.record), action.record];
 			utemp.DOM = [...(utemp.DOM),recordToDom(action.record, utemp.record.length)];
 			temp1[room] = utemp;
@@ -71,7 +68,9 @@ function users(state=initState, action) {
 }
 
 
+
+
 const rootReducer=combineReducers({ 
-	users
+	users,
 })
 export default rootReducer;

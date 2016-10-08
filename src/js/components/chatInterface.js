@@ -14,11 +14,13 @@ export class ChatInterface extends Component {
 		let textDom = document.getElementsByTagName('textarea')[0];
 		const msg = textDom.value;
 		if(msg) {
-			const {users:{current}} = this.props;
+			const {users, users:{current}} = this.props;
+			console.log(users[NAME].photo)
 			socket.emit('postMsg', {
 				source:NAME,
 				message: msg,
-				room: current
+				room: current,
+				imgsrc: users[NAME].photo
 			});
 		}
 		textDom.value = '';
@@ -29,9 +31,13 @@ export class ChatInterface extends Component {
 		var target = e.target || e.srcElement;
 		if(e.target && e.target.nodeName == 'IMG') {
 			const username = e.target.getAttribute('data-username');
+			const imgsrc = e.target.src;
 			if(username != NAME) {
 				const {changeRoom, addUser} = this.props;
-				addUser(username,"boy");
+				addUser({
+					username: username,
+					photo: imgsrc
+				});
 				changeRoom(username);
 			}
 	    }
@@ -41,7 +47,7 @@ export class ChatInterface extends Component {
 		const current = users.current;
 		return (<div className='react-wrap'>
 					<div className='interface-header'>
-						<h1>{current}</h1>
+						<p><span>{current}</span></p>
 					</div>
 					<div className='interface-body'>
 						<ul ref="ul">

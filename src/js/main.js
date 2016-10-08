@@ -11,6 +11,9 @@ import *as Actions from './actions/action'
 const store =configureStore();
 export const socket = io.connect();
 export const NAME = username;
+let photo = "img/photo"+parseInt(Math.random()*4+1)+".jpg";
+export const PHOTO = photo;
+
 
 function IsPC() {  
 	const userAgentInfo = navigator.userAgent;  
@@ -29,7 +32,6 @@ if(IsPC()) {
 //将state相关属性绑定到props的中
 function mapStateToprops(state){
 	return {
-		record:state.record,
 		users:state.users
 	}
 }

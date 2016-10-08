@@ -2,43 +2,46 @@
 //record
 export const ADD_RECORD="ADD_RECORD";
 
-export function add_record(room,username,text,time){
+const defaultRecord = {
+      room: "",
+      username: "",
+      text: "",
+      photo: "",
+      time: ""
+    };
+export function add_record(record){
   return {
     type: ADD_RECORD,
-    record: {
-      room,
-      username,
-      text,
-      time
-    }
+    record: Object.assign({}, defaultRecord, record)
   }
 }
 
-export function addRecord(room,username,text,time){
+export function addRecord(record){
   return (dispatch,getState) =>{
-    dispatch(add_record(room,username,text,time));
+    dispatch(add_record(record));
   }
 }
 
 //userlist
 export const ADD_USER="ADD_USER";
-
-export function add_user(username,sex) {
-  return {
-    type: ADD_USER,
-    user: {
-      username,
-      sex,
+const defaultUser = {
+      username:"",
+      sex:"",
+      photo:"",
       record:[],
       DOM:[],
       unread:0
-    }
+    };
+export function add_user(user) {
+  return {
+    type: ADD_USER,
+    user: Object.assign({},defaultUser, user)
   }
 }
 
-export function addUser(username,sex,record) {
+export function addUser(user) {
   return (dispatch, getState) =>{
-    dispatch(add_user(username,sex,record));
+    dispatch(add_user(user));
   }
 }
 
@@ -72,3 +75,35 @@ export function changeUnread(username) {
     dispatch(change_unread(username));
   }
 }
+
+
+
+// export const ADD_IMG = "ADD_IMG";
+
+// export function add_img(path) {
+//   return {
+//     type: ADD_IMG,
+//     path
+//   }
+// }
+
+// export function addImg(path) {
+//   return (dispatch, getState) =>{
+//     dispatch(add_img(path));
+//   }
+// }
+
+// export const GET_IMG = "GET_IMG";
+
+// export function get_img(path) {
+//   return {
+//     type: GET_IMG,
+//     path
+//   }
+// }
+
+// export function getImg(path) {
+//   return (dispatch, getState) =>{
+//     dispatch(get_img(path));
+//   }
+// }
