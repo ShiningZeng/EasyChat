@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {socket, NAME} from '../main';
+import {socket, NAME, PHOTO} from '../main';
 
 export class ChatList extends Component {
 	constructor(props) {

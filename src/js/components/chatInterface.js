@@ -55,9 +55,22 @@ export class ChatInterface extends Component {
 						</ul>
 					</div>
 					<div className='interface-footer'>
+						<div className='interface-footer-multiFunc'>
+							<ul>
+								<li>
+									<i className='fa fa-smile-o'></i>
+								</li>
+								<li>
+									<i className='fa fa-folder-open-o'></i>
+								</li>
+								<li>
+									<i className='fa fa-scissors'></i>
+								</li>
+							</ul>
+						</div>
 						<textarea>
 						</textarea>
-						<button onClick={this.sendMessage.bind(this)}>send</button>
+						<div className='interface-footer-send' onClick={this.sendMessage.bind(this)}>send</div>
 					</div>
 				</div>)
 	}

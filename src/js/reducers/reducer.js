@@ -6,7 +6,7 @@ import {NAME} from '../main';
 const initState = {
 	publicRoom: {
 		username: "publicRoom",
-		photo: "",
+		photo: "img/public0.jpg",
 		record: [],
 		DOM: []
 	},

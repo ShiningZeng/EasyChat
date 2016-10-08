@@ -11,7 +11,7 @@ import *as Actions from './actions/action'
 const store =configureStore();
 export const socket = io.connect();
 export const NAME = username;
-let photo = "img/photo"+parseInt(Math.random()*4+1)+".jpg";
+let photo = "img/photo"+parseInt(Math.random()*9+1)+".jpg";
 export const PHOTO = photo;
 
 
