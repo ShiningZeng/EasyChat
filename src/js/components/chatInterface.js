@@ -7,10 +7,15 @@ export class ChatInterface extends Component {
 	}
 	componentDidMount() {
 		this.handleDoubleClick = this.handleDoubleClick.bind(this);
+		this.handleMouseWheel = this.handleMouseWheel.bind(this);
 		const ul =  this.refs.ul;
 		ul.addEventListener('dblclick',this.handleDoubleClick,false);
+		const ulwrap = this.refs.ulwrap;
+		ulwrap.addEventListener('mousewheel', this.handleMouseWheel,false);
 	}
 	sendMessage() {
+		const ul =  this.refs.ul;
+		ul.style.bottom= "0px";
 		let textDom = document.getElementsByTagName('textarea')[0];
 		const msg = textDom.value;
 		if(msg) {
@@ -24,6 +29,21 @@ export class ChatInterface extends Component {
 			});
 		}
 		textDom.value = '';
+	}
+	handleMouseWheel(e) {
+		const ul =  this.refs.ul;
+		const ulwrap = this.refs.ulwrap;
+		if(!ul.style.bottom)
+			ul.style.bottom = "0px";
+		var bottom = parseInt(ul.style.bottom);
+		var height = ul.clientHeight;
+		var distance = 50;
+		var wrapHeight = ulwrap.clientHeight;
+		if(e.wheelDelta < 0 && bottom >= -height && bottom <= 10) { //向下滚动
+			console.log(ul.style.bottom = bottom+10+"px")
+		} else if(e.wheelDelta > 0 && bottom >= wrapHeight-height && bottom <= distance) { //向上滚动
+			console.log(ul.style.bottom = bottom-10+"px")
+		}
 	}
 	handleDoubleClick(e) {
 		console.log(this);
@@ -49,7 +69,7 @@ export class ChatInterface extends Component {
 					<div className='interface-header'>
 						<p><span>{current}</span></p>
 					</div>
-					<div className='interface-body'>
+					<div className='interface-body' ref="ulwrap">
 						<ul ref="ul">
 							{users[current]?users[current].DOM:[]}
 						</ul>
