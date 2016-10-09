@@ -39,9 +39,9 @@ export class ChatInterface extends Component {
 		var height = ul.clientHeight;
 		var distance = 50;
 		var wrapHeight = ulwrap.clientHeight;
-		if(e.wheelDelta < 0 && bottom >= -height && bottom <= 10) { //向下滚动
+		if(e.wheelDelta < 0 && bottom >= -height && bottom <= -10) { //向下滚动
 			console.log(ul.style.bottom = bottom+10+"px")
-		} else if(e.wheelDelta > 0 && bottom >= wrapHeight-height && bottom <= distance) { //向上滚动
+		} else if(e.wheelDelta > 0 && bottom > wrapHeight-height && bottom <= distance) { //向上滚动
 			console.log(ul.style.bottom = bottom-10+"px")
 		}
 	}

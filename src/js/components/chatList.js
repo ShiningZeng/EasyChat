@@ -7,8 +7,11 @@ export class ChatList extends Component {
 	}
 	componentDidMount() {
 		this.handleClick = this.handleClick.bind(this);
+		this.handleMouseWheel = this.handleMouseWheel.bind(this);
 		const userList =  this.refs.userList;
 		userList.addEventListener('click',this.handleClick,false);
+		const ulwrap = this.refs.ulwrap;
+		ulwrap.addEventListener('mousewheel', this.handleMouseWheel,false);
 	}
 	handleClick(e) {
 		e = e || window.event;//这一行及下一行是为兼容IE8及以下版本
@@ -19,6 +22,21 @@ export class ChatList extends Component {
 			changeRoom(username);
 			changeUnread(username);
 	    }
+	}
+	handleMouseWheel(e) {
+		const ul =  this.refs.userList;
+		const ulwrap = this.refs.ulwrap;
+		if(!ul.style.bottom)
+			ul.style.bottom = "0px";
+		var bottom = parseInt(ul.style.bottom);
+		var height = ul.clientHeight;
+		var distance = 50;
+		var wrapHeight = ulwrap.clientHeight;
+		if(e.wheelDelta < 0 && bottom >= -height && bottom <= -10) { //向下滚动
+			console.log(ul.style.bottom = bottom+10+"px")
+		} else if(e.wheelDelta > 0 && bottom > wrapHeight-height && bottom <= distance) { //向上滚动
+			console.log(ul.style.bottom = bottom-10+"px")
+		}
 	}
 	reactToDom() {
 		const {users} = this.props;
@@ -50,14 +68,16 @@ export class ChatList extends Component {
 
 		return (<div className='react-wrap'>
 					<div className='user-search'>
-						
 						<input />
 						<i className="fa fa-search"></i>
 						<div>+</div>
 					</div>
-					<ul className='user-list' ref='userList'>
-						{this.reactToDom()}
-					</ul>
+					<div className="userlist-wrap" ref="ulwrap">
+						<ul className='user-list' ref='userList'>
+							{this.reactToDom()}
+						</ul>
+					</div>
+					
 				</div>)
 	}
 }

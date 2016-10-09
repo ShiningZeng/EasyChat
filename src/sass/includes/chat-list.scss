@@ -47,12 +47,18 @@
 			background-color: #bbb;
 		}
 	}
-	>ul.user-list {
+	>div.userlist-wrap {
+		position: relative;
+		width: 100%;
+		height: calc(100% - 50 * 1px);
+		overflow: hidden;
+	}
+	>div.userlist-wrap ul.user-list {
+		@include absolute(bottom);
 		margin: 0;
 		padding: 0;
 		width: 100%;
-		height: calc(100% - 50px);
-		overflow: auto;
+		min-height: 100%;
 		li {
 			position: relative;
 			width: 100%;
@@ -72,6 +78,7 @@
 				overflow:hidden;
 				white-space:nowrap;
 				line-height: 24px;
+				font-size: 11pt;
 			}
 			p.chat-list-brief {
 				float: left;

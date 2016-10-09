@@ -4,14 +4,14 @@ import React from 'react';
 import {NAME} from '../main';
 
 const initState = {
-	publicRoom: {
-		username: "publicRoom",
+	公共聊天室: {
+		username: "公共聊天室",
 		photo: "img/public0.jpg",
 		record: [],
 		DOM: []
 	},
-	userlist:["publicRoom"],
-	current:'publicRoom'
+	userlist:["公共聊天室"],
+	current:'公共聊天室'
 }
 
 function recordToDom(record, key) {
