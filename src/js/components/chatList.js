@@ -65,6 +65,16 @@ export class ChatList extends Component {
 								</li>));
 			}
 		})
+		// _userlist.forEach(function(username) {
+		// 	if(username != NAME) {
+		// 		let imgsrc = users[username].photo;
+		// 		usersDom.push((<li key={usersDom.length}>
+		// 							<img src={imgsrc} className="chat-list-photo"/>
+		// 							<p className="frendslist-username">{username}</p>
+		// 							<div className='chat-list-mask' data-username = {username}></div>
+		// 						</li>));
+		// 	}
+		// })
 		return usersDom;
 	}  
 	render() {

@@ -103,6 +103,22 @@
 		position: relative;
 		height: 65%;
 		overflow: hidden;
+		div.add-friend{
+			@include absolute(right, left);
+			top: 10px;
+			margin-left: auto;
+			margin-right: auto;
+			width: 60px;
+			height: 20px;
+			border-radius: 10px;
+			font-size: 6pt;
+			line-height: 20px;
+			color: #fff;
+			text-align: center;
+			background-color: #baf;
+			cursor: pointer;
+			z-index: 1;
+		}
 		>ul {
 			@include absolute(bottom);
 			margin: 0;

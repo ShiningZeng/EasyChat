@@ -78,32 +78,32 @@ export function changeUnread(username) {
 
 
 
-// export const ADD_IMG = "ADD_IMG";
+export const ADD_FRIEND = "ADD_FRIEND";
 
-// export function add_img(path) {
-//   return {
-//     type: ADD_IMG,
-//     path
-//   }
-// }
+export function add_friend(friend) {
+  return {
+    type: ADD_FRIEND,
+    friend
+  }
+}
 
-// export function addImg(path) {
-//   return (dispatch, getState) =>{
-//     dispatch(add_img(path));
-//   }
-// }
+export function addFriend(friend) {
+  return (dispatch, getState) =>{
+    dispatch(add_friend(friend));
+  }
+}
 
-// export const GET_IMG = "GET_IMG";
+export const GET_FRIEND = "GET_FRIEND";
 
-// export function get_img(path) {
-//   return {
-//     type: GET_IMG,
-//     path
-//   }
-// }
+export function get_friend(friend) {
+  return {
+    type: GET_FRIEND,
+    friend
+  }
+}
 
-// export function getImg(path) {
-//   return (dispatch, getState) =>{
-//     dispatch(get_img(path));
-//   }
-// }
+export function getFriend(friend) {
+  return (dispatch, getState) =>{
+    dispatch(get_friend(friend));
+  }
+}

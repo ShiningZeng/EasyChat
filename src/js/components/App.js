@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {ChatInterface} from './chatInterface';
 import {ChatList} from './chatList';
+import {MenuNav} from './menuNav';
 import {socket, NAME, PHOTO} from '../main';
 
 
@@ -36,19 +37,7 @@ export class App extends Component {
 	render() {
 		return (<div className='react-wrap' onKeyPress={this.handlekeypress}>
 					<div id='menu-nav'>
-						<div className="react-wrap">
-							<ul>
-								<li>
-									<img src={PHOTO} />
-								</li>
-								<li>
-									<i className="fa fa-comment"></i>
-								</li>
-								<li>
-									<i className="fa fa-user"></i>
-								</li>
-							</ul>
-						</div>
+						<MenuNav {...this.props}/>
 					</div>
 					<div id='chat-list'>
 						<ChatList {...this.props}/>

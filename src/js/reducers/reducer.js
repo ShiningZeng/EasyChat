@@ -1,5 +1,5 @@
 import {combineReducers} from "Redux";
-import {ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD} from '../actions/action';
+import {ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD, ADD_FRIEND, GET_FRIEND} from '../actions/action';
 import React from 'react';
 import {NAME} from '../main';
 
@@ -11,9 +11,10 @@ const initState = {
 		DOM: []
 	},
 	userlist:["公共聊天室"],
+	fiendlist:[],
 	current:'公共聊天室'
 }
-
+//辅助函数
 function getImg(text) {
 	//var text = "<img src=\"20.gif\">A<img src=\"img\/emoji\/20.gif\">B<img src=\"20.gif\">C<img src=\"20.gif\">D";
 	const reg = /<img src="[0-9a-zA-Z\/]{0,20}\.gif">/igm;
@@ -32,7 +33,7 @@ function getImg(text) {
 	}
 	return temp4;
 }
-
+//辅助函数
 function recordToDom(record, key) {
  	const username = record.username;
  	const time = record.time;
@@ -82,6 +83,10 @@ function users(state=initState, action) {
 			const temp3 = {};
 			temp3[action.username] = temp2;
 			return Object.assign({}, state, temp3);
+		case ADD_FRIEND:
+			return state;
+		case GET_FRIEND:
+			return state;
 		default:return state;
 	}
 }

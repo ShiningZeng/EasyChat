@@ -8,18 +8,29 @@ export class ChatInterface extends Component {
 	componentDidMount() {
 		this.showEmoji();
 		this.initEmoji();
+		//初始化表情点击事件
 		const emoji = this.refs.emoji;
 		this.showEmoji = this.showEmoji.bind(this);
 		emoji.addEventListener('click', this.showEmoji,false);
+		//初始化表情点击事件
 		const emojiContainer = this.refs.emojiContainer;
 		this.chooseEmoji = this.chooseEmoji.bind(this);
 		emojiContainer.addEventListener('click', this.chooseEmoji,false);
+		//初始化头像点击事件
 		const ul =  this.refs.ul;
 		this.createNewRoom = this.createNewRoom.bind(this);
 		ul.addEventListener('dblclick',this.createNewRoom,false);
+		//初始化滚动点击事件
 		const ulwrap = this.refs.ulwrap;
 		this.handleMouseWheel = this.handleMouseWheel.bind(this);
 		ulwrap.addEventListener('mousewheel', this.handleMouseWheel,false);
+		//初始化添加好友事件
+		const addFri = this.refs.addFri;
+		this.handleAddFriend = this.handleAddFriend.bind(this);
+		addFri.addEventListener('click', this.handleAddFriend, false);
+	}
+	handleAddFriend() {
+		const {addFriend} = this.props;
 	}
 	initEmoji() {
 		let emojiContainer = document.getElementById('emoji-container');
@@ -102,6 +113,7 @@ export class ChatInterface extends Component {
 						<p><span>{current}</span></p>
 					</div>
 					<div className='interface-body' ref="ulwrap">
+						<div className="add-friend" ref="addFri">加为好友</div>
 						<ul ref="ul">
 							{users[current]?users[current].DOM:[]}
 						</ul>
@@ -123,7 +135,7 @@ export class ChatInterface extends Component {
 						<div className="emoji-container" id='emoji-container' ref='emojiContainer'></div>
 						<div contentEditable='true' className="chat-inputarea" ref='inputarea'>
 						</div>
-						<div className='interface-footer-send' onClick={this.sendMessage.bind(this)}>send</div>
+						<div className='interface-footer-send' onClick={this.sendMessage.bind(this)}>发送</div>
 					</div>
 				</div>)
 	}
