@@ -30,7 +30,13 @@ export class ChatInterface extends Component {
 		addFri.addEventListener('click', this.handleAddFriend, false);
 	}
 	handleAddFriend() {
-		const {addFriend} = this.props;
+		const {addFriend, users:{friendlist}} = this.props;
+
+		addFriend({
+			username:"test"+parseInt(Math.random()*1000),
+			sex:"boy"
+		})
+		console.log(friendlist);
 	}
 	initEmoji() {
 		let emojiContainer = document.getElementById('emoji-container');
@@ -46,14 +52,21 @@ export class ChatInterface extends Component {
 		const ul =  this.refs.ul;
 		ul.style.bottom= "0px";
 		const inputarea = this.refs.inputarea;
-		const msg = inputarea.innerHTML;
-		if(msg) {
+		let msg = inputarea.innerHTML;
+		msg = msg.replace(/&amp;/g,'&')
+				.replace(/<div>/g, '')
+				.replace(/<\/div>/g, '')
+				.replace(/<br>/g, '')
+				.replace(/&gt;/g, '>')
+				.replace(/&lt;/g, '<')
+				.replace(/&nbsp;/g, ' ');
+		if(msg.length) {
 			const {users, users:{current}} = this.props;
 			socket.emit('postMsg', {
 				source:NAME,
 				message: msg,
 				room: current,
-				imgsrc: users[NAME].photo
+				imgsrc: users.chatList[NAME].photo
 			});
 		}
 		inputarea.innerHTML = '';
@@ -96,18 +109,25 @@ export class ChatInterface extends Component {
 			const username = e.target.getAttribute('data-username');
 			const imgsrc = e.target.src;
 			if(username != NAME) {
-				const {changeRoom, addUser} = this.props;
-				addUser({
-					username: username,
-					photo: imgsrc
-				});
-				changeRoom(username);
+				const {changeRoom, addUser, users} = this.props;
+				let flag = true;
+				users.userlist.forEach(function(_username){
+					if(_username == username)
+						flag = false;
+				})
+				if(flag) {
+					addUser({
+						username: username,
+						photo: imgsrc
+					});
+					changeRoom(username);
+				}
 			}
 	    }
 	}
 	render() {
-		const {users} = this.props;
-		const current = users.current;
+		const {users, users:{current, chatList}} = this.props;
+		console.log(users, current, chatList)
 		return (<div className='react-wrap'>
 					<div className='interface-header'>
 						<p><span>{current}</span></p>
@@ -115,7 +135,7 @@ export class ChatInterface extends Component {
 					<div className='interface-body' ref="ulwrap">
 						<div className="add-friend" ref="addFri">加为好友</div>
 						<ul ref="ul">
-							{users[current]?users[current].DOM:[]}
+							{chatList[current]?chatList[current].DOM:[]}
 						</ul>
 					</div>
 					<div className='interface-footer'>

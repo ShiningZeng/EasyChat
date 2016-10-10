@@ -33,7 +33,8 @@ export const PHOTO = photo;
 //将state相关属性绑定到props的中
 function mapStateToprops(state){
 	return {
-		users:state.users
+		users: state.users,
+		appstate: state.appstate
 	}
 }
 

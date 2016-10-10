@@ -80,10 +80,16 @@ export function changeUnread(username) {
 
 export const ADD_FRIEND = "ADD_FRIEND";
 
+const defaultFriend = {
+  username:'',
+  sex:'',
+  photo:''
+}
+
 export function add_friend(friend) {
   return {
     type: ADD_FRIEND,
-    friend
+    friend: Object.assign({}, defaultFriend, friend)
   }
 }
 
@@ -93,17 +99,17 @@ export function addFriend(friend) {
   }
 }
 
-export const GET_FRIEND = "GET_FRIEND";
+export const CHANGE_LIST = "CHANGE_LIST";
 
-export function get_friend(friend) {
+export function change_list(show) {
   return {
-    type: GET_FRIEND,
-    friend
+    type: CHANGE_LIST,
+    show
   }
 }
 
-export function getFriend(friend) {
+export function changeList(show) {
   return (dispatch, getState) =>{
-    dispatch(get_friend(friend));
+    dispatch(change_list(show));
   }
 }

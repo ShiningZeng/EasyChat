@@ -28,10 +28,10 @@ export class ChatList extends Component {
 		const ulwrap = this.refs.ulwrap;
 		if(!ul.style.bottom)
 			ul.style.bottom = "0px";
-		var bottom = parseInt(ul.style.bottom);
-		var height = ul.clientHeight;
-		var distance = 50;
-		var wrapHeight = ulwrap.clientHeight;
+		const bottom = parseInt(ul.style.bottom);
+		const height = ul.clientHeight;
+		const distance = 50;
+		const wrapHeight = ulwrap.clientHeight;
 		if(e.wheelDelta < 0 && bottom >= -height && bottom <= -10) { //向下滚动
 			console.log(ul.style.bottom = bottom+10+"px")
 		} else if(e.wheelDelta > 0 && bottom > wrapHeight-height && bottom <= distance) { //向上滚动
@@ -39,42 +39,45 @@ export class ChatList extends Component {
 		}
 	}
 	reactToDom() {
-		const {users} = this.props;
+		const {users, appstate, users:{chatList}} = this.props;
 		const usersDom = [];
 		const _userlist = users.userlist || [];
-		_userlist.forEach(function(username) {
-			if(username != NAME) {
-				const record = users[username].record;
-				let lastmsg = "";
-				if(record.length) {
-					const reg = /<img src="[0-9a-zA-Z\/]{0,20}\.gif">/igm;
-					lastmsg = (username=='公共聊天室' ? record[record.length-1].username+' : ' : '')+
-						record[record.length-1].text.replace(reg,"[emoji]");
+		if(appstate.show) {
+			_userlist.forEach(function(username) {
+				if(username != NAME) {
+					const record = chatList[username].record;
+					let lastmsg = "";
+					if(record.length) {
+						const reg = /<img src="[0-9a-zA-Z\/]{0,20}\.gif">/igm;
+						lastmsg = (username=='公共聊天室' ? record[record.length-1].username+' : ' : '')+
+							record[record.length-1].text.replace(reg,"[emoji]");
+					}
+					let unread = chatList[username].unread;
+					if(unread >= 99)
+						unread = "...";
+					let imgsrc = chatList[username].photo;
+					usersDom.push((<li className={users.current == username ? "active" : ''} key={usersDom.length}>
+										<img src={imgsrc} className="chat-list-photo"/>
+										{unread ? <div className="chat-list-unread">{unread}</div> : null}
+										
+										<span className="chat-list-username">{username}</span>
+										<p className="chat-list-brief">{lastmsg}</p>
+										<div className='chat-list-mask' data-username = {username}></div>
+									</li>));
 				}
-				let unread = users[username].unread;
-				if(unread >= 99)
-					unread = "...";
-				let imgsrc = users[username].photo;
-				usersDom.push((<li className={users.current == username ? "active" : ''} key={usersDom.length}>
-									<img src={imgsrc} className="chat-list-photo"/>
-									{unread ? <div className="chat-list-unread">{unread}</div> : null}
-									
-									<span className="chat-list-username">{username}</span>
-									<p className="chat-list-brief">{lastmsg}</p>
-									<div className='chat-list-mask' data-username = {username}></div>
-								</li>));
-			}
-		})
-		// _userlist.forEach(function(username) {
-		// 	if(username != NAME) {
-		// 		let imgsrc = users[username].photo;
-		// 		usersDom.push((<li key={usersDom.length}>
-		// 							<img src={imgsrc} className="chat-list-photo"/>
-		// 							<p className="frendslist-username">{username}</p>
-		// 							<div className='chat-list-mask' data-username = {username}></div>
-		// 						</li>));
-		// 	}
-		// })
+			})
+		} else {
+			_userlist.forEach(function(username) {
+				if(username != NAME) {
+					let imgsrc = chatList[username].photo;
+					usersDom.push((<li key={usersDom.length}>
+										<img src={imgsrc} className="chat-list-photo"/>
+										<p className="frendslist-username">{username}</p>
+										<div className='chat-list-mask' data-username = {username}></div>
+									</li>));
+				}
+			})
+		}
 		return usersDom;
 	}  
 	render() {

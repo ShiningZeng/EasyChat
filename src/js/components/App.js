@@ -16,8 +16,8 @@ export class App extends Component {
 			photo:PHOTO
 		})
 		socket.on('resMsg', (data) => {
-			const {users, addUser, addRecord, changeUnread} = this.props;
-			if(!users[data.room])
+			const {users, addUser, addRecord, changeUnread, users:{chatList}} = this.props;
+			if(!chatList[data.room])
 				addUser({
 					username: data.room,
 					photo: data.imgsrc
