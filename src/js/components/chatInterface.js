@@ -6,21 +6,38 @@ export class ChatInterface extends Component {
 	    super(props);
 	}
 	componentDidMount() {
-		this.handleDoubleClick = this.handleDoubleClick.bind(this);
-		this.handleMouseWheel = this.handleMouseWheel.bind(this);
+		this.showEmoji();
+		this.initEmoji();
+		const emoji = this.refs.emoji;
+		this.showEmoji = this.showEmoji.bind(this);
+		emoji.addEventListener('click', this.showEmoji,false);
+		const emojiContainer = this.refs.emojiContainer;
+		this.chooseEmoji = this.chooseEmoji.bind(this);
+		emojiContainer.addEventListener('click', this.chooseEmoji,false);
 		const ul =  this.refs.ul;
-		ul.addEventListener('dblclick',this.handleDoubleClick,false);
+		this.createNewRoom = this.createNewRoom.bind(this);
+		ul.addEventListener('dblclick',this.createNewRoom,false);
 		const ulwrap = this.refs.ulwrap;
+		this.handleMouseWheel = this.handleMouseWheel.bind(this);
 		ulwrap.addEventListener('mousewheel', this.handleMouseWheel,false);
+	}
+	initEmoji() {
+		let emojiContainer = document.getElementById('emoji-container');
+		let emojiFrag = document.createDocumentFragment();
+		for (var i = 69; i > 0; i--) {
+            let emojiItem = document.createElement('img');
+            emojiItem.src = 'img/emoji/' + i + '.gif';
+            emojiFrag.appendChild(emojiItem);
+        };
+        emojiContainer.appendChild(emojiFrag); 	
 	}
 	sendMessage() {
 		const ul =  this.refs.ul;
 		ul.style.bottom= "0px";
-		let textDom = document.getElementsByTagName('textarea')[0];
-		const msg = textDom.value;
+		const inputarea = this.refs.inputarea;
+		const msg = inputarea.innerHTML;
 		if(msg) {
 			const {users, users:{current}} = this.props;
-			console.log(users[NAME].photo)
 			socket.emit('postMsg', {
 				source:NAME,
 				message: msg,
@@ -28,7 +45,23 @@ export class ChatInterface extends Component {
 				imgsrc: users[NAME].photo
 			});
 		}
-		textDom.value = '';
+		inputarea.innerHTML = '';
+	}
+	chooseEmoji(e) {
+		e = e || window.event;//这一行及下一行是为兼容IE8及以下版本
+		var target = e.target || e.srcElement;
+		if(e.target && e.target.nodeName == 'IMG') {
+			const inputarea = this.refs.inputarea;
+			inputarea.appendChild(e.target.cloneNode())
+			this.showEmoji();
+	    }
+	}
+	showEmoji() {
+		const emojiContainer = this.refs.emojiContainer;
+		if(emojiContainer.style.display == "none")
+			emojiContainer.style.display = "";
+		else
+			emojiContainer.style.display = "none";
 	}
 	handleMouseWheel(e) {
 		const ul =  this.refs.ul;
@@ -45,8 +78,7 @@ export class ChatInterface extends Component {
 			console.log(ul.style.bottom = bottom-10+"px")
 		}
 	}
-	handleDoubleClick(e) {
-		console.log(this);
+	createNewRoom(e) {
 		e = e || window.event;//这一行及下一行是为兼容IE8及以下版本
 		var target = e.target || e.srcElement;
 		if(e.target && e.target.nodeName == 'IMG') {
@@ -78,7 +110,7 @@ export class ChatInterface extends Component {
 						<div className='interface-footer-multiFunc'>
 							<ul>
 								<li>
-									<i className='fa fa-smile-o'></i>
+									<i className='fa fa-smile-o' ref='emoji'></i>
 								</li>
 								<li>
 									<i className='fa fa-folder-open-o'></i>
@@ -88,8 +120,9 @@ export class ChatInterface extends Component {
 								</li>
 							</ul>
 						</div>
-						<textarea>
-						</textarea>
+						<div className="emoji-container" id='emoji-container' ref='emojiContainer'></div>
+						<div contentEditable='true' className="chat-inputarea" ref='inputarea'>
+						</div>
 						<div className='interface-footer-send' onClick={this.sendMessage.bind(this)}>send</div>
 					</div>
 				</div>)

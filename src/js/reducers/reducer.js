@@ -6,12 +6,31 @@ import {NAME} from '../main';
 const initState = {
 	公共聊天室: {
 		username: "公共聊天室",
-		photo: "img/public0.jpg",
+		photo: "img/photo/public0.jpg",
 		record: [],
 		DOM: []
 	},
 	userlist:["公共聊天室"],
 	current:'公共聊天室'
+}
+
+function getImg(text) {
+	//var text = "<img src=\"20.gif\">A<img src=\"img\/emoji\/20.gif\">B<img src=\"20.gif\">C<img src=\"20.gif\">D";
+	const reg = /<img src="[0-9a-zA-Z\/]{0,20}\.gif">/igm;
+	const temp1 = text.split(reg) || [];//获取文本字符
+	const temp2 = text.match(reg) || [];//获取图片字符
+	const temp3 = [];//提取图片src
+	const temp4 = [];//生成dom
+	for (let i in temp2){
+		temp3.push(temp2[i].split('"')[1]);
+	}
+	for(let i in temp1) {
+		temp4.push(temp1[i])
+		if(temp3[i]) {
+			temp4.push((<img src={temp3[i]} key={i}/>));
+		}
+	}
+	return temp4;
 }
 
 function recordToDom(record, key) {
@@ -29,7 +48,7 @@ function recordToDom(record, key) {
 					<p>
 						<span className="triangle-in"></span>
 						<span className="triangle-out"></span>
-						{text}
+						{getImg(text)}
 					</p>
 				</div>
 			</li>)

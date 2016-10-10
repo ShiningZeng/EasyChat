@@ -22,7 +22,7 @@ module.exports = function(server) {
 	    })
 	    socket.on('postMsg', function(data) {
 	        log('postMsg');
-	        if(data.room == 'publicRoom') {
+	        if(data.room == '公共聊天室') {
 	        	io.sockets.emit('resMsg', data);
 	        } else {
 				usockets[data.source].emit('resMsg', data);

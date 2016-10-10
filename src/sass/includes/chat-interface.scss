@@ -48,7 +48,7 @@
 			padding-left: 5px;
 			padding-right: 5px;
 			display: block;
-			background-color: yellow;
+			text-align: $p;
 		}
 		&>p {
 			position: relative;
@@ -144,7 +144,26 @@
 				color: #aaa;
 			}
 		}
-		&>textarea {
+		>div.emoji-container{
+			position: absolute;
+			bottom: 150px;
+			left: -50px;
+			width: 550px;
+			height:220px;
+			border: 1px solid #aaa;
+			border-radius: 2px;
+			>img {
+				width: 37px;
+				height: 37px;
+				cursor: pointer;
+				margin: 1px;
+			}
+			>img:hover {
+				transform: scale(2);
+				border: 1px solid #aaa;
+			}
+		}
+		&>div.chat-inputarea {
 			@include absolute(bottom);
 			padding-left: 15px;
 			padding-right: 15px;	
@@ -153,6 +172,7 @@
 			border:none;
 			outline-color: $chat-interface-footer-background;
 			background-color: $chat-interface-footer-background;
+			overflow: hidden;
 		}
 		&>div.interface-footer-send {
 			position: absolute;

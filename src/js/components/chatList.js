@@ -46,8 +46,11 @@ export class ChatList extends Component {
 			if(username != NAME) {
 				const record = users[username].record;
 				let lastmsg = "";
-				if(record.length)
-					lastmsg = record[record.length-1].text;
+				if(record.length) {
+					const reg = /<img src="[0-9a-zA-Z\/]{0,20}\.gif">/igm;
+					lastmsg = (username=='公共聊天室' ? record[record.length-1].username+' : ' : '')+
+						record[record.length-1].text.replace(reg,"[emoji]");
+				}
 				let unread = users[username].unread;
 				if(unread >= 99)
 					unread = "...";
