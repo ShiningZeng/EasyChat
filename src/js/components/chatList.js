@@ -39,27 +39,25 @@ export class ChatList extends Component {
 		}
 	}
 	reactToDom() {
-		const {users, appstate, users:{chatList}} = this.props;
+		const {users, appstate, users:{chatList, current, userlist, friendList}} = this.props;
 		const usersDom = [];
-		const _userlist = users.userlist || [];
 		if(appstate.show) {
-			_userlist.forEach(function(username) {
+			userlist.forEach(function(username) {
 				if(username != NAME) {
 					const record = chatList[username].record;
 					let lastmsg = "";
 					if(record.length) {
 						const reg = /<img src="[0-9a-zA-Z\/]{0,20}\.gif">/igm;
-						lastmsg = (username=='公共聊天室' ? record[record.length-1].username+' : ' : '')+
+						lastmsg = (chatList[username].type=='PUBLIC' ? record[record.length-1].username+' : ' : '')+
 							record[record.length-1].text.replace(reg,"[emoji]");
 					}
 					let unread = chatList[username].unread;
 					if(unread >= 99)
 						unread = "...";
 					let imgsrc = chatList[username].photo;
-					usersDom.push((<li className={users.current == username ? "active" : ''} key={usersDom.length}>
+					usersDom.push((<li className={current == username ? "active" : ''} key={usersDom.length}>
 										<img src={imgsrc} className="chat-list-photo"/>
-										{unread ? <div className="chat-list-unread">{unread}</div> : null}
-										
+										<div className={unread ? "chat-list-unread" : "chat-list-unread d-hidden"}>{unread}</div>
 										<span className="chat-list-username">{username}</span>
 										<p className="chat-list-brief">{lastmsg}</p>
 										<div className='chat-list-mask' data-username = {username}></div>
@@ -67,7 +65,7 @@ export class ChatList extends Component {
 				}
 			})
 		} else {
-			_userlist.forEach(function(username) {
+			friendList.forEach(function(username) {
 				if(username != NAME) {
 					let imgsrc = chatList[username].photo;
 					usersDom.push((<li key={usersDom.length}>

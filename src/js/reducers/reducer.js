@@ -7,13 +7,15 @@ const initState = {
 	chatList: {
 		公共聊天室: {
 			username: "公共聊天室",
+			type: 'PUBLIC',
 			photo: "img/photo/public0.jpg",
 			record: [],
 			DOM: []
 		}
 	},
 	userlist:["公共聊天室"],
-	fiendlist:{},
+	friends:{},
+	friendList:[],
 	current:'公共聊天室'
 }
 //辅助函数
@@ -92,9 +94,9 @@ function users(state=initState, action) {
 				chatList: ctemp1
 			});
 		case ADD_FRIEND:
-			const temp4 = Object.assign({}, state.friendlist);
+			const temp4 = Object.assign({}, state.friends);
 			temp4[action.friend.username] = action.friend;
-			return Object.assign({},state, {friendlist:temp4});
+			return Object.assign({},state, {friends:temp4},{friendList: [...state.friendList,action.friend.username]});
 		default: return state;
 	}
 }

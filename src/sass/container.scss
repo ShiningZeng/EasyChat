@@ -8,6 +8,14 @@ li {
 	list-style: none;
 }
 
+.o-hidden{
+	opacity: 0;
+}
+.d-hidden{
+	display: none;
+}
+
+
 #container {
 	position: relative;
 	top: 60px;

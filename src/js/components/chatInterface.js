@@ -28,15 +28,20 @@ export class ChatInterface extends Component {
 		const addFri = this.refs.addFri;
 		this.handleAddFriend = this.handleAddFriend.bind(this);
 		addFri.addEventListener('click', this.handleAddFriend, false);
+		//初始化发送事件
+		const send = this.refs.send;
+		this.sendMessage  = this.sendMessage.bind(this);
+		send.addEventListener('click', this.sendMessage, false);
 	}
 	handleAddFriend() {
-		const {addFriend, users:{friendlist}} = this.props;
-
-		addFriend({
-			username:"test"+parseInt(Math.random()*1000),
-			sex:"boy"
-		})
-		console.log(friendlist);
+		const {addFriend, users:{friends, friendList}, users:{current}} = this.props;
+		if(!friends[current]) {//好友不存在该用户才添加好友
+			addFriend({
+				username:current,
+				sex:"boy"
+			})
+		}
+		console.log(friends,friendList);
 	}
 	initEmoji() {
 		let emojiContainer = document.getElementById('emoji-container');
@@ -127,13 +132,16 @@ export class ChatInterface extends Component {
 	}
 	render() {
 		const {users, users:{current, chatList}} = this.props;
-		console.log(users, current, chatList)
+		let addFri_className = "add-friend";
+		if(chatList[current].type == 'PUBLIC')
+			addFri_className += " d-hidden";
+
 		return (<div className='react-wrap'>
 					<div className='interface-header'>
 						<p><span>{current}</span></p>
 					</div>
 					<div className='interface-body' ref="ulwrap">
-						<div className="add-friend" ref="addFri">加为好友</div>
+						<div className={addFri_className} ref="addFri">加为好友</div>
 						<ul ref="ul">
 							{chatList[current]?chatList[current].DOM:[]}
 						</ul>
@@ -155,7 +163,7 @@ export class ChatInterface extends Component {
 						<div className="emoji-container" id='emoji-container' ref='emojiContainer'></div>
 						<div contentEditable='true' className="chat-inputarea" ref='inputarea'>
 						</div>
-						<div className='interface-footer-send' onClick={this.sendMessage.bind(this)}>发送</div>
+						<div className='interface-footer-send' ref='send'>发送</div>
 					</div>
 				</div>)
 	}
