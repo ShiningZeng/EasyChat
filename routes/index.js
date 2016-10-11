@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var users = require('../model/user')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -15,8 +16,9 @@ router.get('/login', function(req, res, next) {
 })
 
 router.post('/login', function(req, res, next) {
+	var username = req.body.username;
 	//req.session.username = req.body.username;
 	//res.redirect('/')
-	res.render('index', {username: username});
+	res.render('index', {username: req.body.username});
 })
 module.exports = router;
