@@ -39,7 +39,7 @@ export class ChatList extends Component {
 		}
 	}
 	reactToDom() {
-		const {users, appstate, users:{chatList, current, userlist, friendList}} = this.props;
+		const {users, appstate, users:{chatList, current, userlist, friendList, friends}} = this.props;
 		const usersDom = [];
 		if(appstate.show) {
 			userlist.forEach(function(username) {
@@ -67,7 +67,8 @@ export class ChatList extends Component {
 		} else {
 			friendList.forEach(function(username) {
 				if(username != NAME) {
-					let imgsrc = chatList[username].photo;
+					console.log(username)
+					let imgsrc = friends[username].photo;
 					usersDom.push((<li key={usersDom.length}>
 										<img src={imgsrc} className="chat-list-photo"/>
 										<p className="frendslist-username">{username}</p>

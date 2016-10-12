@@ -10,6 +10,7 @@ export class App extends Component {
 	    super(props);
 	}
 	componentDidMount() {
+		this.initFriendList();
 		const {addUser} = this.props;
 		addUser({
 			username:NAME,
@@ -33,6 +34,30 @@ export class App extends Component {
 		});
 	}
 	handlekeypress() {
+	}
+	initFriendList() {
+		const {addFriend,users:{friends, friendList, current, chatList}} = this.props;
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4) {
+				if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+					let data = JSON.parse(xhr.responseText);
+					data.forEach(function(friend) {
+							addFriend(friend);
+							console.log(friend)
+							console.log(friends)
+							console.log(friendList)
+						})
+					console.log(data);
+				} else {
+					console.log("init failed!");
+				}
+			}
+		}
+		xhr.open("post", "/initFriendList", true);
+		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		let data = "username="+NAME;
+		xhr.send(data);
 	}
 	render() {
 		return (<div className='react-wrap' onKeyPress={this.handlekeypress}>

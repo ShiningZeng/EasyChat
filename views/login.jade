@@ -2,7 +2,12 @@ extends layout
 
 block content
   #login
+    #{message}
     form(method='post')
-      label nickname
+      label(for='username') 昵称
         input(name='username')
+      label(for='photo') 选择头像
+        input(name='photo')
       input(type='submit')
+    #selectphoto
+

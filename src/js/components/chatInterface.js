@@ -34,14 +34,29 @@ export class ChatInterface extends Component {
 		send.addEventListener('click', this.sendMessage, false);
 	}
 	handleAddFriend() {
-		const {addFriend, users:{friends, friendList}, users:{current}} = this.props;
+		const {addFriend, users:{friends, friendList, current, chatList}} = this.props;
 		if(!friends[current]) {//好友不存在该用户才添加好友
-			addFriend({
+			const friend = {
 				username:current,
-				sex:"boy"
-			})
+				photo: chatList[current].photo
+			};
+			addFriend(friend);
+			// const xhr = new XMLHttpRequest();
+			// xhr.onreadystatechange = function() {
+			// 	if (xhr.readyState == 4) {
+			// 		if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+			// 			let data = JSON.parse(xhr.responseText);
+			// 			console.log(data.message);
+			// 		} else {
+			// 			console.log("init failed!");
+			// 		}
+			// 	}
+			// }
+			// xhr.open("post", "/addFriend", true);
+			// xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			// let data = "username="+NAME+"&friend="+friend.username+"&photo="+friend.photo;
+			// xhr.send(data);
 		}
-		console.log(friends,friendList);
 	}
 	initEmoji() {
 		let emojiContainer = document.getElementById('emoji-container');
