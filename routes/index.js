@@ -17,10 +17,7 @@ router.post('/initFriendList', function(req, res, next) {
 })
 
 router.post('/addFriend', function(req, res, next) {
-	users.addFriend(req.body.username, {
-		username: req.body.friend,
-		photo: req.body.photo
-	})
+	users.addFriend(req.body.username, req.body.friend);
 	res.json({message:"addFriend success"});
 })
 

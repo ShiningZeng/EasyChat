@@ -81,7 +81,7 @@ export class ChatList extends Component {
 	}  
 	render() {
 
-		return (<div className='react-wrap'>
+		return (<div id='chat-list'>
 					<div className='user-search'>
 						<input />
 						<i className="fa fa-search"></i>

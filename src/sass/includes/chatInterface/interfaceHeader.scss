@@ -1,0 +1,9 @@
+#interface-header {
+	height: 10%;
+	>p {
+		text-align: center;
+		>span{
+			cursor: pointer;
+		}
+	}
+}

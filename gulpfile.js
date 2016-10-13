@@ -18,7 +18,10 @@ var gutil = require('gulp-util');
 
 // 编译Sass
 gulp.task('sass', function() {
-    gulp.src(['./src/sass/main.scss', './src/sass/container.scss', './src/sass/includes/*.scss'])
+    gulp.src(['./src/sass/main.scss',
+        './src/sass/container.scss',
+        './src/sass/includes/*.scss',
+        './src/sass/includes/chatInterface/*.scss'])
         .pipe(concat('style-debug.css'))
         .pipe(sass())
         .on('error', function (err) {
@@ -61,10 +64,9 @@ gulp.task('default', function(){
     // gulp.watch('./src/js/*.js', function(){
     //     gulp.run('scripts')
     // });
-    gulp.watch('./src/sass/*.scss', function(){
-        gulp.run('sass');
-    })
-    gulp.watch('./src/sass/includes/*.scss', function(){
+    gulp.watch(['./src/sass/*.scss',
+        './src/sass/includes/*.scss',
+        './src/sass/includes/chatInterface/*.scss'], function(){
         gulp.run('sass');
     })
 });

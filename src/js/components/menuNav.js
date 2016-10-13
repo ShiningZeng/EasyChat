@@ -29,18 +29,18 @@ export class MenuNav extends Component {
 		}
 	}
 	render() {
-		return (<div className="react-wrap">
-							<ul>
-								<li>
-									<img src={PHOTO} />
-								</li>
-								<li ref="domComment" data-mode="comment">
-									<i className="fa fa-comment" data-mode="comment"></i>
-								</li>
-								<li ref="domUser" data-mode="user">
-									<i className="fa fa-user" data-mode="user"></i>
-								</li>
-							</ul>
-						</div>);
+		return (<div id='menu-nav'>
+					<ul>
+						<li>
+							<img src={PHOTO} />
+						</li>
+						<li ref="domComment" data-mode="comment">
+							<i className="fa fa-comment" data-mode="comment"></i>
+						</li>
+						<li ref="domUser" data-mode="user">
+							<i className="fa fa-user" data-mode="user"></i>
+						</li>
+					</ul>
+				</div>);
 	}
 }

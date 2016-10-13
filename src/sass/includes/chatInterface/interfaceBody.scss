@@ -1,0 +1,114 @@
+@mixin triangle-span($p: 'left') {
+	position: absolute;
+	top: 7px;
+	display: block;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	&.triangle-in {
+		@if $p == 'left' {
+			border-width: 5px 8px 5px 0;
+			border-color: transparent $chat-content-color-shadow transparent transparent;
+			left: -9px;
+			opacity: .8;
+	    }
+	    @else {
+	    	border-width: 5px 0 5px 8px;
+	    	border-color: transparent transparent transparent $chat-content-color-shadow;
+	    	right: -9px;
+	    	opacity: .8;
+	    }
+	}
+	&.triangle-out {
+		@if $p == 'left' {
+			border-width: 5px 8px 5px 0;
+			border-color: transparent $chat-content-color-left transparent transparent;
+			left: -8px;
+	    }
+	    @else {
+	    	border-width: 5px 0 5px 8px;
+	    	border-color: transparent transparent transparent $chat-content-color-right;
+	    	right: -8px;
+	    }
+	}
+}
+
+@mixin chat-record-list($p: 'left') {
+	clear: both;
+	&>img {
+		float: $p;
+		width: 40px;
+		height: 40px;
+	}
+	&>div {
+		float: $p;
+		margin-left: 10px;
+		margin-right: 10px;
+		&>span {
+			padding-left: 5px;
+			padding-right: 5px;
+			display: block;
+			text-align: $p;
+		}
+		&>p {
+			position: relative;
+			min-height: 20px;
+			max-width: 200px;
+			margin-top: 5px;
+			padding: 5px;
+			word-break:break-word;
+			border-radius: 5px;
+			box-shadow: 0 0 2px $chat-content-color-shadow;
+			@if $p == 'left' {
+				left: 8px;
+				background-color: $chat-content-color-left;
+
+		    }
+		    @else {
+		    	right: 8px;
+		    	background-color: $chat-content-color-right;
+		    }
+			
+			&>span {
+				@include triangle-span($p);
+			}
+		}
+	}
+}
+
+
+#interface-body {
+	position: relative;
+	height: 65%;
+	overflow: hidden;
+	div.add-friend{
+		@include absolute(right, left);
+		top: 10px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 60px;
+		height: 20px;
+		border-radius: 10px;
+		font-size: 6pt;
+		line-height: 20px;
+		color: #fff;
+		text-align: center;
+		background-color: #baf;
+		cursor: pointer;
+		z-index: 1;
+	}
+	>ul {
+		@include absolute(bottom);
+		margin: 0;
+		padding-left: 5%;
+		padding-right: 5%;
+		width: 90%;	
+		min-height: 100%;
+	}
+	>ul li.chat-record-list-left {
+		@include chat-record-list(left);
+	}
+	>ul li.chat-record-list-right {
+		@include chat-record-list(right);
+	}
+}

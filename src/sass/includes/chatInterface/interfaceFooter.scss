@@ -1,0 +1,74 @@
+#interface-footer {
+	position: relative;
+	height: 25%;
+	background-color: $chat-interface-footer-background;
+	>div.interface-footer-multiFunc {
+		width: 100%;
+		height: 40px;
+		ul {
+			margin: 0;
+			height: 100%;
+			padding-left: 10px;
+		}
+		ul li {
+			display: inline-block;
+			margin-left: 15px;
+			padding-top: 7px;
+			height: 100%;
+			vertical-align: middle;
+			cursor: pointer;
+			font-size: 13pt;
+			color: #777;
+		}
+		ul li:hover {
+			color: #aaa;
+		}
+	}
+	>div.emoji-container{
+		position: absolute;
+		bottom: 150px;
+		left: -50px;
+		width: 550px;
+		height:220px;
+		border: 1px solid #aaa;
+		border-radius: 2px;
+		>img {
+			width: 37px;
+			height: 37px;
+			cursor: pointer;
+			margin: 1px;
+		}
+		>img:hover {
+			transform: scale(2);
+			border: 1px solid #aaa;
+		}
+	}
+	&>div.chat-inputarea {
+		@include absolute(bottom);
+		padding-left: 15px;
+		padding-right: 15px;	
+		width: calc(100% - 32 * 1px);
+		height: calc(100% - 40 * 1px);
+		border:none;
+		outline-color: $chat-interface-footer-background;
+		background-color: $chat-interface-footer-background;
+		overflow: hidden;
+	}
+	&>div.interface-footer-send {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+		width: 70px;
+		height: 25px;
+		line-height: 25px;
+		text-align: center;
+		font-size: 11pt;
+		border: 1px solid #ddd;
+		border-radius: 1px;
+		cursor: pointer;
+		&:hover {
+			color: #fff;
+			background-color: rgb(61,206,61);
+		}
+	}
+}

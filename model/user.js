@@ -3,7 +3,7 @@ var users = {
 	userArray:[],
 	addFriend: function(username,friend) {
 		this.userList[username].friendList.push(friend);
-		console.log(this.userList[username].friendList)
+		this.userList[friend].friendList.push(username);
 	},
 	getFriends: function(username) {
 		return this.userList[username].friendList;

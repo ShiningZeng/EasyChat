@@ -36,7 +36,7 @@ export class App extends Component {
 	handlekeypress() {
 	}
 	initFriendList() {
-		const {addFriend,users:{friends, friendList, current, chatList}} = this.props;
+		const {addFriend} = this.props;
 		const xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4) {
@@ -44,9 +44,6 @@ export class App extends Component {
 					let data = JSON.parse(xhr.responseText);
 					data.forEach(function(friend) {
 							addFriend(friend);
-							console.log(friend)
-							console.log(friends)
-							console.log(friendList)
 						})
 					console.log(data);
 				} else {
@@ -61,15 +58,9 @@ export class App extends Component {
 	}
 	render() {
 		return (<div className='react-wrap' onKeyPress={this.handlekeypress}>
-					<div id='menu-nav'>
-						<MenuNav {...this.props}/>
-					</div>
-					<div id='chat-list'>
-						<ChatList {...this.props}/>
-					</div>
-					<div id='chat-interface'>
-						<ChatInterface {...this.props}/>
-					</div>
+					<MenuNav {...this.props}/>
+					<ChatList {...this.props}/>
+					<ChatInterface {...this.props}/>
 				</div>)
 	}
 }

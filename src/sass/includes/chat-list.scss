@@ -4,7 +4,7 @@
 	width: $chat-list-width;
 	background-color: $chat-list-background;
 }
-#chat-list .react-wrap {
+#chat-list {
 	>div.user-search{ 
 		position: relative;
 		margin-left: auto;

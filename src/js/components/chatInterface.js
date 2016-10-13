@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import {InterfaceHeader} from './chatInterface/interfaceHeader';
+import {InterfaceBody} from './chatInterface/interfaceBody';
+import {InterfaceFooter} from './chatInterface/interfaceFooter';
 import {socket, NAME} from '../main';
 
 export class ChatInterface extends Component {
@@ -41,21 +44,21 @@ export class ChatInterface extends Component {
 				photo: chatList[current].photo
 			};
 			addFriend(friend);
-			// const xhr = new XMLHttpRequest();
-			// xhr.onreadystatechange = function() {
-			// 	if (xhr.readyState == 4) {
-			// 		if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-			// 			let data = JSON.parse(xhr.responseText);
-			// 			console.log(data.message);
-			// 		} else {
-			// 			console.log("init failed!");
-			// 		}
-			// 	}
-			// }
-			// xhr.open("post", "/addFriend", true);
-			// xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			// let data = "username="+NAME+"&friend="+friend.username+"&photo="+friend.photo;
-			// xhr.send(data);
+			const xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+						let data = JSON.parse(xhr.responseText);
+						console.log(data.message);
+					} else {
+						console.log("init failed!");
+					}
+				}
+			}
+			xhr.open("post", "/addFriend", true);
+			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			let data = "username="+NAME+"&friend="+friend.username;
+			xhr.send(data);
 		}
 	}
 	initEmoji() {
@@ -151,17 +154,15 @@ export class ChatInterface extends Component {
 		if(chatList[current].type == 'PUBLIC')
 			addFri_className += " d-hidden";
 
-		return (<div className='react-wrap'>
-					<div className='interface-header'>
-						<p><span>{current}</span></p>
-					</div>
-					<div className='interface-body' ref="ulwrap">
+		return (<div id='chat-interface'>
+					<InterfaceHeader {...this.props}/>
+					<div id='interface-body' ref="ulwrap">
 						<div className={addFri_className} ref="addFri">加为好友</div>
 						<ul ref="ul">
 							{chatList[current]?chatList[current].DOM:[]}
 						</ul>
 					</div>
-					<div className='interface-footer'>
+					<div id='interface-footer'>
 						<div className='interface-footer-multiFunc'>
 							<ul>
 								<li>
