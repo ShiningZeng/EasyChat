@@ -6,7 +6,14 @@ var users = {
 		this.userList[friend].friendList.push(username);
 	},
 	getFriends: function(username) {
-		return this.userList[username].friendList;
+		var that = this;
+		var friendList = this.userList[username].friendList.map(function(name){
+			return {
+				username: name,
+				photo: that.userList[name].photo
+			};
+		})
+		return friendList;
 	},
 	addUser: function(user) {
 		if(!this.userList[user.username]) {

@@ -44,6 +44,7 @@ export class App extends Component {
 					let data = JSON.parse(xhr.responseText);
 					data.forEach(function(friend) {
 							addFriend(friend);
+							console.log(friend);
 						})
 					console.log(data);
 				} else {

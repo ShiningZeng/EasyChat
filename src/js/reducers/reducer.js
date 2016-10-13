@@ -105,7 +105,7 @@ const initState1 = {
 	show: true
 }
 
-function appstate(state = initState1, action) {
+function appState(state = initState1, action) {
 	switch(action.type) {
 		case CHANGE_LIST:
 			return Object.assign({}, state, {
@@ -118,6 +118,6 @@ function appstate(state = initState1, action) {
 
 const rootReducer=combineReducers({ 
 	users,
-	appstate
+	appState
 })
 export default rootReducer;

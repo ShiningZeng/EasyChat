@@ -34,7 +34,7 @@ export const PHOTO = photo;
 function mapStateToprops(state){
 	return {
 		users: state.users,
-		appstate: state.appstate
+		appState: state.appState
 	}
 }
 

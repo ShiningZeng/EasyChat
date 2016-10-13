@@ -18,7 +18,10 @@ export class ChatList extends Component {
 		var target = e.target || e.srcElement;
 		if(e.target && e.target.nodeName == 'DIV') {
 			const username = e.target.getAttribute('data-username');
-			const {changeRoom, changeUnread} = this.props;
+			const {changeRoom, changeUnread, appState, addUser, users:{chatList, friends}} = this.props;
+			if(!chatList[username]) {
+				addUser(friends[username]);
+			}
 			changeRoom(username);
 			changeUnread(username);
 	    }
@@ -39,9 +42,9 @@ export class ChatList extends Component {
 		}
 	}
 	reactToDom() {
-		const {users, appstate, users:{chatList, current, userlist, friendList, friends}} = this.props;
+		const {users, appState, users:{chatList, current, userlist, friendList, friends}} = this.props;
 		const usersDom = [];
-		if(appstate.show) {
+		if(appState.show) {
 			userlist.forEach(function(username) {
 				if(username != NAME) {
 					const record = chatList[username].record;

@@ -83,13 +83,13 @@ export class InterfaceBody extends Component {
 	    }
 	}
 	render() {
-		const {users:{current, chatList}} = this.props;
+		const {users:{current, chatList, friends}} = this.props;
 		let addFri_className = "add-friend";
-		if(chatList[current].type == 'PUBLIC')
+		if(chatList[current].type == 'PUBLIC' || friends[current])
 			addFri_className += " d-hidden";
 		return (<div id='interface-body' ref="ulwrap">
 					<div className={addFri_className} ref="addFri">加为好友</div>
-					<ul ref="ul">
+					<ul id='chatUl' ref="ul">
 						{chatList[current]?chatList[current].DOM:[]}
 					</ul>
 				</div>)
