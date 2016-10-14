@@ -1,0 +1,37 @@
+#login {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	width: $login-width;
+	height: $login-height;
+	background-color: $login-background-color;
+	border-radius: 5px;
+	#loginForm {
+		input {
+			border: none;
+			outline: none;
+			background-color: $login-background-color;
+			border-bottom: 1px solid #789;
+			text-align: center;
+		}
+	}
+	#selectphoto {
+		@include absolute(bottom);
+		width: $login-width;
+		height: $login-width;
+		background-color: #f1fec6;
+		>img.login-photo {
+			float: left;
+			margin: 1px;
+			width: $login-width/3-2;
+			height: $login-width/3-2;
+			cursor: pointer;
+			z-index: -1;
+			&:active {
+				// box-shadow:inset x-offset y-offset blur-radius spread-radius color
+				box-shadow: 0px 0px 2px 2px orange;
+			}
+		}
+	}
+}

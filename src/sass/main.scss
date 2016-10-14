@@ -29,6 +29,10 @@ $chat-content-color-left: #fff;
 $chat-content-color-right: #28cb40;
 $chat-content-color-shadow: #aaa;
 
+// setting of login page
+$login-width: 300px;
+$login-height: 500px;
+$login-background-color: #eee;
 
 @mixin absolute($p1:0, $p2:0, $p3:0, $p4:0) {
 	position: absolute;

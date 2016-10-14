@@ -6,10 +6,12 @@ router.get('/', function(req, res, next) {
 	res.render('login');
 })
 
-router.post('/', function(req, res, next) {
+router.post('/login', function(req, res, next) {
 	var user = req.body;
 	users.addUser(user);
-	res.render('index', user);
+	//res.render('index', user);
+	console.log(req.body)
+	res.json(req.body);
 })
 
 router.post('/initFriendList', function(req, res, next) {
@@ -17,8 +19,8 @@ router.post('/initFriendList', function(req, res, next) {
 })
 
 router.post('/addFriend', function(req, res, next) {
-	users.addFriend(req.body.username, req.body.friend);
-	res.json({message:"addFriend success"});
+	var message = users.addFriend(req.body.username, req.body.friend);
+	res.json({message:message});
 })
 
 module.exports = router;

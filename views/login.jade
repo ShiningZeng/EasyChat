@@ -3,11 +3,12 @@ extends layout
 block content
   #login
     #{message}
-    form(method='post')
+    form(id='loginForm' method='post')
       label(for='username') 昵称
         input(name='username')
       label(for='photo') 选择头像
         input(name='photo')
-      input(type='submit')
+    button(onClick='login()') click
     #selectphoto
+  script(src='/js/login.js')
 

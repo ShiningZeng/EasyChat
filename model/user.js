@@ -2,8 +2,14 @@ var users = {
 	userList:{},
 	userArray:[],
 	addFriend: function(username,friend) {
-		this.userList[username].friendList.push(friend);
-		this.userList[friend].friendList.push(username);
+		if(this.userList[username].indexof(friend) == -1) {
+			this.userList[username].friendList.push(friend);
+			this.userList[friend].friendList.push(username);
+			return username+"adds friend"+friend+"successfully";
+		} else {
+			return username+"had added"+friend+"previously";
+		}
+		
 	},
 	getFriends: function(username) {
 		var that = this;
@@ -17,8 +23,7 @@ var users = {
 	},
 	addUser: function(user) {
 		if(!this.userList[user.username]) {
-			user.friendList = [];
-			this.userList[user.username] = user;
+			this.userList[user.username] = Object.assign({friendList: []},user);
 			this.userArray.push(user.username);
 		}
 	}

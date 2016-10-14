@@ -19,7 +19,6 @@ var gutil = require('gulp-util');
 // 编译Sass
 gulp.task('sass', function() {
     gulp.src(['./src/sass/main.scss',
-        './src/sass/container.scss',
         './src/sass/includes/*.scss',
         './src/sass/includes/chatInterface/*.scss'])
         .pipe(concat('style-debug.css'))
@@ -58,9 +57,17 @@ function bundle() {
 }
 
 
+gulp.task('lint', function() {
+    gulp.src('./src/js/login.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+        //.pipe(uglify())
+        .pipe(gulp.dest('./dist/js'))
+})
+
 //gulp 默认任务
 gulp.task('default', function(){
-    gulp.run('sass', 'scripts');
+    gulp.run('sass', 'scripts', 'lint');
     // gulp.watch('./src/js/*.js', function(){
     //     gulp.run('scripts')
     // });
@@ -68,6 +75,9 @@ gulp.task('default', function(){
         './src/sass/includes/*.scss',
         './src/sass/includes/chatInterface/*.scss'], function(){
         gulp.run('sass');
+    })
+    gulp.watch('./src/js/login.js', function() {
+        gulp.run('lint');
     })
 });
 
