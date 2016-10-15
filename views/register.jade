@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  #register
+    #selectphoto
+    p#register-remainder.reminder #{message}
+    form(id='registerForm' method='post' action="/register")
+      label(for='photo' style='display:none;') 头像: 
+        input(name='photo')
+      label(for='username')
+        input(name='username' placeholder='昵称')
+      label(for='password')
+        input(name='password' placeholder='密码')
+      label(for='repeatPassword' )
+        input(name='repeatPassword' placeholder='确认密码')
+      div.button-container
+        button(type='reset' value="reset") 重置
+        button.jumpTo(type='button' value="jump2login")
+          a(href='/login') 点此进入登陆界面
+        button(type='submit' value="submit") 注册
+  script(src='/js/register.js')
+

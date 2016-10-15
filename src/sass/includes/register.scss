@@ -1,0 +1,27 @@
+#register {
+	@include register-login();
+	#selectphoto {
+        width: 100%;
+        height: $register-login-width;
+        background-color: $register-login-background-color;
+        >img.register-photo {
+            float: left;
+            margin-left: 1%;
+            margin-top: 1%;
+            width: 32%;
+            height: 32%;
+            cursor: pointer;
+            z-index: -1;
+            &.register-img-active {
+                // box-shadow:inset x-offset y-offset blur-radius spread-radius color
+                box-shadow: 0px 0px 2px 2px orange;
+            }
+        }
+    }
+    >p {
+        margin: 0;
+        padding: 5px;
+        color: #456;
+        text-align: center;
+    }
+}

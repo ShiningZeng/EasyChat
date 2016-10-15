@@ -1,17 +1,45 @@
 var express = require('express');
 var router = express.Router();
 var users = require('../model/user')
-
-router.get('/', function(req, res, next) {
-	res.render('login');
+router.get('/register', function(req, res, next) {
+	res.render('register');
 })
 
+router.get('/', function(req, res, next) {
+	var user;
+	if(req.session.user) {
+		user = req.session.user;
+		res.render('index', user);
+	} else {
+		res.redirect('/register')
+	}
+})
+
+router.post('/register', function(req, res, next) {
+	var user = users.addUser(req.body);
+	if (user) {
+		req.session.user = user;
+		res.redirect('/');
+	} else {
+		res.render('register', {message:"昵称已存在"});
+	}
+	
+})
+
+router.get('/login', function(req, res, next) {
+	res.render('login');
+})
 router.post('/login', function(req, res, next) {
-	var user = req.body;
-	users.addUser(user);
-	//res.render('index', user);
 	console.log(req.body)
-	res.json(req.body);
+	var user = users.userLogin(req.body);
+	if (user == "不存在此用户") {
+		res.render('login', {message: "不存在此用户"});
+	} else if (user == "密码错误") {
+		res.render('login', {message: "密码错误"});
+	} else {
+		req.session.user = user;
+		res.redirect('/');
+	}
 })
 
 router.post('/initFriendList', function(req, res, next) {

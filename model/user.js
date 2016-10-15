@@ -23,8 +23,32 @@ var users = {
 	},
 	addUser: function(user) {
 		if(!this.userList[user.username]) {
-			this.userList[user.username] = Object.assign({friendList: []},user);
+			if (user.repeatPassword != user.password)
+				return false;
+			var temp1 = Object.assign({friendList: []},user);
+			delete temp1.repeatPassword;
+			this.userList[user.username] = temp1;
 			this.userArray.push(user.username);
+			var temp2 = Object.assign({},user);
+			delete temp2.repeatPassword;
+			delete temp2.password;
+			console.log(temp1)
+			console.log(temp2)
+			return temp2;
+		} else {
+			return false;
+		}
+	},
+	userLogin: function(user) {
+		if (!this.userList[user.username]) {
+			return "不存在此用户";
+		} else if(user.password != this.userList[user.username].password) {
+			return "密码错误";
+		} else{
+			return {
+				username: user.username,
+				photo: this.userList[user.username].photo
+			}
 		}
 	}
 };

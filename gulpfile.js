@@ -58,6 +58,14 @@ function bundle() {
 
 
 gulp.task('lint', function() {
+    gulp.src('./src/js/register.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'))
+        //.pipe(uglify())
+        .pipe(gulp.dest('./dist/js'))
+})
+
+gulp.task('lint1', function() {
     gulp.src('./src/js/login.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
@@ -67,7 +75,7 @@ gulp.task('lint', function() {
 
 //gulp 默认任务
 gulp.task('default', function(){
-    gulp.run('sass', 'scripts', 'lint');
+    gulp.run('sass', 'scripts', 'lint', 'lint1');
     // gulp.watch('./src/js/*.js', function(){
     //     gulp.run('scripts')
     // });
@@ -76,8 +84,11 @@ gulp.task('default', function(){
         './src/sass/includes/chatInterface/*.scss'], function(){
         gulp.run('sass');
     })
-    gulp.watch('./src/js/login.js', function() {
+    gulp.watch('./src/js/register.js', function() {
         gulp.run('lint');
+    })
+    gulp.watch('./src/js/login.js', function() {
+        gulp.run('lint1');
     })
 });
 
