@@ -87,8 +87,11 @@ export class InterfaceBody extends Component {
 		let addFri_className = "add-friend";
 		if(chatList[current].type == 'PUBLIC' || friends[current])
 			addFri_className += " d-hidden";
+		let agreeAddFri_className = "agree-add-friend";
+
 		return (<div id='interface-body' ref="ulwrap">
 					<div className={addFri_className} ref="addFri">加为好友</div>
+					<div className={agreeAddFri_className} ref="agreeAddFri">同意</div>
 					<ul id='chatUl' ref="ul">
 						{chatList[current]?chatList[current].DOM:[]}
 					</ul>
