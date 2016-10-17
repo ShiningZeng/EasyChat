@@ -16,10 +16,27 @@ export class InterfaceBody extends Component {
 		ulwrap.addEventListener('mousewheel', this.handleMouseWheel,false);
 		//初始化添加好友事件
 		const addFri = this.refs.addFri;
-		this.handleAddFriend = this.handleAddFriend.bind(this);
-		addFri.addEventListener('click', this.handleAddFriend, false);
+		this.addFriendClick = this.addFriendClick.bind(this);
+		addFri.addEventListener('click', this.addFriendClick, false);
+		//初始化接受文件事件
+		const receiveFile = this.refs.receiveFile;
+		this.receiveFileClick= this.receiveFileClick.bind(this);
+		receiveFile.addEventListener('click', this.receiveFileClick, false);
 	}
-	handleAddFriend() {
+
+	receiveFileClick(e) {
+		e = e || window.event;//这一行及下一行是为兼容IE8及以下版本
+		var target = e.target || e.srcElement;
+		if(e.target && e.target.nodeName == 'SPAN') {
+			if (e.target.innerText == "接收") {
+				e.target.className+=" d-hidden";
+			} else if (e.target.innerText == "取消") {
+				e.target.className+=" d-hidden";
+			}
+		}
+	}
+
+	addFriendClick(e) {
 		const {addFriend, users:{friends, friendList, current, chatList}} = this.props;
 		if(!friends[current]) {//好友不存在该用户才添加好友
 			const friend = {
@@ -87,14 +104,18 @@ export class InterfaceBody extends Component {
 		let addFri_className = "add-friend";
 		if(chatList[current].type == 'PUBLIC' || friends[current])
 			addFri_className += " d-hidden";
-		let agreeAddFri_className = "agree-add-friend";
+		let receiveFile_className = "receive-file";
 
 		return (<div id='interface-body' ref="ulwrap">
-					<div className={addFri_className} ref="addFri">加为好友</div>
-					<div className={agreeAddFri_className} ref="agreeAddFri">同意</div>
 					<ul id='chatUl' ref="ul">
 						{chatList[current]?chatList[current].DOM:[]}
 					</ul>
+					<div className={receiveFile_className} ref="receiveFile">
+						对方向您传输了文件
+						<span>接收</span>
+						<span>取消</span>
+					</div>
+					<div className={addFri_className} ref="addFri">加为好友</div>
 				</div>)
 	}
 }

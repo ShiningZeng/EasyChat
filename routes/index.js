@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var users = require('../model/user')
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
+var path = require('path');
+var fs = require('fs');
+var users = require('../model/user');
+
+
 router.get('/register', function(req, res, next) {
 	res.render('register');
 })
@@ -50,5 +56,20 @@ router.post('/addFriend', function(req, res, next) {
 	var message = users.addFriend(req.body.username, req.body.friend);
 	res.json({message:message});
 })
+
+router.post('/upload', multipartMiddleware, function(req, res, next) {
+  console.log(req.files.files);
+  //get filename
+  var filename = req.files.files.originalFilename || path.basename(req.files.files.path);
+  console.log(filename);
+  //copy file to a public directory
+  var targetPath = path.resolve(path.dirname(__filename),'..') + '/dist/dir/' + filename;
+  console.log(targetPath);
+  //copy file
+  fs.createReadStream(req.files.files.path).pipe(fs.createWriteStream(targetPath));
+
+  res.json({fileMessage: filename});
+})
+
 
 module.exports = router;

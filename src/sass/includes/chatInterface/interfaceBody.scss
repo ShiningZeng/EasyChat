@@ -81,7 +81,7 @@
 	position: relative;
 	height: 65%;
 	overflow: hidden;
-	div.add-friend{
+	div.add-friend {
 		@include absolute(right, left);
 		top: 10px;
 		margin-left: auto;
@@ -97,6 +97,40 @@
 		cursor: pointer;
 		z-index: 1;
 	}
+	div.receive-file {
+		@include absolute(top);
+		width: 100%;
+		height: 20px;
+		text-align: center;
+		color: #000;
+		background-color: #abf;
+		font-size: 10pt;
+		opacity: .7;
+		>span:last-child {
+			@include absolute(top);
+			right: 10px;
+			height: 20px;
+			width: 40px;
+			line-height: 20px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		
+		>span:first-child {
+			@include absolute(top);
+			right: 50px;
+			height: 20px;
+			width: 40px;
+			line-height: 20px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		span:hover{
+				background-color: #2382e1;
+				color: #fff;
+			}
+	}
+
 	>ul {
 		@include absolute(bottom);
 		margin: 0;

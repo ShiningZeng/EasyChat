@@ -16,9 +16,14 @@ export class InterfaceFooter extends Component {
 		const emojiContainer = this.refs.emojiContainer;
 		this.chooseEmoji = this.chooseEmoji.bind(this);
 		emojiContainer.addEventListener('click', this.chooseEmoji,false);
-		const send = this.refs.send;
+		//初始化发送消息事件
+		const sendMsg = this.refs.sendMsg;
 		this.sendMessage  = this.sendMessage.bind(this);
-		send.addEventListener('click', this.sendMessage, false);
+		sendMsg.addEventListener('click', this.sendMessage, false);
+		//初始化发送文件事件
+		const uploadFile = this.refs.uploadFile;
+		this.uploadFileClick  = this.uploadFileClick.bind(this);
+		uploadFile.addEventListener('click', this.uploadFileClick, false);
 	}
 	initEmoji() {
 		let emojiContainer = document.getElementById('emoji-container');
@@ -29,6 +34,27 @@ export class InterfaceFooter extends Component {
             emojiFrag.appendChild(emojiItem);
         };
         emojiContainer.appendChild(emojiFrag); 	
+	}
+	uploadFileClick(e) {
+		const files = this.refs.files;
+		const data = new FormData();
+		
+		data.append("files", files.files[0]);
+
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4) {
+				if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+					let data = JSON.parse(xhr.responseText);
+					console.log(data);
+				} else {
+					console.log("upload failed!");
+				}
+			}
+		}
+		xhr.open("post", "/upload", true);
+		//xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xhr.send(data);
 	}
 	sendMessage() {
 		//const ul =  this.refs.ul;
@@ -69,15 +95,16 @@ export class InterfaceFooter extends Component {
 		else
 			emojiContainer.style.display = "none";
 	}
-
+	
 	render() {
 		return (<div id='interface-footer'>
+					<input type='file' ref='files' /><button ref='uploadFile'>click</button>
 					<div className='interface-footer-multiFunc'>
 						<ul>
 							<li>
 								<i className='fa fa-smile-o' ref='emoji'></i>
 							</li>
-							<li>
+							<li ref='choseFile'>
 								<i className='fa fa-folder-open-o'></i>
 							</li>
 							<li>
@@ -85,10 +112,11 @@ export class InterfaceFooter extends Component {
 							</li>
 						</ul>
 					</div>
+
 					<div className="emoji-container" id='emoji-container' ref='emojiContainer'></div>
 					<div contentEditable='true' className="chat-inputarea" ref='inputarea'>
 					</div>
-					<div className='interface-footer-send' ref='send'>发送</div>
+					<div className='interface-footer-send' ref='sendMsg'>发送</div>
 				</div>)
 	}
 }
