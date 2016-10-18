@@ -106,6 +106,22 @@
 		background-color: #abf;
 		font-size: 10pt;
 		opacity: .7;
+		>span {
+			@include absolute(top);
+			right: 50px;
+			height: 20px;
+			width: 40px;
+			line-height: 20px;
+			border-radius: 5px;
+			cursor: pointer;
+			>a {
+				color: #000;
+				text-decoration: none;
+			}
+			>a:hover{
+				color: #fff;
+			}
+		}
 		>span:last-child {
 			@include absolute(top);
 			right: 10px;
@@ -115,16 +131,10 @@
 			border-radius: 5px;
 			cursor: pointer;
 		}
-		
-		>span:first-child {
-			@include absolute(top);
-			right: 50px;
-			height: 20px;
-			width: 40px;
-			line-height: 20px;
-			border-radius: 5px;
-			cursor: pointer;
+		>p {
+			display: inline;
 		}
+		
 		span:hover{
 				background-color: #2382e1;
 				color: #fff;

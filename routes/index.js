@@ -58,17 +58,17 @@ router.post('/addFriend', function(req, res, next) {
 })
 
 router.post('/upload', multipartMiddleware, function(req, res, next) {
-  console.log(req.files.files);
   //get filename
-  var filename = req.files.files.originalFilename || path.basename(req.files.files.path);
-  console.log(filename);
+  var fileName = req.files.files.originalFilename || path.basename(req.files.files.path);
+  console.log(fileName);
   //copy file to a public directory
-  var targetPath = path.resolve(path.dirname(__filename),'..') + '/dist/dir/' + filename;
+  var relativePath = '/dist/dir/' + fileName;
+  var targetPath = path.resolve(path.dirname(__filename),'..') + relativePath;
   console.log(targetPath);
   //copy file
   fs.createReadStream(req.files.files.path).pipe(fs.createWriteStream(targetPath));
 
-  res.json({fileMessage: filename});
+  res.json({filePath: relativePath, fileName: fileName});
 })
 
 

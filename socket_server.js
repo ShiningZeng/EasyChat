@@ -31,6 +31,14 @@ module.exports = function(server) {
 	        	usockets[room].emit('resMsg', data);
 	        }
 	    });
+	    socket.on('sendFile', function(data) {
+	    	log('sendFile');
+	    	if(data.room == '公共聊天室') {
+	    		io.sockets.emit('resFile', data);
+	    	} else {
+	    		usockets[data.room].emit('resFile', data);
+	    	}
+	    })
 	    
 	})
 	io.sockets.on('disconnect', function() {

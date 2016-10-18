@@ -22,12 +22,25 @@ export class InterfaceBody extends Component {
 		const receiveFile = this.refs.receiveFile;
 		this.receiveFileClick= this.receiveFileClick.bind(this);
 		receiveFile.addEventListener('click', this.receiveFileClick, false);
+		socket.on('resFile', (data) => {
+			const fileDownload = this.refs.fileDownload;
+			const receiveFile = this.refs.receiveFile;
+			const fileReminder = this.refs.fileReminder;
+			fileDownload.href = data.filePath;
+			receiveFile.className = receiveFile.className.replace(" d-hidden", "");
+			if(data.room == "公共聊天室") {
+				fileReminder.innerText = data.source+"共享了文件: "+data.fileName;
+			}
+			else {
+				fileReminder.innerText = "对方向您发送了文件: "+data.fileName;
+			}
+		});
 	}
 
 	receiveFileClick(e) {
 		e = e || window.event;//这一行及下一行是为兼容IE8及以下版本
 		var target = e.target || e.srcElement;
-		if(e.target && e.target.nodeName == 'SPAN') {
+		if(e.target && (e.target.nodeName == 'SPAN' || e.target.nodeName == 'A')) {
 			if (e.target.innerText == "接收") {
 				e.target.className+=" d-hidden";
 			} else if (e.target.innerText == "取消") {
@@ -104,15 +117,15 @@ export class InterfaceBody extends Component {
 		let addFri_className = "add-friend";
 		if(chatList[current].type == 'PUBLIC' || friends[current])
 			addFri_className += " d-hidden";
-		let receiveFile_className = "receive-file";
+		let receiveFile_className = "receive-file d-hidden";
 
 		return (<div id='interface-body' ref="ulwrap">
 					<ul id='chatUl' ref="ul">
 						{chatList[current]?chatList[current].DOM:[]}
 					</ul>
 					<div className={receiveFile_className} ref="receiveFile">
-						对方向您传输了文件
-						<span>接收</span>
+						<p ref="fileReminder">对方向您传输了文件</p>
+						<span><a href="" ref="fileDownload" download>接收</a></span>
 						<span>取消</span>
 					</div>
 					<div className={addFri_className} ref="addFri">加为好友</div>

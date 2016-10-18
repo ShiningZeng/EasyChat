@@ -38,7 +38,7 @@ export class InterfaceFooter extends Component {
 	uploadFileClick(e) {
 		const files = this.refs.files;
 		const data = new FormData();
-		
+		const that = this;
 		data.append("files", files.files[0]);
 
 		const xhr = new XMLHttpRequest();
@@ -46,14 +46,21 @@ export class InterfaceFooter extends Component {
 			if (xhr.readyState == 4) {
 				if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
 					let data = JSON.parse(xhr.responseText);
-					console.log(data);
+					const {users:{current}} = that.props;
+					socket.emit('sendFile', {
+						source:NAME,
+						filePath: data.filePath,
+						fileName: data.fileName,
+						room: current,
+						imgsrc: PHOTO
+					});
+
 				} else {
 					console.log("upload failed!");
 				}
 			}
 		}
 		xhr.open("post", "/upload", true);
-		//xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xhr.send(data);
 	}
 	sendMessage() {
