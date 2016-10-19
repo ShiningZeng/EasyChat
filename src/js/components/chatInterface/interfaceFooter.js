@@ -60,8 +60,8 @@ export class InterfaceFooter extends Component {
 					const {users:{current}} = that.props;
 					// socket.emit('sendFile', {
 					// 	source:NAME,
-					// 	filePath: data.filePath,
-					// 	fileName: data.fileName,
+					// 	filePath: data.filePath, 
+					// 	fileName: data.fileName, 
 					// 	room: current,
 					// 	imgsrc: PHOTO
 					// });
