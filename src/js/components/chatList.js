@@ -51,8 +51,13 @@ export class ChatList extends Component {
 					let lastmsg = "";
 					if(record.length) {
 						const reg = /<img src="[0-9a-zA-Z\/]{0,20}\.gif">/igm;
-						lastmsg = (chatList[username].type=='PUBLIC' ? record[record.length-1].username+' : ' : '')+
+						if (typeof record[record.length-1].text != "object"){
+							lastmsg = (chatList[username].type=='PUBLIC' ? record[record.length-1].username+' : ' : '')+
 							record[record.length-1].text.replace(reg,"[emoji]");
+						}
+						else {//传输的text如果是对象，此处特指文件信息
+							lastmsg = (chatList[username].type=='PUBLIC' ? record[record.length-1].username+' : ' : '')+"文件";
+						}
 					}
 					let unread = chatList[username].unread;
 					if(unread >= 99)

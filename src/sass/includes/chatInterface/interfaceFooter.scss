@@ -43,6 +43,15 @@
 			border: 1px solid #aaa;
 		}
 	}
+	>div.file-container{
+		position: absolute;
+		bottom: 150px;
+		border: 1px solid #aaa;
+		border-radius: 2px;
+		input[type=file] {
+			width: 100px;
+		}
+	}
 	&>div.chat-inputarea {
 		@include absolute(bottom);
 		padding-left: 15px;

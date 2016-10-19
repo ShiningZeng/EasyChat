@@ -6,6 +6,7 @@ export class InterfaceFooter extends Component {
 	    super(props);
 	}
 	componentDidMount() {
+		this.showFile();
 		this.showEmoji();
 		this.initEmoji();
 		//初始化表情点击事件
@@ -16,6 +17,9 @@ export class InterfaceFooter extends Component {
 		const emojiContainer = this.refs.emojiContainer;
 		this.chooseEmoji = this.chooseEmoji.bind(this);
 		emojiContainer.addEventListener('click', this.chooseEmoji,false);
+		const choseFile = this.refs.choseFile;
+		this.showFile = this.showFile.bind(this);
+		choseFile.addEventListener('click', this.showFile,false);
 		//初始化发送消息事件
 		const sendMsg = this.refs.sendMsg;
 		this.sendMessage  = this.sendMessage.bind(this);
@@ -24,6 +28,13 @@ export class InterfaceFooter extends Component {
 		const uploadFile = this.refs.uploadFile;
 		this.uploadFileClick  = this.uploadFileClick.bind(this);
 		uploadFile.addEventListener('click', this.uploadFileClick, false);
+	}
+	showFile() {
+		const fileContainer = this.refs.fileContainer;
+		if(fileContainer.style.display == "none")
+			fileContainer.style.display = "";
+		else
+			fileContainer.style.display = "none";
 	}
 	initEmoji() {
 		let emojiContainer = document.getElementById('emoji-container');
@@ -47,14 +58,24 @@ export class InterfaceFooter extends Component {
 				if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
 					let data = JSON.parse(xhr.responseText);
 					const {users:{current}} = that.props;
-					socket.emit('sendFile', {
-						source:NAME,
-						filePath: data.filePath,
+					// socket.emit('sendFile', {
+					// 	source:NAME,
+					// 	filePath: data.filePath,
+					// 	fileName: data.fileName,
+					// 	room: current,
+					// 	imgsrc: PHOTO
+					// });
+					// const msg = "fileFiled[filename:"+data.fileName+","+"filePath:"+data.filePath+","+fileType
+					const msg = {
 						fileName: data.fileName,
+						filePath: data.filePath
+					}
+					socket.emit('postMsg', {
+						source:NAME,
+						message: msg,
 						room: current,
 						imgsrc: PHOTO
 					});
-
 				} else {
 					console.log("upload failed!");
 				}
@@ -105,7 +126,10 @@ export class InterfaceFooter extends Component {
 	
 	render() {
 		return (<div id='interface-footer'>
-					<input type='file' ref='files' /><button ref='uploadFile'>click</button>
+					<div className='file-container' ref = "fileContainer">
+						<input type='file' ref='files' />
+						<button ref='uploadFile'>发送</button>
+					</div>
 					<div className='interface-footer-multiFunc'>
 						<ul>
 							<li>
