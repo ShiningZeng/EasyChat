@@ -44,7 +44,7 @@ export class ChatList extends Component {
 	reactToDom() {
 		const {users, appState, users:{chatList, current, userlist, friendList, friends}} = this.props;
 		const usersDom = [];
-		if(appState.show) {
+		if(appState.show) { // 聊天列表
 			userlist.forEach(function(username) {
 				if(username != NAME) {
 					const record = chatList[username].record;
@@ -56,7 +56,12 @@ export class ChatList extends Component {
 							record[record.length-1].text.replace(reg,"[emoji]");
 						}
 						else {//传输的text如果是对象，此处特指文件信息
-							lastmsg = (chatList[username].type=='PUBLIC' ? record[record.length-1].username+' : ' : '')+"文件";
+							if(chatList[username].type=='PUBLIC') {
+								lastmsg = record[record.length-1].username+"共享了文件:"+record[record.length-1].text.fileName;
+							} else {
+								lastmsg = "对方向您发送了文件:"+record[record.length-1].text.fileName;
+							}
+
 						}
 					}
 					let unread = chatList[username].unread;
@@ -72,7 +77,7 @@ export class ChatList extends Component {
 									</li>));
 				}
 			})
-		} else {
+		} else {  // 好友列表
 			friendList.forEach(function(username) {
 				if(username != NAME) {
 					console.log(username)

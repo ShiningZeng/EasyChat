@@ -107,8 +107,8 @@ export class InterfaceBody extends Component {
 						username: username,
 						photo: imgsrc
 					});
-					changeRoom(username);
 				}
+				changeRoom(username);
 			}
 	    }
 	}

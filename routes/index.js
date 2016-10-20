@@ -68,7 +68,7 @@ router.post('/upload', multipartMiddleware, function(req, res, next) {
   //copy file
   fs.createReadStream(req.files.files.path).pipe(fs.createWriteStream(targetPath));
 
-  res.json({filePath: relativePath, fileName: fileName});
+  res.json({filePath: '/dir/'+fileName, fileName: fileName});
 })
 
 

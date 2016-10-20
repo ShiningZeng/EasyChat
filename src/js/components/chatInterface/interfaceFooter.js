@@ -28,6 +28,16 @@ export class InterfaceFooter extends Component {
 		const uploadFile = this.refs.uploadFile;
 		this.uploadFileClick  = this.uploadFileClick.bind(this);
 		uploadFile.addEventListener('click', this.uploadFileClick, false);
+
+		const inputarea = this.refs.inputarea;
+		this.quicksend = this.quicksend.bind(this);
+		inputarea.addEventListener('click', this.quicksend, false);
+		inputarea.addEventListener('keydown', this.quicksend, false);
+	}
+	quicksend(e){
+		if(e.ctrlKey && (e.keyCode == 13)) {
+			this.sendMessage();
+		}
 	}
 	showFile() {
 		const fileContainer = this.refs.fileContainer;
@@ -112,7 +122,7 @@ export class InterfaceFooter extends Component {
 		var target = e.target || e.srcElement;
 		if(e.target && e.target.nodeName == 'IMG') {
 			const inputarea = this.refs.inputarea;
-			inputarea.appendChild(e.target.cloneNode())
+			inputarea.appendChild(e.target.cloneNode());
 			this.showEmoji();
 	    }
 	}
@@ -122,6 +132,7 @@ export class InterfaceFooter extends Component {
 			emojiContainer.style.display = "";
 		else
 			emojiContainer.style.display = "none";
+		const sendMsg = this.refs.sendMsg;
 	}
 	
 	render() {
