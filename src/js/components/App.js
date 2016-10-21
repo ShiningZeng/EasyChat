@@ -22,7 +22,7 @@ export class App extends Component {
 			photo:PHOTO
 		})
 		socket.on('resMsg', (data) => {
-			const {addUser, users:{chatList}} = this.props;
+			const {addUser,addRecord,changeUnread, users:{chatList}} = this.props;
 			if(!chatList[data.room]) {
 				addUser({
 					username: data.room,
@@ -82,10 +82,11 @@ export class App extends Component {
 	}
 	initFriendList() {
 		const xhr = new XMLHttpRequest();
+		const that = this;
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4) {
 				if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-					const {addFriend} = this.props;
+					const {addFriend} = that.props;
 					let data = JSON.parse(xhr.responseText);
 					data.forEach(function(friend) {
 							addFriend(friend);

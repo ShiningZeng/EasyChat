@@ -68,14 +68,6 @@ export class InterfaceFooter extends Component {
 				if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
 					let data = JSON.parse(xhr.responseText);
 					const {users:{current}} = that.props;
-					// socket.emit('sendFile', {
-					// 	source:NAME,
-					// 	filePath: data.filePath, 
-					// 	fileName: data.fileName, 
-					// 	room: current,
-					// 	imgsrc: PHOTO
-					// });
-					// const msg = "fileFiled[filename:"+data.fileName+","+"filePath:"+data.filePath+","+fileType
 					const msg = {
 						fileName: data.fileName,
 						filePath: data.filePath
@@ -95,7 +87,6 @@ export class InterfaceFooter extends Component {
 		xhr.send(data);
 	}
 	sendMessage() {
-		//const ul =  this.refs.ul;
 		document.getElementById('chatUl').style.bottom= "0px";
 		const inputarea = this.refs.inputarea;
 		let msg = inputarea.innerHTML;

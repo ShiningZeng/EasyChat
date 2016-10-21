@@ -81,6 +81,23 @@
 	position: relative;
 	height: 65%;
 	overflow: hidden;
+	>div.func-reminder {
+		position: absolute;
+		top: 100px;
+		height: 100px;
+		width: 100%;
+		font-size: 16pt;
+		color: #fff;
+		text-align: center;
+		background: -webkit-linear-gradient(left, #afafc8, #0b0c0b , #afafc8); /* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(right, #afafc8, #0b0c0b , #afafc8); /* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(right, #afafc8, #0b0c0b , #afafc8); /* Firefox 3.6 - 15 */
+		background: linear-gradient(to right, #afafc8, #0b0c0b , #afafc8); /* 标准的语法 */
+		opacity: .2;
+		line-height: 100px;
+		cursor: pointer;
+		z-index: 1;
+	}
 	div.add-friend {
 		@include absolute(right, left);
 		top: 10px;

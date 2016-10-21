@@ -6,12 +6,14 @@ export class InterfaceHeader extends Component {
 	    super(props);
 	}
 	componentDidMount() {
-
+		
 	}
+	
 	render() {
 		const {users:{current, count, chatList}} = this.props;
 		return (<div id='interface-header'>
 					<p><span>{current}</span>{chatList[current].type == "PUBLIC" ? (<span className="online-state"> 在线人数({count})</span>) : null}</p>
+					
 				</div>)
 	}
 }
