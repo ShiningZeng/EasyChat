@@ -1,0 +1,584 @@
+@charset "UTF-8";
+@import url(font-awesome/css/font-awesome.css);
+#chat-interface {
+  float: left;
+  height: 100%;
+  width: 550px;
+  background-color: whitesmoke; }
+  #chat-interface:after {
+    content: "";
+    clear: both; }
+
+#chat-interface > div {
+  float: left;
+  width: 100%; }
+
+#chat-list {
+  float: left;
+  height: 100%;
+  width: 250px;
+  background-color: #eaeaea; }
+
+#chat-list > div.user-search {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  width: 100%;
+  height: 50px; }
+  #chat-list > div.user-search input {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    width: 188px;
+    height: 20px;
+    border: 1px solid #cac1c1;
+    background-color: #efefef; }
+  #chat-list > div.user-search input:focus {
+    outline-color: #cac1c1; }
+  #chat-list > div.user-search i.fa-search {
+    position: absolute;
+    left: 182px;
+    top: 15px;
+    font-size: 11pt;
+    color: #bbb; }
+  #chat-list > div.user-search > div {
+    position: absolute;
+    left: 210px;
+    top: 13px;
+    height: 20px;
+    width: 20px;
+    line-height: 16px;
+    font-size: 16pt;
+    text-align: center;
+    background-color: gainsboro;
+    cursor: pointer; }
+  #chat-list > div.user-search > div:active {
+    background-color: #bbb; }
+
+#chat-list > div.userlist-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 50 * 1px);
+  overflow: hidden; }
+
+#chat-list > div.userlist-wrap ul.user-list {
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%; }
+  #chat-list > div.userlist-wrap ul.user-list li {
+    position: relative;
+    width: 100%;
+    height: 60px; }
+    #chat-list > div.userlist-wrap ul.user-list li img.chat-list-photo {
+      float: left;
+      margin-top: 8px;
+      margin-left: 12px;
+      margin-right: 8px;
+      width: 44px;
+      height: 44px; }
+    #chat-list > div.userlist-wrap ul.user-list li span.chat-list-username {
+      float: left;
+      margin-top: 8px;
+      width: 150px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      line-height: 24px;
+      font-size: 11pt; }
+    #chat-list > div.userlist-wrap ul.user-list li p.chat-list-brief {
+      float: left;
+      margin: 0;
+      display: inline-block;
+      width: 150px;
+      text-overflow: ellipsis;
+      line-height: 20px;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 10pt;
+      color: #777; }
+    #chat-list > div.userlist-wrap ul.user-list li p.frendslist-username {
+      height: 100%;
+      line-height: 60px;
+      margin: 0; }
+    #chat-list > div.userlist-wrap ul.user-list li div.chat-list-unread {
+      position: absolute;
+      left: 40px;
+      top: 1px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #f00;
+      color: #fff;
+      font-size: 8pt;
+      line-height: 15px;
+      text-align: center; }
+    #chat-list > div.userlist-wrap ul.user-list li div.chat-list-mask {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%; }
+  #chat-list > div.userlist-wrap ul.user-list li.active {
+    background-color: #c1c8d3; }
+  #chat-list > div.userlist-wrap ul.user-list li:hover {
+    background-color: #d8dcdf; }
+
+html, body {
+  font-family: Microsoft YaHei, 微软雅黑;
+  margin: 0;
+  padding: 0; }
+
+li {
+  list-style: none; }
+
+.o-hidden {
+  opacity: 0; }
+
+.d-hidden {
+  display: none; }
+
+#container {
+  position: relative;
+  top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 850px;
+  height: 600px;
+  border: 1px solid #ccc;
+  border-radius: 2px; }
+
+@media screen and (max-width: 767px) {
+  #container {
+    top: 0;
+    width: 100%; } }
+
+.react-wrap {
+  width: 100%;
+  height: 100%; }
+
+#login {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  width: 300px;
+  height: 500px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  font-size: 11pt; }
+  #login > form {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    letter-spacing: 2px;
+    color: #456;
+    font-size: 10pt; }
+    #login > form input {
+      display: inline-block;
+      margin-bottom: 8px;
+      width: 100%;
+      border: none;
+      outline: none;
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #789;
+      text-align: center;
+      font-family: Microsoft YaHei, 微软雅黑;
+      font-size: 10pt;
+      color: #456; }
+    #login > form input[disabled=disabled] {
+      background-color: #eee;
+      color: #aaa; }
+  #login p.reminder {
+    margin: 0;
+    color: #f00;
+    font-size: 10pt;
+    text-align: center; }
+  #login div.button-container {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto; }
+    #login div.button-container > button {
+      display: inline-block;
+      width: 55px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      background-color: #5371eb;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 10pt;
+      text-indent: 2px;
+      border: none; }
+      #login div.button-container > button:hover {
+        background-color: #2f428e; }
+      #login div.button-container > button a {
+        color: #fff;
+        text-decoration: none; }
+    #login div.button-container > button[type=reset] {
+      position: absolute;
+      left: 0; }
+    #login div.button-container > button[type=submit] {
+      position: absolute;
+      right: 0; }
+    #login div.button-container > button.jumpTo {
+      position: relative;
+      top: 45px;
+      width: 100%; }
+  #login > h1 {
+    color: #7a6eda;
+    padding: 20px;
+    text-align: center; }
+
+#menu-nav {
+  float: left;
+  height: 100%;
+  width: 50px;
+  background-color: #3e3e40; }
+
+#menu-nav > ul {
+  margin: 0;
+  padding: 0;
+  margin-top: 12px; }
+
+#menu-nav > ul li {
+  text-align: center;
+  width: 100%;
+  height: 50px;
+  cursor: pointer; }
+  #menu-nav > ul li > img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer; }
+  #menu-nav > ul li i {
+    font-size: 18pt;
+    color: #14d212; }
+
+#register {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  width: 300px;
+  height: 500px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  font-size: 11pt; }
+  #register > form {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    letter-spacing: 2px;
+    color: #456;
+    font-size: 10pt; }
+    #register > form input {
+      display: inline-block;
+      margin-bottom: 8px;
+      width: 100%;
+      border: none;
+      outline: none;
+      background-color: #f5f5f5;
+      border-bottom: 1px solid #789;
+      text-align: center;
+      font-family: Microsoft YaHei, 微软雅黑;
+      font-size: 10pt;
+      color: #456; }
+    #register > form input[disabled=disabled] {
+      background-color: #eee;
+      color: #aaa; }
+  #register p.reminder {
+    margin: 0;
+    color: #f00;
+    font-size: 10pt;
+    text-align: center; }
+  #register div.button-container {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto; }
+    #register div.button-container > button {
+      display: inline-block;
+      width: 55px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      background-color: #5371eb;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 10pt;
+      text-indent: 2px;
+      border: none; }
+      #register div.button-container > button:hover {
+        background-color: #2f428e; }
+      #register div.button-container > button a {
+        color: #fff;
+        text-decoration: none; }
+    #register div.button-container > button[type=reset] {
+      position: absolute;
+      left: 0; }
+    #register div.button-container > button[type=submit] {
+      position: absolute;
+      right: 0; }
+    #register div.button-container > button.jumpTo {
+      position: relative;
+      top: 45px;
+      width: 100%; }
+  #register #selectphoto {
+    width: 100%;
+    height: 300px;
+    background-color: #f5f5f5; }
+    #register #selectphoto > img.register-photo {
+      float: left;
+      margin-left: 1%;
+      margin-top: 1%;
+      width: 32%;
+      height: 32%;
+      cursor: pointer;
+      z-index: -1; }
+      #register #selectphoto > img.register-photo.register-img-active {
+        box-shadow: 0px 0px 2px 2px orange; }
+  #register > p {
+    margin: 0;
+    padding: 5px;
+    color: #456;
+    text-align: center; }
+
+#interface-body {
+  position: relative;
+  height: 65%;
+  overflow: hidden; }
+  #interface-body div.add-friend {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60px;
+    height: 20px;
+    border-radius: 10px;
+    font-size: 6pt;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    background-color: #baf;
+    cursor: pointer;
+    z-index: 1; }
+  #interface-body div.receive-add-fri {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    color: #000;
+    background-color: #abf;
+    font-size: 10pt;
+    opacity: .7; }
+    #interface-body div.receive-add-fri > span {
+      position: absolute;
+      top: 0;
+      right: 50px;
+      height: 20px;
+      width: 40px;
+      line-height: 20px;
+      border-radius: 5px;
+      cursor: pointer; }
+    #interface-body div.receive-add-fri > span:last-child {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      height: 20px;
+      width: 40px;
+      line-height: 20px;
+      border-radius: 5px;
+      cursor: pointer; }
+    #interface-body div.receive-add-fri > p {
+      display: inline; }
+    #interface-body div.receive-add-fri span:hover {
+      background-color: #2382e1;
+      color: #fff; }
+  #interface-body > ul {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 90%;
+    min-height: 100%; }
+  #interface-body > ul li.chat-record-list-left {
+    clear: both; }
+    #interface-body > ul li.chat-record-list-left > img {
+      float: left;
+      width: 40px;
+      height: 40px; }
+    #interface-body > ul li.chat-record-list-left > div {
+      float: left;
+      margin-left: 10px;
+      margin-right: 10px; }
+      #interface-body > ul li.chat-record-list-left > div > span {
+        padding-left: 5px;
+        padding-right: 5px;
+        display: block;
+        text-align: left; }
+      #interface-body > ul li.chat-record-list-left > div > p {
+        position: relative;
+        min-height: 20px;
+        max-width: 200px;
+        margin-top: 5px;
+        padding: 5px;
+        word-break: break-word;
+        border-radius: 5px;
+        box-shadow: 0 0 2px #aaa;
+        left: 8px;
+        background-color: #fff; }
+        #interface-body > ul li.chat-record-list-left > div > p > span {
+          position: absolute;
+          top: 7px;
+          display: block;
+          width: 0px;
+          height: 0px;
+          border-style: solid; }
+          #interface-body > ul li.chat-record-list-left > div > p > span.triangle-in {
+            border-width: 5px 8px 5px 0;
+            border-color: transparent #aaa transparent transparent;
+            left: -9px;
+            opacity: .8; }
+          #interface-body > ul li.chat-record-list-left > div > p > span.triangle-out {
+            border-width: 5px 8px 5px 0;
+            border-color: transparent #fff transparent transparent;
+            left: -8px; }
+  #interface-body > ul li.chat-record-list-right {
+    clear: both; }
+    #interface-body > ul li.chat-record-list-right > img {
+      float: right;
+      width: 40px;
+      height: 40px; }
+    #interface-body > ul li.chat-record-list-right > div {
+      float: right;
+      margin-left: 10px;
+      margin-right: 10px; }
+      #interface-body > ul li.chat-record-list-right > div > span {
+        padding-left: 5px;
+        padding-right: 5px;
+        display: block;
+        text-align: right; }
+      #interface-body > ul li.chat-record-list-right > div > p {
+        position: relative;
+        min-height: 20px;
+        max-width: 200px;
+        margin-top: 5px;
+        padding: 5px;
+        word-break: break-word;
+        border-radius: 5px;
+        box-shadow: 0 0 2px #aaa;
+        right: 8px;
+        background-color: #28cb40; }
+        #interface-body > ul li.chat-record-list-right > div > p > span {
+          position: absolute;
+          top: 7px;
+          display: block;
+          width: 0px;
+          height: 0px;
+          border-style: solid; }
+          #interface-body > ul li.chat-record-list-right > div > p > span.triangle-in {
+            border-width: 5px 0 5px 8px;
+            border-color: transparent transparent transparent #aaa;
+            right: -9px;
+            opacity: .8; }
+          #interface-body > ul li.chat-record-list-right > div > p > span.triangle-out {
+            border-width: 5px 0 5px 8px;
+            border-color: transparent transparent transparent #28cb40;
+            right: -8px; }
+
+#interface-footer {
+  position: relative;
+  height: 25%;
+  background-color: #f9f9f9; }
+  #interface-footer > div.interface-footer-multiFunc {
+    width: 100%;
+    height: 40px; }
+    #interface-footer > div.interface-footer-multiFunc ul {
+      margin: 0;
+      height: 100%;
+      padding-left: 10px; }
+    #interface-footer > div.interface-footer-multiFunc ul li {
+      display: inline-block;
+      margin-left: 15px;
+      padding-top: 7px;
+      height: 100%;
+      vertical-align: middle;
+      cursor: pointer;
+      font-size: 13pt;
+      color: #777; }
+    #interface-footer > div.interface-footer-multiFunc ul li:hover {
+      color: #aaa; }
+  #interface-footer > div.emoji-container {
+    position: absolute;
+    bottom: 150px;
+    left: -50px;
+    width: 550px;
+    height: 220px;
+    border: 1px solid #aaa;
+    border-radius: 2px; }
+    #interface-footer > div.emoji-container > img {
+      width: 37px;
+      height: 37px;
+      cursor: pointer;
+      margin: 1px; }
+    #interface-footer > div.emoji-container > img:hover {
+      transform: scale(2);
+      border: 1px solid #aaa; }
+  #interface-footer > div.file-container {
+    position: absolute;
+    bottom: 150px;
+    border: 1px solid #aaa;
+    border-radius: 2px; }
+    #interface-footer > div.file-container input[type=file] {
+      width: 100px; }
+  #interface-footer > div.chat-inputarea {
+    position: absolute;
+    bottom: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: calc(100% - 32 * 1px);
+    height: calc(100% - 40 * 1px);
+    border: none;
+    outline-color: #f9f9f9;
+    background-color: #f9f9f9;
+    overflow: hidden; }
+  #interface-footer > div.interface-footer-send {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 70px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    font-size: 11pt;
+    border: 1px solid #ddd;
+    border-radius: 1px;
+    cursor: pointer; }
+    #interface-footer > div.interface-footer-send:hover {
+      color: #fff;
+      background-color: #3dce3d; }
+
+#interface-header {
+  height: 10%; }
+  #interface-header > p {
+    text-align: center; }
+    #interface-header > p > span {
+      cursor: pointer; }
+    #interface-header > p > span.online-state {
+      font-size: 10pt; }
