@@ -20,8 +20,10 @@ export class ChatList extends Component {
 			const username = e.target.getAttribute('data-username');
 			const {changeRoom, changeUnread, appState, addUser, users:{chatList, friends}} = this.props;
 			if(!chatList[username]) {
+				console.log(chatList);
 				addUser(Object.assign({},friends[username], {fristate:'yes'}));
 			}
+			console.log(chatList);
 			changeRoom(username);
 			changeUnread(username);
 	    }

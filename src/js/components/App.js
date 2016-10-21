@@ -16,17 +16,20 @@ export class App extends Component {
 			console.log('connect success');
 			socket.emit('user join',{username: NAME});
 		});
-		const {users, addUser, addRecord, changeUnread, systemBroadcast, users:{chatList}} = this.props;
+		const {addUser} = this.props;
 		addUser({
 			username:NAME,
 			photo:PHOTO
 		})
 		socket.on('resMsg', (data) => {
-			if(!chatList[data.room])
+			const {addUser, users:{chatList}} = this.props;
+			if(!chatList[data.room]) {
 				addUser({
 					username: data.room,
 					photo: data.imgsrc
 				});
+			}
+				
 		    addRecord({
 		    	room: data.room,
 		        username: data.source,
@@ -39,7 +42,7 @@ export class App extends Component {
 		//处理添加好友的请求
 		socket.on('resAddFri', (data) => {
 			// receiveAddFri.className = receiveAddFri.className.replace(" d-hidden", "");
-			const {changeFristate, changeRoom, addUser, users:{chatList, userlist}} = this.props;
+			const {changeFristate, addUser, users:{userlist}} = this.props;
 				let flag = true;
 				userlist.forEach(function(_username){
 					if(_username == data.source)
@@ -69,6 +72,7 @@ export class App extends Component {
 			addFriend(friend);
 		});
 		socket.on('systemBroadcast', (msg) => {
+			const {systemBroadcast} = this.props;
 			console.log(msg)
 			systemBroadcast(msg);
 		})
@@ -77,11 +81,11 @@ export class App extends Component {
 	handlekeypress() {
 	}
 	initFriendList() {
-		const {addFriend} = this.props;
 		const xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4) {
 				if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+					const {addFriend} = this.props;
 					let data = JSON.parse(xhr.responseText);
 					data.forEach(function(friend) {
 							addFriend(friend);

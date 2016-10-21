@@ -30,6 +30,7 @@ module.exports = function(server) {
 	    })
 	    socket.on('postMsg', function(data) {
 	        log('postMsg');
+	        console.log(data)
 	        if(data.room == '公共聊天室') {
 	        	io.sockets.emit('resMsg', data);
 	        } else {
