@@ -11,6 +11,7 @@ window.onload = function() {
 			}
 		}
 		console.log(tmp[0], tmp[1])
+		return false;
 		return flag;
 	};
 };
