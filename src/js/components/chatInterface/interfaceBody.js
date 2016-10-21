@@ -22,38 +22,6 @@ export class InterfaceBody extends Component {
 		const receiveAddFri = this.refs.receiveAddFri;
 		this.receiveAddFriClick= this.receiveAddFriClick.bind(this);
 		receiveAddFri.addEventListener('click', this.receiveAddFriClick, false);
-		//处理添加好友的请求
-		socket.on('resAddFri', (data) => {
-			// receiveAddFri.className = receiveAddFri.className.replace(" d-hidden", "");
-			const {changeFristate, changeRoom, addUser, users:{chatList, userlist}} = this.props;
-				let flag = true;
-				userlist.forEach(function(_username){
-					if(_username == data.source)
-						flag = false;
-				})
-				if(flag) {
-					addUser({
-						username: data.source,
-						photo: data.photo
-					});
-				}
-			changeFristate({
-				username: data.source,
-				fristate: 'procedure'
-			})
-		});
-		socket.on('addFriSuccess', (data) => {
-			const {addFriend, changeFristate, users:{chatList}} = this.props;
-			const friend = {
-				username:data.source,
-				photo: chatList[data.source].photo
-			};
-			changeFristate({
-				username: data.source,
-				fristate: 'yes'
-			})
-			addFriend(friend);
-		})
 	}
 
 	receiveAddFriClick(e) {

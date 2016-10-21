@@ -48,11 +48,6 @@ const AppComponent = connect(
 	)(App);
 
 
-//socket连接成功提示
-socket.on('connect', function(){
-	console.log('connect success');
-	socket.emit('user join',{username: NAME});
-});
 
 render(
 	<Provider store={store}>

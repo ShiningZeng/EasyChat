@@ -9,9 +9,9 @@ export class InterfaceHeader extends Component {
 
 	}
 	render() {
-		const {users:{current}} = this.props;
+		const {users:{current, count, chatList}} = this.props;
 		return (<div id='interface-header'>
-					<p><span>{current}</span></p>
+					<p><span>{current}</span>{chatList[current].type == "PUBLIC" ? (<span className="online-state"> 在线人数({count})</span>) : null}</p>
 				</div>)
 	}
 }

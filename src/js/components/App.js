@@ -11,13 +11,17 @@ export class App extends Component {
 	}
 	componentDidMount() {
 		this.initFriendList();
-		const {addUser} = this.props;
+		//socket连接成功提示
+		socket.on('connect', function(){
+			console.log('connect success');
+			socket.emit('user join',{username: NAME});
+		});
+		const {users, addUser, addRecord, changeUnread, systemBroadcast, users:{chatList}} = this.props;
 		addUser({
 			username:NAME,
 			photo:PHOTO
 		})
 		socket.on('resMsg', (data) => {
-			const {users, addUser, addRecord, changeUnread, users:{chatList}} = this.props;
 			if(!chatList[data.room])
 				addUser({
 					username: data.room,
@@ -32,6 +36,43 @@ export class App extends Component {
 		    });
 		    changeUnread(data.room);
 		});
+		//处理添加好友的请求
+		socket.on('resAddFri', (data) => {
+			// receiveAddFri.className = receiveAddFri.className.replace(" d-hidden", "");
+			const {changeFristate, changeRoom, addUser, users:{chatList, userlist}} = this.props;
+				let flag = true;
+				userlist.forEach(function(_username){
+					if(_username == data.source)
+						flag = false;
+				})
+				if(flag) {
+					addUser({
+						username: data.source,
+						photo: data.photo
+					});
+				}
+			changeFristate({
+				username: data.source,
+				fristate: 'procedure'
+			})
+		});
+		socket.on('addFriSuccess', (data) => {
+			const {addFriend, changeFristate, users:{chatList}} = this.props;
+			const friend = {
+				username:data.source,
+				photo: chatList[data.source].photo
+			};
+			changeFristate({
+				username: data.source,
+				fristate: 'yes'
+			})
+			addFriend(friend);
+		});
+		socket.on('systemBroadcast', (msg) => {
+			console.log(msg)
+			systemBroadcast(msg);
+		})
+		
 	}
 	handlekeypress() {
 	}

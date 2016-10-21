@@ -1,5 +1,6 @@
 import {combineReducers} from "Redux";
-import {ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD, ADD_FRIEND, CHANGE_LIST, CHANGE_FRISTATE} from '../actions/action';
+import {ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD, ADD_FRIEND,
+ CHANGE_LIST, CHANGE_FRISTATE, SYSTEM_BROADCAST} from '../actions/action';
 import React from 'react';
 import {NAME} from '../main';
 
@@ -16,7 +17,8 @@ const initState = {
 	userlist:["公共聊天室"],
 	friends:{},
 	friendList:[],
-	current:'公共聊天室'
+	current:'公共聊天室',
+	count:0
 }
 //辅助函数
 function transString(text) {
@@ -107,10 +109,11 @@ function users(state=initState, action) {
 			temp4[action.friend.username] = action.friend;
 			return Object.assign({},state, {friends:temp4}, {friendList: [...state.friendList,action.friend.username]});
 		case CHANGE_FRISTATE:
-			console.log(action);
 			const ctemp2 = Object.assign({}, state.chatList);
 			ctemp2[action.fristate.username].fristate = action.fristate.fristate;
 			return Object.assign({}, state, {chatList: ctemp2});
+		case SYSTEM_BROADCAST:
+			return Object.assign({}, state, {count: action.message.count});
 		default: return state;
 	}
 }

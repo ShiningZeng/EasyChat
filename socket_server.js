@@ -8,17 +8,25 @@ module.exports = function(server) {
 	}
 
 
-	var users = {};
 	var usockets = {};
-
+	var count = 0;
 	var io = require('socket.io').listen(server);
 
 	io.sockets.on('connection', function(socket){
 	    socket.on('user join', function(data) {
 	    	log('user '+data.username+' joins.');
+	    	count++;
 	    	var username = data.username;
-		    users[username] = username;
+		    socket.username = username;
 		    usockets[username] = socket;
+		    socket.broadcast.emit('systemBroadcast', {
+				message: username+"加入了聊天室",
+				count: count
+			});
+			socket.emit('systemBroadcast', {
+				message: username+"加入了聊天室",
+				count: count
+			});
 	    })
 	    socket.on('postMsg', function(data) {
 	        log('postMsg');
@@ -47,32 +55,15 @@ module.exports = function(server) {
 	    	log('agreeAddFri');
 	    	usockets[data.target].emit('addFriSuccess',data);
 	    })
+	    socket.on('disconnect', function() {
+			log(socket.username+' leaves.');
+			count--;
+			socket.broadcast.emit('systemBroadcast', {
+				message: socket.username+"离开了聊天室",
+				count: count
+			});
+			delete usockets[socket.username];
+		});
 	})
-	io.sockets.on('disconnect', function() {
-		log('disconnect')
-	    // if (username) {
-	    //     counter--;
-	    //     delete users[username];
-	    //     delete usocket[username];
-	    //     if (home.name == username) {
-	    //         homeLeave(username);
-	    //     }
-	    //     sendmsg({
-	    //         type: 0,
-	    //         msg: "用户<b>" + username + "</b>离开聊天室",
-	    //         counter: counter,
-	    //         users: users
-	    //     })
-	    // }
-	});
 
-	function sendUserMsg(data) {
-	    if (data.to in usersocket) {
-	        console.log('================')
-	        console.log('to' + data.to, data);
-	        usocket[data.to].emit('to' + data.to, data);
-	        usocket[data.user].emit('to' + data.user, data);
-	        console.log('================')
-	    }
-	}
 }

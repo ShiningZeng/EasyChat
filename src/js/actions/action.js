@@ -131,3 +131,19 @@ export function changeFristate(fristate) {
     dispatch(change_fristate(fristate));
   }
 }
+
+
+export const SYSTEM_BROADCAST = "SYSTEM_BROADCAST";
+
+export function system_broadcast(message) {
+  return {
+    type: SYSTEM_BROADCAST,
+    message
+  }
+}
+
+export function systemBroadcast(message) {
+  return (dispatch, getState) =>{
+    dispatch(system_broadcast(message));
+  }
+}
