@@ -603,22 +603,3 @@ li {
       cursor: pointer; }
     #interface-header > p > span.online-state {
       font-size: 10pt; }
-  #interface-header > div.func-reminder {
-    position: absolute;
-    bottom: 0;
-    height: 20px;
-    width: 100%;
-    font-size: 8pt;
-    color: #f695a7;
-    text-align: center; }
-    #interface-header > div.func-reminder > p {
-      margin: 0;
-      display: inline-block; }
-    #interface-header > div.func-reminder > span {
-      display: inline-block;
-      width: 35px;
-      margin-left: 10px;
-      cursor: pointer;
-      color: #fff;
-      background-color: #f695a7;
-      border-radius: 3px; }

@@ -15,6 +15,7 @@ var plugins = require('gulp-load-plugins')();
 var source = require('vinyl-source-stream');//vinyl-source-stream是一个文件流的处理插件
 var path = require('path');
 var gutil = require('gulp-util');
+var envify = require('gulp-envify');
 
 // 编译Sass
 gulp.task('sass', function() {
@@ -73,6 +74,16 @@ gulp.task('lint1', function() {
         .pipe(gulp.dest('./dist/js'))
 })
 
+gulp.task('compress', function() {
+    gulp.src('./dist/js/bundle.js')
+        .pipe(uglify())
+        .pipe(envify({
+              NODE_ENV: 'production'
+            }))
+        .pipe(rename('bundle.min.js'))
+        .pipe(gulp.dest('./dist/js'))
+})
+
 //gulp 默认任务
 gulp.task('default', function(){
     gulp.run('sass', 'scripts', 'lint', 'lint1');
@@ -94,21 +105,3 @@ gulp.task('default', function(){
 
 
 
-
-//检查js脚本的任务
-// gulp.task('lint', function() {
-//     gulp.src('./app/list.js') //可配置你需要检查脚本的具体名字。
-//         .pipe(jshint())
-//         .pipe(jshint.reporter('default'));
-// });
-
-// gulp.task('scripts',function(){
-//     gulp.src('./src/js/mainES6.js', { read: false })
-//     .pipe(browserify({
-//       transform: ['babelify']
-//     }))
-//     .on('error', function(err){console.log(err.message)})
-//     .pipe(rename('bundle.js'))
-//     .pipe(gulp.dest('dist/js'))
-
-// });
