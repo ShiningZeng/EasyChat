@@ -2,12 +2,12 @@ var users = {
 	userList:{},
 	userArray:[],
 	addFriend: function(username,friend) {
-		if(this.userList[username].indexof(friend) == -1) {
+		if(this.userList[username].friendList.indexOf(friend) == -1) {
 			this.userList[username].friendList.push(friend);
 			this.userList[friend].friendList.push(username);
-			return username+"adds friend"+friend+"successfully";
+			return "success";
 		} else {
-			return username+"had added"+friend+"previously";
+			return "failed";
 		}
 		
 	},

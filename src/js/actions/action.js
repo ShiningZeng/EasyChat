@@ -30,7 +30,8 @@ const defaultUser = {
       photo:"",
       record:[],
       DOM:[],
-      unread:0
+      unread:0,
+      fristate:"not" // not: 不是好友 ; procedure: 请求处理中 ; yes: 是好友
     };
 export function add_user(user) {
   return {
@@ -115,3 +116,18 @@ export function changeList(show) {
 }
 
 
+export const CHANGE_FRISTATE = "CHANGE_FRISTATE";
+
+
+export function change_fristate(fristate) {
+  return {
+    type: CHANGE_FRISTATE,
+    fristate
+  }
+}
+
+export function changeFristate(fristate) {
+  return (dispatch, getState) =>{
+    dispatch(change_fristate(fristate));
+  }
+}

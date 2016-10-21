@@ -1,5 +1,5 @@
 import {combineReducers} from "Redux";
-import {ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD, ADD_FRIEND, CHANGE_LIST} from '../actions/action';
+import {ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD, ADD_FRIEND, CHANGE_LIST, CHANGE_FRISTATE} from '../actions/action';
 import React from 'react';
 import {NAME} from '../main';
 
@@ -105,7 +105,12 @@ function users(state=initState, action) {
 		case ADD_FRIEND:
 			const temp4 = Object.assign({}, state.friends);
 			temp4[action.friend.username] = action.friend;
-			return Object.assign({},state, {friends:temp4},{friendList: [...state.friendList,action.friend.username]});
+			return Object.assign({},state, {friends:temp4}, {friendList: [...state.friendList,action.friend.username]});
+		case CHANGE_FRISTATE:
+			console.log(action);
+			const ctemp2 = Object.assign({}, state.chatList);
+			ctemp2[action.fristate.username].fristate = action.fristate.fristate;
+			return Object.assign({}, state, {chatList: ctemp2});
 		default: return state;
 	}
 }

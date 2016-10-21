@@ -39,7 +39,14 @@ module.exports = function(server) {
 	    		usockets[data.room].emit('resFile', data);
 	    	}
 	    })
-	    
+	    socket.on('addFri', function(data) {
+	    	log('addFri');
+	    	usockets[data.target].emit('resAddFri', data);
+	    })
+	    socket.on('agreeAddFri', function(data) {
+	    	log('agreeAddFri');
+	    	usockets[data.target].emit('addFriSuccess',data);
+	    })
 	})
 	io.sockets.on('disconnect', function() {
 		log('disconnect')

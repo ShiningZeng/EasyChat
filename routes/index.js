@@ -53,8 +53,9 @@ router.post('/initFriendList', function(req, res, next) {
 })
 
 router.post('/addFriend', function(req, res, next) {
-	var message = users.addFriend(req.body.username, req.body.friend);
-	res.json({message:message});
+	console.log(req.body);
+	users.addFriend(req.body.username, req.body.friend);
+	res.json(req.body);
 })
 
 router.post('/upload', multipartMiddleware, function(req, res, next) {

@@ -18,33 +18,79 @@ export class InterfaceBody extends Component {
 		const addFri = this.refs.addFri;
 		this.addFriendClick = this.addFriendClick.bind(this);
 		addFri.addEventListener('click', this.addFriendClick, false);
-		//初始化接受文件事件
-		const receiveFile = this.refs.receiveFile;
-		this.receiveFileClick= this.receiveFileClick.bind(this);
-		receiveFile.addEventListener('click', this.receiveFileClick, false);
-		socket.on('resFile', (data) => {
-			const fileDownload = this.refs.fileDownload;
-			const receiveFile = this.refs.receiveFile;
-			const fileReminder = this.refs.fileReminder;
-			fileDownload.href = data.filePath;
-			receiveFile.className = receiveFile.className.replace(" d-hidden", "");
-			if(data.room == "公共聊天室") {
-				fileReminder.innerText = data.source+"共享了文件: "+data.fileName;
-			}
-			else {
-				fileReminder.innerText = "对方向您发送了文件: "+data.fileName;
-			}
+		//初始化处理添加好友请求事件
+		const receiveAddFri = this.refs.receiveAddFri;
+		this.receiveAddFriClick= this.receiveAddFriClick.bind(this);
+		receiveAddFri.addEventListener('click', this.receiveAddFriClick, false);
+		//处理添加好友的请求
+		socket.on('resAddFri', (data) => {
+			// receiveAddFri.className = receiveAddFri.className.replace(" d-hidden", "");
+			const {changeFristate, changeRoom, addUser, users:{chatList, userlist}} = this.props;
+				let flag = true;
+				userlist.forEach(function(_username){
+					if(_username == data.source)
+						flag = false;
+				})
+				if(flag) {
+					addUser({
+						username: data.source,
+						photo: data.photo
+					});
+				}
+			changeFristate({
+				username: data.source,
+				fristate: 'procedure'
+			})
 		});
+		socket.on('addFriSuccess', (data) => {
+			const {addFriend, changeFristate, users:{chatList}} = this.props;
+			const friend = {
+				username:data.source,
+				photo: chatList[data.source].photo
+			};
+			changeFristate({
+				username: data.source,
+				fristate: 'yes'
+			})
+			addFriend(friend);
+		})
 	}
 
-	receiveFileClick(e) {
+	receiveAddFriClick(e) {
 		e = e || window.event;//这一行及下一行是为兼容IE8及以下版本
 		var target = e.target || e.srcElement;
-		if(e.target && (e.target.nodeName == 'SPAN' || e.target.nodeName == 'A')) {
-			if (e.target.innerText == "接收") {
-				e.target.className+=" d-hidden";
+		if(e.target && (e.target.nodeName == 'SPAN')) {
+			if (e.target.innerText == "接受") {
+				const receiveAddFri = this.refs.receiveAddFri;
+				const {addFriend, users:{friends, friendList, current, chatList}} = this.props;
+				//向服务器发送添加好友的请求
+				const xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4) {
+						if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+							let data = JSON.parse(xhr.responseText);
+							const friend = {
+								username:data.friend,
+								photo: chatList[data.friend].photo
+							};
+							addFriend(friend);
+							receiveAddFri.className += " d-hidden";
+							socket.emit('agreeAddFri', {
+								source: NAME,
+								target: data.friend
+							})
+						} else {
+							console.log("add friend failed!");
+						}
+					}
+				}
+				xhr.open("post", "/addFriend", true);
+				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				let data = "username="+NAME+"&friend="+current;
+				xhr.send(data);
 			} else if (e.target.innerText == "取消") {
-				e.target.className+=" d-hidden";
+				const receiveAddFri = this.refs.receiveAddFri;
+				receiveAddFri.className += " d-hidden";
 			}
 		}
 	}
@@ -52,26 +98,11 @@ export class InterfaceBody extends Component {
 	addFriendClick(e) {
 		const {addFriend, users:{friends, friendList, current, chatList}} = this.props;
 		if(!friends[current]) {//好友不存在该用户才添加好友
-			const friend = {
-				username:current,
+			socket.emit('addFri', {
+				source: NAME,
+				target: current,
 				photo: chatList[current].photo
-			};
-			addFriend(friend);
-			const xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4) {
-					if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-						let data = JSON.parse(xhr.responseText);
-						console.log(data.message);
-					} else {
-						console.log("init failed!");
-					}
-				}
-			}
-			xhr.open("post", "/addFriend", true);
-			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			let data = "username="+NAME+"&friend="+friend.username;
-			xhr.send(data);
+			});
 		}
 	}
 	handleMouseWheel(e) {
@@ -115,17 +146,20 @@ export class InterfaceBody extends Component {
 	render() {
 		const {users:{current, chatList, friends}} = this.props;
 		let addFri_className = "add-friend";
-		if(chatList[current].type == 'PUBLIC' || friends[current])
+		if(chatList[current].type == 'PUBLIC' || friends[current] || chatList[current].fristate=='procedure' || chatList[current].fristate=='yes')
 			addFri_className += " d-hidden";
-		let receiveFile_className = "receive-file d-hidden";
+
+		let receiveAddFri_className = "receive-add-fri";
+		if(chatList[current].type == 'PUBLIC' || chatList[current].fristate != 'procedure')
+			receiveAddFri_className += " d-hidden";
 
 		return (<div id='interface-body' ref="ulwrap">
 					<ul id='chatUl' ref="ul">
 						{chatList[current]?chatList[current].DOM:[]}
 					</ul>
-					<div className={receiveFile_className} ref="receiveFile">
-						<p ref="fileReminder">对方向您传输了文件</p>
-						<span><a href="" ref="fileDownload" download>接收</a></span>
+					<div className={receiveAddFri_className} ref="receiveAddFri">
+						<p>对方请求添加您为好友</p>
+						<span ref="agreeAddFri">接受</span>
 						<span>取消</span>
 					</div>
 					<div className={addFri_className} ref="addFri">加为好友</div>

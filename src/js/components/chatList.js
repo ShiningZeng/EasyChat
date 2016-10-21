@@ -20,7 +20,7 @@ export class ChatList extends Component {
 			const username = e.target.getAttribute('data-username');
 			const {changeRoom, changeUnread, appState, addUser, users:{chatList, friends}} = this.props;
 			if(!chatList[username]) {
-				addUser(friends[username]);
+				addUser(Object.assign({},friends[username], {fristate:'yes'}));
 			}
 			changeRoom(username);
 			changeUnread(username);
@@ -80,7 +80,6 @@ export class ChatList extends Component {
 		} else {  // 好友列表
 			friendList.forEach(function(username) {
 				if(username != NAME) {
-					console.log(username)
 					let imgsrc = friends[username].photo;
 					usersDom.push((<li key={usersDom.length}>
 										<img src={imgsrc} className="chat-list-photo"/>
