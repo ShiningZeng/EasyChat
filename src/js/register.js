@@ -29,20 +29,32 @@ window.onload = function() {
 		    }
 		});
 
-		registerForm.onsubmit = function() {
-			var flag = true;
+		function validator(username, password, repeatpassword) {
 			var tmp = registerForm.elements;
 			for (var i in tmp) {
 				if(tmp[i].value === '') {
 					registerRemainder.innerText = '输入内容不能为空';
-					flag = false;
+					return false;
 				}
+			}
+
+			if (/^[a-zA-Z0-9]{1,8}$/.test(tmp[1].value) !== true) {
+				registerRemainder.innerText = '请输入1到8位由字母和数字组成的昵称';
+				return false;
+			}
+			if (/^[a-zA-Z0-9]{6,16}$/.test(tmp[2].value) !== true) {
+				registerRemainder.innerText = '请输入6到16位由字母和数字组成的密码';
+				return false;
 			}
 			if (tmp[2].value != tmp[3].value) {
 				registerRemainder.innerText = '输入的密码不一致';
-				flag = false;
+				return false;
 			}
-			return flag;
+
+		}
+
+		registerForm.onsubmit = function() {
+			return validator();
 		};
 	};
 	init();
