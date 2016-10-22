@@ -1,7 +1,6 @@
 node_modules/
 sessions/
-data/
-dist/js
+dist/js/
 dist/css/*.css
 dist/dir/*
 !dist/dir/.gitkeep
