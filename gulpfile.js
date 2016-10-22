@@ -76,10 +76,10 @@ gulp.task('lint1', function() {
 
 gulp.task('compress', function() {
     gulp.src('./dist/js/bundle.js')
-        .pipe(uglify())
         .pipe(envify({
               NODE_ENV: 'production'
             }))
+        .pipe(uglify())
         .pipe(rename('bundle.min.js'))
         .pipe(gulp.dest('./dist/js'))
 })

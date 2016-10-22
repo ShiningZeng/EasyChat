@@ -58,33 +58,38 @@ export class InterfaceFooter extends Component {
 	}
 	uploadFileClick(e) {
 		const files = this.refs.files;
-		const data = new FormData();
-		const that = this;
-		data.append("files", files.files[0]);
+		if(files.files[0].size <= 1*1024*1024) {
+			const data = new FormData();
+			const that = this;
+			data.append("files", files.files[0]);
 
-		const xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4) {
-				if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-					let data = JSON.parse(xhr.responseText);
-					const {users:{current}} = that.props;
-					const msg = {
-						fileName: data.fileName,
-						filePath: data.filePath
+			const xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+						let data = JSON.parse(xhr.responseText);
+						const {users:{current}} = that.props;
+						const msg = {
+							fileName: data.fileName,
+							filePath: data.filePath
+						}
+						socket.emit('postMsg', {
+							source:NAME,
+							message: msg,
+							room: current,
+							imgsrc: PHOTO
+						});
+					} else {
+						console.log("upload failed!");
 					}
-					socket.emit('postMsg', {
-						source:NAME,
-						message: msg,
-						room: current,
-						imgsrc: PHOTO
-					});
-				} else {
-					console.log("upload failed!");
 				}
 			}
+			xhr.open("post", "/upload", true);
+			xhr.send(data);
+		} else {
+			alert("请上传1M以内大小文件")
 		}
-		xhr.open("post", "/upload", true);
-		xhr.send(data);
+		
 	}
 	sendMessage() {
 		document.getElementById('chatUl').style.bottom= "0px";
