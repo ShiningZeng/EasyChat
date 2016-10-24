@@ -58,7 +58,8 @@ module.exports = function(server) {
 	    })
 	    socket.on('disconnect', function() {
 			log(socket.username+' leaves.');
-			count--;
+			if(count > 0)
+				count--;
 			socket.broadcast.emit('systemBroadcast', {
 				message: socket.username+"离开了聊天室",
 				count: count
@@ -66,5 +67,4 @@ module.exports = function(server) {
 			delete usockets[socket.username];
 		});
 	})
-
 }
