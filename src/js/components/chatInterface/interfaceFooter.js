@@ -7,16 +7,17 @@ export class InterfaceFooter extends Component {
 	}
 	componentDidMount() {
 		this.showFile();
-		this.showEmoji();
+		this.hideEmoji();
 		this.initEmoji();
 		//初始化表情点击事件
 		const emoji = this.refs.emoji;
-		this.showEmoji = this.showEmoji.bind(this);
-		emoji.addEventListener('click', this.showEmoji,false);
+		this.showHideEmoji = this.showHideEmoji.bind(this);
+		emoji.addEventListener('click', this.showHideEmoji,false);
 		//初始化表情点击事件
 		const emojiContainer = this.refs.emojiContainer;
 		this.chooseEmoji = this.chooseEmoji.bind(this);
 		emojiContainer.addEventListener('click', this.chooseEmoji,false);
+
 		const choseFile = this.refs.choseFile;
 		this.showFile = this.showFile.bind(this);
 		choseFile.addEventListener('click', this.showFile,false);
@@ -31,7 +32,8 @@ export class InterfaceFooter extends Component {
 
 		const inputarea = this.refs.inputarea;
 		this.quicksend = this.quicksend.bind(this);
-		inputarea.addEventListener('click', this.quicksend, false);
+		this.hideEmoji = this.hideEmoji.bind(this);
+		inputarea.addEventListener('click', this.hideEmoji, false);
 		inputarea.addEventListener('keydown', this.quicksend, false);
 	}
 	quicksend(e){
@@ -119,18 +121,26 @@ export class InterfaceFooter extends Component {
 		if(e.target && e.target.nodeName == 'IMG') {
 			const inputarea = this.refs.inputarea;
 			inputarea.appendChild(e.target.cloneNode());
-			this.showEmoji();
+			this.hideEmoji();
 	    }
 	}
-	showEmoji() {
+	showHideEmoji() {
 		const emojiContainer = this.refs.emojiContainer;
 		if(emojiContainer.style.display == "none")
 			emojiContainer.style.display = "";
 		else
 			emojiContainer.style.display = "none";
-		const sendMsg = this.refs.sendMsg;
 	}
-	
+	showEmoji() {
+		const emojiContainer = this.refs.emojiContainer;
+		if(emojiContainer.style.display == "none")
+			emojiContainer.style.display = "";
+	}
+	hideEmoji() {
+		const emojiContainer = this.refs.emojiContainer;
+		if(emojiContainer.style.display != "none")
+			emojiContainer.style.display = "none";
+	}
 	render() {
 		return (<div id='interface-footer'>
 					<div className='file-container' ref = "fileContainer">

@@ -38,8 +38,8 @@ window.onload = function() {
 				}
 			}
 
-			if (/^[a-zA-Z0-9]{1,8}$/.test(tmp[1].value) !== true) {
-				registerRemainder.innerText = '请输入1到8位由字母和数字组成的昵称';
+			if (/^[a-zA-Z0-9]{1,12}$/.test(tmp[1].value) !== true) {
+				registerRemainder.innerText = '请输入1到12位由字母和数字组成的昵称';
 				return false;
 			}
 			if (/^[a-zA-Z0-9]{6,16}$/.test(tmp[2].value) !== true) {
