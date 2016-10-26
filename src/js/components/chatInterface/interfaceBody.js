@@ -64,8 +64,13 @@ export class InterfaceBody extends Component {
 				let data = "username="+NAME+"&friend="+current;
 				xhr.send(data);
 			} else if (e.target.innerText == "取消") {
+				const {changeFristate, users:{current}} = this.props;
 				const receiveAddFri = this.refs.receiveAddFri;
 				receiveAddFri.className += " d-hidden";
+				changeFristate({
+					username: current,
+					fristate: 'not'
+				});
 			}
 		}
 	}

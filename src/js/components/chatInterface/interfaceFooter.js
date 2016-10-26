@@ -17,7 +17,7 @@ export class InterfaceFooter extends Component {
 		const emojiContainer = this.refs.emojiContainer;
 		this.chooseEmoji = this.chooseEmoji.bind(this);
 		emojiContainer.addEventListener('click', this.chooseEmoji,false);
-
+		//初始化文件选取事件
 		const choseFile = this.refs.choseFile;
 		this.showFile = this.showFile.bind(this);
 		choseFile.addEventListener('click', this.showFile,false);
@@ -29,7 +29,7 @@ export class InterfaceFooter extends Component {
 		const uploadFile = this.refs.uploadFile;
 		this.uploadFileClick  = this.uploadFileClick.bind(this);
 		uploadFile.addEventListener('click', this.uploadFileClick, false);
-
+		//初始化inputarea相关事件
 		const inputarea = this.refs.inputarea;
 		this.quicksend = this.quicksend.bind(this);
 		this.hideEmoji = this.hideEmoji.bind(this);
@@ -64,7 +64,6 @@ export class InterfaceFooter extends Component {
 			const data = new FormData();
 			const that = this;
 			data.append("files", files.files[0]);
-
 			const xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				if (xhr.readyState == 4) {

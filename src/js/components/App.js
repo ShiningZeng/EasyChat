@@ -16,11 +16,13 @@ export class App extends Component {
 			console.log('connect success');
 			socket.emit('user join',{username: NAME});
 		});
+		//添加自己到用户列表
 		const {addUser} = this.props;
 		addUser({
 			username:NAME,
 			photo:PHOTO
 		})
+		//处理接收到的消息
 		socket.on('resMsg', (data) => {
 			const {addUser,addRecord,changeUnread, users:{chatList}} = this.props;
 			if(!chatList[data.room]) {
@@ -59,6 +61,7 @@ export class App extends Component {
 				fristate: 'procedure'
 			})
 		});
+		//处理添加好友成功后的请求
 		socket.on('addFriSuccess', (data) => {
 			const {addFriend, changeFristate, users:{chatList}} = this.props;
 			const friend = {
@@ -71,6 +74,7 @@ export class App extends Component {
 			})
 			addFriend(friend);
 		});
+		//处理全局广播事件
 		socket.on('systemBroadcast', (msg) => {
 			const {systemBroadcast} = this.props;
 			console.log(msg)
@@ -78,9 +82,8 @@ export class App extends Component {
 		})
 		
 	}
-	handlekeypress() {
-	}
 	initFriendList() {
+		//向服务器请求好友列表
 		const xhr = new XMLHttpRequest();
 		const that = this;
 		xhr.onreadystatechange = function() {
@@ -104,7 +107,7 @@ export class App extends Component {
 		xhr.send(data);
 	}
 	render() {
-		return (<div className='react-wrap' onKeyPress={this.handlekeypress}>
+		return (<div className='react-wrap'>
 					<MenuNav {...this.props}/>
 					<ChatList {...this.props}/>
 					<ChatInterface {...this.props}/>

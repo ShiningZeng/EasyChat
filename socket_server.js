@@ -1,4 +1,6 @@
 module.exports = function(server) {
+	var io = require('socket.io').listen(server);
+	//控制台打印动作
 	function log(msg) {
 		var d = new Date();
 		var h = d.getHours();
@@ -6,12 +8,11 @@ module.exports = function(server) {
 		var s = d.getSeconds();
 		console.log('['+h+':'+m+':'+s+'] '+msg);
 	}
-
-
+	//用于存储每一个socket连接
 	var usockets = {};
+	//在线用户数
 	var count = 0;
-	var io = require('socket.io').listen(server);
-
+	//进入socket连接
 	io.sockets.on('connection', function(socket){
 	    socket.on('user join', function(data) {
 	    	log('user '+data.username+' joins.');
@@ -64,7 +65,7 @@ module.exports = function(server) {
 				message: socket.username+"离开了聊天室",
 				count: count
 			});
-			delete usockets[socket.username];
+			//delete usockets[socket.username];
 		});
 	})
 }

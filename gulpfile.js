@@ -2,7 +2,6 @@
 var gulp = require('gulp');
 
 // 引入组件
-var watchify = require('watchify');
 var jshint = require('gulp-jshint');//检查js
 var sass   = require('gulp-sass');  //编译Sass
 var concat = require('gulp-concat');//合并
@@ -11,11 +10,12 @@ var uglify = require('gulp-uglify');//uglify 组件（用于压缩 JS）
 var rename = require('gulp-rename');//重命名
 var browserify = require('browserify');//browserify负责各个模块的依赖关系
 var babelify = require('babelify');//babelify 责把babel/内容转换成浏览器可以识别的JS/es5内容
+var watchify = require('watchify'); //用于配合browserity进行高效的js编译
 var plugins = require('gulp-load-plugins')();
 var source = require('vinyl-source-stream');//vinyl-source-stream是一个文件流的处理插件
 var path = require('path');
-var gutil = require('gulp-util');
-var envify = require('gulp-envify');
+var gutil = require('gulp-util');//日志工具
+var envify = require('gulp-envify');//
 
 // 编译Sass
 gulp.task('sass', function() {
@@ -32,10 +32,6 @@ gulp.task('sass', function() {
         .pipe(rename('style.min.css'))
         .pipe(gulp.dest('./dist/css'));//dest()写入文件
 });
-
-
-// 在这里添加自定义 browserify 选项
-
 
 //browserify打包处理js文件，watchify改进browserify后续打包工作
 gulp.task('scripts', bundle);
@@ -58,7 +54,7 @@ function bundle() {
 }
 
 
-gulp.task('lint', function() {
+gulp.task('lint:register', function() {
     gulp.src('./src/js/register.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
@@ -66,7 +62,7 @@ gulp.task('lint', function() {
         .pipe(gulp.dest('./dist/js'))
 })
 
-gulp.task('lint1', function() {
+gulp.task('lint:login', function() {
     gulp.src('./src/js/login.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
@@ -86,20 +82,17 @@ gulp.task('compress', function() {
 
 //gulp 默认任务
 gulp.task('default', function(){
-    gulp.run('sass', 'scripts', 'lint', 'lint1');
-    // gulp.watch('./src/js/*.js', function(){
-    //     gulp.run('scripts')
-    // });
+    gulp.run('sass', 'scripts', 'lint:register', 'lint:login');
     gulp.watch(['./src/sass/*.scss',
         './src/sass/includes/*.scss',
         './src/sass/includes/chatInterface/*.scss'], function(){
         gulp.run('sass');
     })
     gulp.watch('./src/js/register.js', function() {
-        gulp.run('lint');
+        gulp.run('lint:register');
     })
     gulp.watch('./src/js/login.js', function() {
-        gulp.run('lint1');
+        gulp.run('lint:login');
     })
 });
 

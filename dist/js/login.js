@@ -10,7 +10,7 @@ window.onload = function() {
 				flag = false;
 			}
 		}
-		console.log(tmp[0], tmp[1])
+		console.log(tmp[0], tmp[1]);
 		return flag;
 	};
 };

@@ -7,13 +7,11 @@ import {App} from './components/App';
 import configureStore from "./store";
 import *as Actions from './actions/action'
 
-
-const store =configureStore();
+const store = configureStore();
 export const socket = io.connect();
 export const NAME = username;
 //let photo = "img/photo/photo"+parseInt(Math.random()*9+1)+".jpg";
 export const PHOTO = photo;
-
 
 // function IsPC() {  
 // 	const userAgentInfo = navigator.userAgent;  
@@ -46,8 +44,6 @@ const AppComponent = connect(
 	mapStateToprops, //输入逻辑：外部的数据（即state对象）如何转换为 UI 组件的参数
 	mapDispatchToProps //输出逻辑：用户发出的动作如何变为 Action 对象，从 UI 组件传出去
 	)(App);
-
-
 
 render(
 	<Provider store={store}>
