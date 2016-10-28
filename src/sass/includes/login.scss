@@ -1,8 +1,20 @@
+
 #login {
 	@include register-login();
 	>h1 {
 		color: #7a6eda;
 		padding: 20px;
 		text-align: center;
+		margin-top: 0;
 	}
+}
+@media screen and (max-width: $mobile-width) {
+    #login {
+        margin-top: 0;
+        height: 100%;
+        width: 100%;
+        >form input {
+            margin-top: 10px;
+        }
+    }
 }
