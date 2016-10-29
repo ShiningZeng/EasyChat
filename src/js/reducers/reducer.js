@@ -90,7 +90,6 @@ function users(state=initState, action) {
 			return Object.assign({}, state, {
 				chatList: temp1
 			});
-
 		case CHANGE_ROOM:
 			return Object.assign({}, state, {current:action.username});
 		case CHANGE_UNREAD:
