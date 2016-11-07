@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import {ChatInterface} from './chatInterface';
+import {FriendList} from './friendList';
 import {ChatList} from './chatList';
+import {Share} from './share';
+import {Header} from './header';
+import {Individual} from './individual';
 import {MenuNav} from './menuNav';
-import {socket, NAME, PHOTO} from '../main';
+import {socket, NAME, PHOTO, isPC} from '../main';
 
 
 export class App extends Component {
@@ -108,9 +112,13 @@ export class App extends Component {
 	}
 	render() {
 		return (<div className='react-wrap'>
+					{!isPC ? <Header {...this.props}/> : null}
 					<MenuNav {...this.props}/>
 					<ChatList {...this.props}/>
+					<FriendList {...this.props}/>
 					<ChatInterface {...this.props}/>
+					<Share {...this.props}/>
+					<Individual {...this.props}/>
 				</div>)
 	}
 }

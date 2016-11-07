@@ -1,6 +1,7 @@
 #interface-header {
 	position: relative;
 	height: 10%;
+	width: 100%;
 	>p {
 		text-align: center;
 		>span{
@@ -12,4 +13,20 @@
 		}
 	}
 	
+}
+
+@media screen and (max-width: $mobile-width) {
+	#interface-header.moblie {
+		color: #fff;
+		background-color: #3e3e40;
+		line-height: 0;
+		padding-left: 12px;
+		:nth-child(n) {
+			position: relative;
+			top: 50%;
+		}
+		#goback {
+			margin-right: 20px;
+		}
+	}
 }

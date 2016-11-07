@@ -4,21 +4,25 @@
 	background-color: $chat-interface-footer-background;
 	>div.interface-footer-multiFunc {
 		width: 100%;
-		height: 40px;
+		height: 20%;
 		ul {
 			margin: 0;
 			height: 100%;
 			padding-left: 10px;
+			line-height: 0;
 		}
 		ul li {
+			position: relative;
+			top: 50%;
 			display: inline-block;
 			margin-left: 15px;
-			padding-top: 7px;
 			height: 100%;
 			vertical-align: middle;
 			cursor: pointer;
-			font-size: 13pt;
 			color: #777;
+			.iconfont {
+				font-size: 16pt;
+			}
 		}
 		ul li:hover {
 			color: #aaa;
@@ -27,9 +31,9 @@
 	>div.emoji-container{
 		position: absolute;
 		bottom: 150px;
-		left: -50px;
+		left: 0px;
 		width: 550px;
-		height:220px;
+		height: auto;
 		border: 1px solid #aaa;
 		border-radius: 2px;
 		>img {
@@ -52,18 +56,25 @@
 			width: 100px;
 		}
 	}
-	&>div.chat-inputarea {
+	>div.chat-inputarea {
 		@include absolute(bottom);
 		padding-left: 15px;
-		padding-right: 15px;	
-		width: calc(100% - 32 * 1px);
-		height: calc(100% - 40 * 1px);
+		padding-right: 15px;
+		width: 95%;
+		height: 75%;
+		margin-top: 5%;
+		// width: calc(100% - 32 * 1px);
+		// width: -webkit-calc(100% - 32 * 1px);
+		// width: -moz-calc(100% - 32 * 1px);
+		// height: calc(100% - 40 * 1px);
+		// height: -webkit-calc(100% - 40 * 1px);
+		// height: -moz-calc(100% - 40 * 1px);
 		border:none;
 		outline-color: $chat-interface-footer-background;
 		background-color: $chat-interface-footer-background;
 		overflow: hidden;
 	}
-	&>div.interface-footer-send {
+	>div.interface-footer-send {
 		position: absolute;
 		bottom: 10px;
 		right: 10px;
@@ -81,3 +92,19 @@
 		}
 	}
 }
+
+// @media screen and (max-width: $mobile-width) {
+// 	#interface-footer {
+// 		>div.emoji-container {
+// 			height: auto;
+// 			width: 100%;
+// 		}
+// 		>div.file-container{
+// 			margin-bottom: 20px;
+// 			width: auto;
+// 			input[type=file] {
+// 				width: auto;
+// 			}
+// 		}
+// 	}
+// }

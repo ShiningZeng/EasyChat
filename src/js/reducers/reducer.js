@@ -1,8 +1,8 @@
 import {combineReducers} from "Redux";
 import {ADD_RECORD, ADD_USER, CHANGE_ROOM, CHANGE_UNREAD, ADD_FRIEND,
- CHANGE_LIST, CHANGE_FRISTATE, SYSTEM_BROADCAST} from '../actions/action';
+ CHANGE_STATE, CHANGE_FRISTATE, SYSTEM_BROADCAST} from '../actions/action';
 import React from 'react';
-import {NAME} from '../main';
+import {NAME, isPC} from '../main';
 
 const initState = {
 	chatList: {
@@ -117,15 +117,54 @@ function users(state=initState, action) {
 	}
 }
 
+
+
+
+
+function changeZIndex(curState, postZIndex) {
+	const temp = Object.assign({}, postZIndex);
+	if (isPC) {
+		const temp1 = ['chatList', 'friendList'];
+		const temp2 = ['chatInterface', 'share', 'individual'];
+		if(temp1.indexOf(curState) >= 0) {
+			temp1.forEach(function(t) {
+				temp[t] = t == curState ? 1 : 0;
+			})
+		} else {
+			temp2.forEach(function(t) {
+				temp[t] = t == curState ? 1 : 0;
+			})
+		}
+	} else {
+		const temp3 = ['chatInterface'];
+		const temp4 = ['chatList', 'friendList', 'share', 'individual'];
+		temp3.forEach(function(t) {
+			temp[t] = t == curState ? 11 : 0;
+		})
+		temp4.forEach(function(t) {
+			temp[t] = t == curState ? 1 : 0;
+		})
+	}
+	return temp;
+}
 const initState1 = {
-	show: true
+	curState: 'chatList',
+	componentZIndex: {
+		chatList: 2,
+		friendList: 0,
+		chatInterface: 1,
+		share: 0,
+		individual: 0
+	}
 }
 
 function appState(state = initState1, action) {
 	switch(action.type) {
-		case CHANGE_LIST:
+		case CHANGE_STATE:
+				console.log(action.newState);
+			
 			return Object.assign({}, state, {
-				show: action.show
+				curState: action.newState, componentZIndex: changeZIndex(action.newState, state.componentZIndex)
 			})
 		default: return state;
 	}

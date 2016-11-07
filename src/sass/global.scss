@@ -1,0 +1,16 @@
+html, body {
+	margin: 0;
+	padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: Microsoft YaHei, 微软雅黑;
+}
+ul {
+	margin: 0;
+	padding: 0;
+
+}
+* { //去除手机UC浏览器点击文本后出现的极其丑陋的蓝色背景
+	-webkit-tap-highlight-color:transparent;
+}
+-wekit-scrollbar{display:none}

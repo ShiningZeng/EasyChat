@@ -1,5 +1,6 @@
 #chat-interface {
-	float: left;
+	position: absolute;
+	right: 0;
 	height: 100%;
 	width: $chat-interface-width;
 	background-color: $chat-interface-background;
@@ -12,5 +13,17 @@
 	&>div {
 		float: left;
 		width: 100%;
+	}
+}
+
+@media screen and (max-width: $mobile-width) {
+	#chat-interface {
+		@include absolute(top);
+		width: 100%;
+		height: 100%;
+		transition: all .1s linear .05s;
+		-o-transition: all .1s linear .05s;
+		-moz-transition: all .1s linear .05s;
+		-webkit-transition: all .1s linear .05s;
 	}
 }

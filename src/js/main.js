@@ -13,20 +13,16 @@ export const NAME = username;
 //let photo = "img/photo/photo"+parseInt(Math.random()*9+1)+".jpg";
 export const PHOTO = photo;
 
-// function IsPC() {  
-// 	const userAgentInfo = navigator.userAgent;  
-// 	const Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");  
-// 	let flag = false;  
-// 	for (let v = 0; v < Agents.length; v++) {  
-// 	    if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = true; break; }  
-// 	}  
-// 	return flag;
-// }
-// // resize the chatting room when opened in phone
-// if(IsPC()) {
-// 	document.getElementById("container").style.width = window.innerWidth+"px";
-// 	document.getElementById("container").style.height = window.innerHeight+"px";
-// }
+function IsPC() {  
+	const userAgentInfo = navigator.userAgent;  
+	const Agents = new Array("Mobile", "Windows Phone", "Android", "iPhone", "SymbianOS", "iPad", "iPod");  
+	let flag = true;  
+	for (let v = 0; v < Agents.length; v++) {  
+	    if (userAgentInfo.indexOf(Agents[v]) >= 0) { flag = false; break; }  
+	}  
+	return flag;
+}
+export const isPC = IsPC();
 
 //将state相关属性绑定到props的中
 

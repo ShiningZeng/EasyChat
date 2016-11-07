@@ -17,22 +17,6 @@ var path = require('path');
 var gutil = require('gulp-util');//日志工具
 var envify = require('gulp-envify');//
 
-// 编译Sass
-gulp.task('sass', function() {
-    gulp.src(['./src/sass/main.scss',
-        './src/sass/includes/*.scss',
-        './src/sass/includes/chatInterface/*.scss'])
-        .pipe(concat('style-debug.css'))
-        .pipe(sass())
-        .on('error', function (err) {
-            console.error('compile sass file error: %s', err.message);
-        })
-        .pipe(gulp.dest('./dist/css')) // 将未压缩的css文件放入css-debug中供DEBUG
-        .pipe(minifyCss())
-        .pipe(rename('style.min.css'))
-        .pipe(gulp.dest('./dist/css'));//dest()写入文件
-});
-
 //browserify打包处理js文件，watchify改进browserify后续打包工作
 gulp.task('scripts', bundle);
 
@@ -80,13 +64,29 @@ gulp.task('compress', function() {
         .pipe(gulp.dest('./dist/js'))
 })
 
+/* 编译Sass */
+gulp.task('sass', function() {
+    gulp.src('./src/sass/main.scss')
+        .pipe(sass())
+        .on('error', function (err) {
+            console.error('compile sass file error: %s', err.message);
+        })
+        .pipe(rename('style-debug.css')) // 将未压缩的css文件放入css-debug中供DEBUG
+        .pipe(gulp.dest('./dist/css'))
+        .pipe(minifyCss())
+        .pipe(rename('style.min.css'))
+        .pipe(gulp.dest('./dist/css'))
+})
+
 //gulp 默认任务
 gulp.task('default', function(){
     gulp.run('sass', 'scripts', 'lint:register', 'lint:login');
-    gulp.watch(['./src/sass/*.scss',
+    gulp.watch(['./src/sass/includes/chatInterface/*.scss',
         './src/sass/includes/*.scss',
-        './src/sass/includes/chatInterface/*.scss'], function(){
-        gulp.run('sass');
+        './src/sass/*.scss'], function(){
+            setTimeout(function(){
+                gulp.run('sass')
+            },300);
     })
     gulp.watch('./src/js/register.js', function() {
         gulp.run('lint:register');

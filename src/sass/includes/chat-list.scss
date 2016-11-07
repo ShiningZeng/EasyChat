@@ -1,8 +1,10 @@
 #chat-list {
-	float: left;
+	position: absolute;
+	left: $menu-nav-width;
 	height: 100%;
 	width: $chat-list-width;
 	background-color: $chat-list-background;
+	overflow: hidden;
 }
 #chat-list {
 	>div.user-search{ 
@@ -50,10 +52,13 @@
 	>div.userlist-wrap {
 		position: relative;
 		width: 100%;
+		height: 100%;
 		height: calc(100% - 50 * 1px);
+		height: -webkit-calc(100% - 50 * 1px);
+		height: -moz-calc(100% - 50 * 1px);
 		overflow: hidden;
 	}
-	>div.userlist-wrap ul.user-list {
+	ul.user-list {
 		@include absolute(bottom);
 		margin: 0;
 		padding: 0;
@@ -64,16 +69,16 @@
 			width: 100%;
 			height: 60px;
 			img.chat-list-photo {
-				float: left;
-				margin-top: 8px;
-				margin-left: 12px;
-				margin-right: 8px;
+				position: absolute;
+				left: 12px;
+				top: 8px;
 				width: 44px;
 				height: 44px;
 			}
 			span.chat-list-username {
-				float: left;
-				margin-top: 8px;
+				position: absolute;
+				top: 8px;
+				left: 64px;
 				width: 150px;
 				text-overflow: ellipsis;
 				overflow:hidden;
@@ -82,7 +87,9 @@
 				font-size: 11pt;
 			}
 			p.chat-list-brief {
-				float: left;
+				position: absolute;
+				bottom: 8px;
+				left: 64px;
 				margin: 0;
 				display: inline-block;
 				width: 150px;
@@ -92,11 +99,6 @@
 				white-space:nowrap;
 				font-size: 10pt;
 				color: #777;
-			}
-			p.frendslist-username {
-				height: 100%;
-				line-height: 60px;
-				margin: 0;
 			}
 			div.chat-list-unread {
 				position: absolute;
@@ -125,3 +127,29 @@
 		}
 	}
 }
+
+@media screen and (max-width: $mobile-width) {
+	#chat-list {
+		position: absolute;
+		top: 10%;
+		left: 0;
+		width: 100%;
+		background-color: #fff;
+		>div.userlist-wrap ul.user-list{
+			li {
+				border-bottom: 1px solid #ddd;
+				background-color: transparent;
+			}
+			li.active {
+				background-color: transparent;
+			}
+			li:hover {
+				background-color: $chat-list-hover;
+			}
+		}
+
+			
+	}
+}
+
+

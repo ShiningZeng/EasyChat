@@ -100,20 +100,7 @@ export function addFriend(friend) {
   }
 }
 
-export const CHANGE_LIST = "CHANGE_LIST";
 
-export function change_list(show) {
-  return {
-    type: CHANGE_LIST,
-    show
-  }
-}
-
-export function changeList(show) {
-  return (dispatch, getState) =>{
-    dispatch(change_list(show));
-  }
-}
 
 
 export const CHANGE_FRISTATE = "CHANGE_FRISTATE";
@@ -145,5 +132,22 @@ export function system_broadcast(message) {
 export function systemBroadcast(message) {
   return (dispatch, getState) =>{
     dispatch(system_broadcast(message));
+  }
+}
+
+
+
+export const CHANGE_STATE = "CHANGE_STATE";
+
+export function change_state(state) {
+  return {
+    type: CHANGE_STATE,
+    newState: state
+  }
+}
+
+export function changeState(state) {
+  return (dispatch, getState) =>{
+    dispatch(change_state(state));
   }
 }

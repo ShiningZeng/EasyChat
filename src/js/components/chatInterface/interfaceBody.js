@@ -10,6 +10,8 @@ export class InterfaceBody extends Component {
 		const ul =  this.refs.ul;
 		this.createNewRoom = this.createNewRoom.bind(this);
 		ul.addEventListener('dblclick',this.createNewRoom,false);
+		ul.addEventListener('touchend',this.createNewRoom,false);
+		
 		//初始化滚动事件
 		const ulwrap = this.refs.ulwrap;
 		this.handleMouseWheel = this.handleMouseWheel.bind(this);
@@ -22,15 +24,15 @@ export class InterfaceBody extends Component {
 		const receiveAddFri = this.refs.receiveAddFri;
 		this.receiveAddFriClick= this.receiveAddFriClick.bind(this);
 		receiveAddFri.addEventListener('click', this.receiveAddFriClick, false);
-		//初始化隐藏中间提示框事件
-		const funcReminder = this.refs.funcReminder;
-		this.hidReminderClick = this.hidReminderClick.bind(this);
-		funcReminder.addEventListener('click',this.hidReminderClick,false);
+		// //初始化隐藏中间提示框事件
+		// const funcReminder = this.refs.funcReminder;
+		// this.hidReminderClick = this.hidReminderClick.bind(this);
+		// funcReminder.addEventListener('click',this.hidReminderClick,false);
 	}
-	hidReminderClick(e) {
-		const funcReminder = this.refs.funcReminder;
-		funcReminder.className = funcReminder.className + " d-hidden";
-	}
+	// hidReminderClick(e) {
+	// 	const funcReminder = this.refs.funcReminder;
+	// 	funcReminder.className = funcReminder.className + " d-hidden";
+	// }
 	receiveAddFriClick(e) {
 		e = e || window.event;//这一行及下一行是为兼容IE8及以下版本
 		var target = e.target || e.srcElement;
@@ -134,9 +136,6 @@ export class InterfaceBody extends Component {
 			receiveAddFri_className += " d-hidden";
 
 		return (<div id='interface-body' ref="ulwrap">
-					<div className="func-reminder" ref="funcReminder">
-						双击对方头像可以进入私聊
-					</div>
 					<ul id='chatUl' ref="ul">
 						{chatList[current]?chatList[current].DOM:[]}
 					</ul>
